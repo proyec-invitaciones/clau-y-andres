@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Claudia & Andrés - 25 Aniversario</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;600&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-color: #EAE0D5; 
+            --text-main: #3E362E; 
+            --accent-gold: #C5A059; 
+            --card-bg: #FFFFFF;
+            --card-text: #333333;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Montserrat', sans-serif; background-color: var(--bg-color); color: var(--text-main); overflow-x: hidden; }
+        h1, h2, h3 { font-family: 'Cinzel', serif; font-weight: 400; }
+        .script-font { font-family: 'Pinyon Script', cursive; }
+
+        /* --- PANTALLA DE APERTURA (EL SOBRE) --- */
+        #envelope-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: #1A1816; 
+            z-index: 9999; display: flex; flex-direction: column; 
+            align-items: center; justify-content: center; overflow: visible;
+            transition: opacity 1.2s ease;
+        }
+
+        .envelope-wrapper {
+            position: relative; width: 340px; height: 240px; cursor: pointer; overflow: visible;
+            transition: all 0.8s ease;
+        }
+
+        .envelope-back {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #d4c5b0;
+            background-image: url("https://www.transparenttextures.com/patterns/handmade-paper.png");
+            border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 1;
+            transition: all 0.8s ease;
+        }
+
+        .wax-seal {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 80px; height: 80px; border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #a61b1b, #6b0000 60%, #3a0000);
+            border: 1px solid #2d0000; box-shadow: 0 8px 15px rgba(0,0,0,0.6), inset 0 4px 6px rgba(255,255,255,0.2);
+            display: flex; align-items: center; justify-content: center; z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        .seal-logo {
+            width: 80%; height: 80%; object-fit: contain;
+            filter: invert(1) sepia(1) saturate(5) hue-rotate(10deg) brightness(1.1);
+            mix-blend-mode: screen; z-index: 11;
+        }
+
+        .hint-text { color: #d4c5b0; font-family: 'Cinzel'; letter-spacing: 3px; margin-top: 30px; animation: pulse 2s infinite; transition: opacity 0.3s; }
+        @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+
+        /* --- HERO Y CONTENIDO --- */
+        .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; background: radial-gradient(circle at center, rgba(255,255,255,0.4) 0%, var(--bg-color) 100%); padding: 20px; border: 15px solid rgba(197, 160, 89, 0.4); margin: 10px; border-radius: 10px;}
+        .family-names { font-family: 'Cinzel', serif; font-size: 1.1rem; color: var(--text-main); margin: 10px 0; line-height: 1.6; text-shadow: 0 1px 2px rgba(255,255,255,0.3); }
+        .hero h1 { font-size: 2.8rem; letter-spacing: 2px; margin-bottom: 10px; color: var(--text-main); text-shadow: 0 2px 4px rgba(255,255,255,0.3); }
+        .hero .subtitle { font-size: 3.5rem; color: var(--text-main); margin-bottom: 15px; line-height: 1; }
+        
+        section { padding: 40px 20px; max-width: 900px; margin: 0 auto; text-align: center; }
+        .section-title { font-size: 1.8rem; color: var(--text-main); margin-bottom: 20px; letter-spacing: 2px; }
+        .divider { width: 60px; height: 1px; background: var(--text-main); margin: 0 auto 30px auto; }
+
+        .countdown { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 30px; }
+        .time-box { border: 1px solid var(--accent-gold); padding: 15px 10px; border-radius: 4px; min-width: 70px; background: var(--card-bg); color: var(--card-text); }
+        .time-box span { display: block; font-family: 'Cinzel'; font-size: 1.8rem; font-weight: 400; }
+        .time-box p { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; margin-top: 5px; }
+
+        .locations-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .location-card { background: var(--card-bg); padding: 35px 20px; border-radius: 8px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); color: var(--card-text); }
+        .location-card i { font-size: 2rem; color: var(--accent-gold); margin-bottom: 15px; }
+        .location-card h3 { font-size: 1.3rem; margin-bottom: 10px; }
+        .location-card p { margin-bottom: 15px; font-size: 0.9rem; line-height: 1.6; }
+        
+        .timeline { position: relative; max-width: 600px; margin: 0 auto; padding: 20px 0; }
+        .timeline::before { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: var(--accent-gold); transform: translateX(-50%); }
+        .timeline-item { position: relative; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        .timeline-item:nth-child(even) { flex-direction: row-reverse; }
+        .timeline-content { width: 45%; background: var(--card-bg); padding: 15px; border-radius: 8px; text-align: center; color: var(--card-text); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .timeline-icon { position: absolute; left: 50%; transform: translateX(-50%); width: 35px; height: 35px; background: var(--card-bg); border: 1px solid var(--accent-gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--accent-gold); z-index: 1; }
+        
+        @media (max-width: 768px) {
+            .timeline::before { left: 30px; }
+            .timeline-item { flex-direction: column !important; align-items: flex-end; }
+            .timeline-content { width: calc(100% - 60px); }
+            .timeline-icon { left: 30px; transform: translateX(-50%); }
+        }
+
+        .carousel-container { width: 100%; max-width: 600px; margin: 0 auto; overflow: hidden; border-radius: 8px; background: var(--card-bg); box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
+        .carousel-slide { display: flex; width: 300%; animation: slide 12s infinite; }
+        .carousel-slide img { width: 33.33%; height: 400px; object-fit: contain; }
+        @keyframes slide { 0%, 25% { transform: translateX(0%); } 33%, 58% { transform: translateX(-33.33%); } 66%, 91% { transform: translateX(-66.66%); } 100% { transform: translateX(0%); } }
+
+        #youtube-player-container { position: absolute; width: 1px; height: 1px; top: -1000px; left: -1000px; opacity: 0; pointer-events: none; }
+
+        .qr-section { background: var(--card-bg); padding: 40px 20px; border-radius: 8px; margin-top: 30px; color: var(--card-text); box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
+        .qr-container { width: 160px; height: 160px; margin: 20px auto; padding: 5px; }
+        .qr-container img { width: 100%; height: 100%; }
+
+        .btn-wa { background: transparent; color: var(--card-text); border: 1px solid var(--card-text); padding: 12px 25px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; font-weight: 500; text-transform: uppercase; border-radius: 50px; text-decoration: none; width: 100%; max-width: 280px; margin: 0 auto; font-size: 0.9rem; transition: background 0.3s, color 0.3s; }
+        .btn-wa:hover { background: var(--accent-gold); color: white; border-color: var(--accent-gold); }
+
+        .music-btn { position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; background: rgba(255, 255, 255, 0.95); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--card-text); cursor: pointer; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.15); border: 1px solid var(--accent-gold); }
+    </style>
+</head>
+<body>
+
+    <audio id="bg-music" loop>
+    <source src="cty.mp3" type="audio/mpeg">
+</audio>
+
+    <div class="music-btn" onclick="toggleMusic()"><i id="m-icon" class="fa-solid fa-music"></i></div>
+
+    <div id="envelope-screen">
+        <div class="envelope-wrapper" id="envelope-body" onclick="abrirSobre()">
+            <div class="envelope-back"></div>
+            
+            <div class="wax-seal" id="sello">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA4AAAASQCAIAAAAiJ7YVAAAAA3NCSVQICAjb4U/gAAARw3pUWHRSYXcgcHJvZml" class="seal-logo" alt="Sello">
+            </div>
+        </div>
+        <p class="hint-text" id="hint">Rompe el sello</p>
+    </div>
+
+    <header class="hero">
+        <p style="letter-spacing: 2px; font-size: 0.75rem; margin-bottom: 10px; text-transform: uppercase;">Con la bendición de Dios y nuestros hijos</p>
+        <p class="family-names">Andrea Fernanda<br>Juan Andre<br>Fernanda Lilith</p>
+        <p style="letter-spacing: 2px; font-size: 0.75rem; margin-top: 20px; margin-bottom: 10px; text-transform: uppercase;">Tenemos el honor de invitarles a nuestras</p>
+        <h2 class="subtitle script-font">Bodas de Plata</h2>
+        <h1>Claudia & Andrés</h1>
+        <div class="date" style="margin-top: 20px; font-size: 1.1rem; border-top: 1px solid var(--accent-gold); border-bottom: 1px solid var(--accent-gold); padding: 10px 0;">Sábado • 19 Diciembre • 2026</div>
+        
+        <div class="countdown" id="countdown">
+            <div class="time-box"><span id="days">00</span><p>Días</p></div>
+            <div class="time-box"><span id="hours">00</span><p>Hrs</p></div>
+            <div class="time-box"><span id="mins">00</span><p>Min</p></div>
+            <div class="time-box"><span id="secs">00</span><p>Seg</p></div>
+        </div>
+    </header>
+
+    <section>
+        <h2 class="section-title">Dónde & Cuándo</h2>
+        <div class="divider"></div>
+        <div class="locations-grid">
+            <div class="location-card">
+                <i class="fa-solid fa-church"></i>
+                <h3 style="font-family: 'Montserrat', sans-serif; font-weight: 600;">Ceremonia</h3>
+                <p><strong>Capilla de la Sagrada Familia</strong><br>16:30 hrs<br>Calle Palmira, Tingüindín 139, Palmira, 62490 Cuernavaca, Mor.</p>
+                <a href="https://maps.google.com/?q=VQRH%2B8H+Cuernavaca,+Morelos" target="_blank" class="btn-wa">Ver Mapa</a>
+            </div>
+            <div class="location-card">
+                <i class="fa-solid fa-champagne-glasses"></i>
+                <h3 style="font-family: 'Montserrat', sans-serif; font-weight: 600;">Recepción</h3>
+                <p><strong>Romen's Jardín de Eventos</strong><br>18:30 hrs<br>C. Colorines, Atlacomulco, 62560 Jiutepec, Mor.</p>
+                <a href="https://maps.app.goo.gl/CA13NXhthvkKY49d8?g_st=aw" target="_blank" class="btn-wa">Ver Mapa</a>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2 class="section-title">Itinerario</h2>
+        <div class="divider"></div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-icon"><i class="fa-solid fa-church"></i></div>
+                <div class="timeline-content">
+                    <div class="timeline-time">16:30</div>
+                    <p style="font-size: 0.9rem;">Renovación de Votos</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-icon"><i class="fa-solid fa-camera"></i></div>
+                <div class="timeline-content">
+                    <div class="timeline-time">18:00</div>
+                    <p style="font-size: 0.9rem;">Sesión Fotográfica</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-icon"><i class="fa-solid fa-martini-glass"></i></div>
+                <div class="timeline-content">
+                    <div class="timeline-time">18:30</div>
+                    <p style="font-size: 0.9rem;">Cóctel de Bienvenida</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-icon"><i class="fa-solid fa-utensils"></i></div>
+                <div class="timeline-content">
+                    <div class="timeline-time">20:00</div>
+                    <p style="font-size: 0.9rem;">Cena & Brindis</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-icon"><i class="fa-solid fa-music"></i></div>
+                <div class="timeline-content">
+                    <div class="timeline-time">22:00</div>
+                    <p style="font-size: 0.9rem;">Baile de Gala</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2 class="section-title">Nuestros Recuerdos</h2>
+        <div class="divider"></div>
+        <div class="carousel-container">
+            <div class="carousel-slide">
+                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2070&auto=format&fit=crop" alt="Boda Plata Detalle">
+                <img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=2070&auto=format&fit=crop" alt="Brindis">
+                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2070&auto=format&fit=crop" alt="Boda Plata Detalle 2">
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2 class="section-title">Nuestra Historia</h2>
+        <div class="divider"></div>
+        <p style="font-size: 1rem; margin-bottom: 20px; line-height: 1.6;">
+            Veinticinco años después, seguimos eligiéndonos cada día. Gracias por acompañarnos.
+        </p>
+        <div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; border-radius: 8px;">
+            <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/ScMzIvxBSi4?rel=0&modestbranding=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </section>
+
+    <section>
+        <h2 class="section-title">Detalles</h2>
+        <div class="divider"></div>
+        
+        <div class="location-card" style="margin-bottom: 20px;">
+            <i class="fa-solid fa-user-tie"></i>
+            <h3 style="font-family: 'Montserrat', sans-serif; font-weight: 600;">Dress Code</h3>
+            <p><strong>Formal de Gala</strong><br>Damas: Vestido largo elegante.<br>Caballeros: Traje oscuro o Esmoquin.<br><em>Sugerencia de tonos: Dorado, Arena o Plata.</em></p>
+        </div>
+
+        <div class="location-card" style="margin-bottom: 20px;">
+            <i class="fa-solid fa-gift"></i>
+            <h3 style="font-family: 'Montserrat', sans-serif; font-weight: 600;">Mesa de Regalos</h3>
+            <p>Tu presencia es nuestro mejor regalo. Si deseas tener un detalle adicional:</p>
+            <p><strong>Lluvia de Sobres</strong><br>Liverpool Evento: <strong>pendiente</strong></p>
+        </div>
+
+        <div class="location-card">
+            <i class="fa-solid fa-bed"></i>
+            <h3 style="font-family: 'Montserrat', sans-serif; font-weight: 600;">Hospedaje</h3>
+            <p>Para nuestros invitados de fuera, sugerimos:</p>
+            <p><strong>Hotel Grand Misión</strong><br>Código de descuento: BODACA25</p>
+        </div>
+    </section>
+
+    <section>
+        <div class="qr-section">
+            <p class="script-font" style="font-size: 2.5rem; margin-bottom: 10px; color: var(--accent-gold);">Claudia & Andrés</p>
+            <h3 id="nombre-invitado" style="font-size: 1.2rem; font-family: 'Montserrat', sans-serif; font-weight: 600; text-transform: uppercase;">Invitado de Honor</h3>
+            
+            <div class="qr-container">
+                <img id="qr-img" src="" alt="QR Acceso">
+            </div>
+            
+            <p style="margin-top: 10px; font-size: 0.9rem;">Presenta este código en recepción</p>
+            
+            <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(0,0,0,0.1);">
+                <p style="font-size: 0.8rem; margin-bottom: 15px;">Agradecemos su confirmación de asistencia.</p>
+                <a href="#" id="btn-wa" target="_blank" class="btn-wa">CONFIRMACIÓN</a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Referencia al elemento de audio HTML5
+        const bgMusic = document.getElementById('bg-music');
+        let isPlaying = false;
+
+        // Control del botón flotante de música (encender/apagar)
+        function toggleMusic() {
+            const icon = document.getElementById('m-icon');
+            if (isPlaying) {
+                bgMusic.pause();
+                icon.className = 'fa-solid fa-music-slash';
+                isPlaying = false;
+            } else {
+                bgMusic.play();
+                icon.className = 'fa-solid fa-music';
+                isPlaying = true;
+            }
+        }
+
+        // Abrir el sobre e iniciar la música con el clic del usuario
+        function abrirSobre() {
+            const wrapper = document.getElementById('envelope-body');
+            const hint = document.getElementById('hint');
+            const screen = document.getElementById('envelope-screen');
+
+            // Ocultar texto y escalar sobre
+            hint.style.opacity = '0';
+            wrapper.style.transform = 'scale(1.1)';
+            wrapper.style.opacity = '0';
+
+            // Reproducir música directamente desde la etiqueta <audio>
+            let playPromise = bgMusic.play();
+            if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                    isPlaying = true;
+                    document.getElementById('m-icon').className = 'fa-solid fa-music';
+                }).catch(error => {
+                    console.log("El navegador bloqueó la reproducción automática:", error);
+                });
+            }
+
+            // Ocultar la pantalla del sobre
+            setTimeout(() => {
+                screen.style.opacity = '0';
+            }, 800);
+
+            setTimeout(() => {
+                screen.style.display = 'none';
+            }, 2000);
+        }
+
+        /* --- PARÁMETROS DE INVITADO Y PASES (URL) --- */
+        const urlParams = new URLSearchParams(window.location.search);
+        const invitado = urlParams.get('invitado') || "Invitado de Honor";
+        const pases = urlParams.get('pases') || "2";
+
+        document.getElementById('nombre-invitado').innerText = invitado;
+        document.getElementById('qr-img').src = "https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=CA25-" + encodeURIComponent(invitado) + "-" + pases;
+        document.getElementById('btn-wa').href = "https://wa.me/?text=" + encodeURIComponent("¡Hola Claudia y Andrés! Confirmo la asistencia de " + invitado + " (" + pases + " accesos) a sus Bodas de Plata el 19 de Diciembre.");
+
+        /* --- CONTADOR REGRESIVO --- */
+        const targetDate = new Date('Dec 19, 2026 16:30:00').getTime();
+        setInterval(function() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            if (distance > 0) {
+                document.getElementById('days').innerText = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+                document.getElementById('hours').innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+                document.getElementById('mins').innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+                document.getElementById('secs').innerText = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
+            } else {
+                document.getElementById('countdown').innerHTML = "<h3 style='color: var(--text-main);'>¡Ha llegado el gran momento!</h3>";
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
