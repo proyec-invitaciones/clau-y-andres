@@ -340,7 +340,7 @@
         }
           
         .timeline { position: relative; max-width: 600px; margin: 0 auto; padding: 20px 0; }
-        .timeline::before { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: rgba(55, 74, 58, 0.2); transform: translateX(-50%); }
+        .timeline::before { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: rgba(55, 74, 58, 0.2); transform: translateX(-50%); display: none; }
         .timeline-item { position: relative; margin-bottom: 50px; width: 100%; display: flex; flex-direction: column; align-items: center; background: transparent; }
         .timeline-time { position: absolute; left: 0; top: 30px; font-family: 'Playfair Display'; font-size: 1.2rem; color: var(--accent-green); }
         .timeline-content h3 { font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; color: var(--text-dark); }
@@ -349,12 +349,66 @@
         .location-card { background: var(--card-bg); padding: 50px 30px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.04); margin-bottom: 30px; }
         .location-card h3 { font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; color: var(--text-dark); }
           
-        .photo-stack-container { width: 100%; max-width: 600px; margin: 20px auto; position: relative; display: flex; flex-direction: column; align-items: center; }
-        .photo-stack { position: relative; width: 100%; height: 450px; display: grid; justify-items: center; align-items: center; }
-        .photo-stack img { position: absolute; width: 85%; border: 12px solid #FFFFFF; box-shadow: 0 15px 30px rgba(0,0,0,0.15); transition: transform 0.5s; }
-        .photo-stack .photo-3 { transform: translate(20px, 30px) rotate(-8deg); z-index: 1; }
-        .photo-stack .photo-2 { transform: translate(-15px, 20px) rotate(6deg); z-index: 2; }
-        .photo-stack .photo-1 { transform: translate(0, 0) rotate(0deg); z-index: 3; width: 95%; }
+        /* --- GALERÍA ESTILO PILA DE FOTOS --- */
+        .stacked-gallery-container {
+            width: 100%;
+            overflow: hidden; /* Evita que la pantalla se mueva a los lados al deslizar */
+            padding: 40px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .stacked-gallery {
+            position: relative;
+            width: 280px;
+            height: 380px;
+        }
+
+        .stacked-card {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: 12px solid #FFFFFF;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            background-color: var(--card-bg);
+            /* Propiedades clave para el deslizamiento */
+            touch-action: none; /* Evita el scroll nativo al tocar la foto */
+            user-select: none;
+            cursor: grab;
+            transform-origin: 50% 100%;
+            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.3s ease;
+        }
+
+        .stacked-card.dragging {
+            transition: none; /* Quitamos la transición mientras el usuario arrastra */
+            cursor: grabbing;
+        }
+
+        .swipe-indicator { 
+            margin-top: 40px; 
+            font-size: 0.8rem; 
+            color: var(--dark-green); 
+            letter-spacing: 2px; 
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+        }
+        
+        .swipe-indicator i {
+            display: block;
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+            animation: swipeAnim 2s infinite ease-in-out;
+            color: var(--accent-green);
+        }
+
+        @keyframes swipeAnim { 
+            0%, 100% { transform: translateX(0) rotate(0deg); } 
+            50% { transform: translateX(15px) rotate(5deg); } 
+        }
 
         .btn-green {
             background-color: var(--dark-green); color: #FFFFFF; padding: 14px 35px; border-radius: 4px; text-decoration: none; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; display: inline-flex; align-items: center; justify-content: center; gap: 10px; margin-top: 20px; font-size: 0.85rem; border: 1px solid var(--dark-green); transition: 0.3s;
@@ -368,7 +422,6 @@
             .family-block { grid-template-columns: 1fr; gap: 30px; }
             .hero h1 { font-size: 4rem; }
             .hero .subtitle { font-size: 3.5rem; }
-            .photo-stack { height: 350px; }
             .timeline-time { position: relative; top: 0; margin-bottom: 20px; text-align: center; }
             .timeline::before { display: none; }
         }
@@ -502,7 +555,7 @@
           
         <div class="timeline">
             <div class="timeline-item">
-                <div class="timeline-time">16:30<br><span style="font-size: 0.6rem; color: #888;">HRS</span></div>
+                <div class="timeline-time"><br><span style="font-size: 0.6rem; color: #888;"></span></div>
                 <div class="icon-circle"><i class="fa-solid fa-church"></i></div>
                 <div class="timeline-content">
                     <h3>Ceremonia</h3>
@@ -511,7 +564,7 @@
             </div>
               
             <div class="timeline-item">
-                <div class="timeline-time">18:00<br><span style="font-size: 0.6rem; color: #888;">HRS</span></div>
+                <div class="timeline-time"><br><span style="font-size: 0.6rem; color: #888;"></span></div>
                 <div class="icon-circle"><i class="fa-solid fa-camera"></i></div>
                 <div class="timeline-content">
                     <h3>Sesión de Fotos</h3>
@@ -520,7 +573,7 @@
             </div>
 
             <div class="timeline-item">
-                <div class="timeline-time">18:30<br><span style="font-size: 0.6rem; color: #888;">HRS</span></div>
+                <div class="timeline-time"><br><span style="font-size: 0.6rem; color: #888;"></span></div>
                 <div class="icon-circle"><i class="fa-solid fa-champagne-glasses"></i></div>
                 <div class="timeline-content">
                     <h3>Cóctel</h3>
@@ -529,7 +582,7 @@
             </div>
               
             <div class="timeline-item">
-                <div class="timeline-time">20:00<br><span style="font-size: 0.6rem; color: #888;">HRS</span></div>
+                <div class="timeline-time"><br><span style="font-size: 0.6rem; color: #888;"></span></div>
                 <div class="icon-circle"><i class="fa-solid fa-utensils"></i></div>
                 <div class="timeline-content">
                     <h3>Cena & Baile</h3>
@@ -548,7 +601,7 @@
             <p style="font-size: 0.8rem; letter-spacing: 2px; color: #888; text-transform: uppercase; margin-bottom: 10px;">Ceremonia Religiosa</p>
             <h3>Capilla de la Sagrada Familia</h3>
             <p style="font-style: italic; margin-bottom: 15px;">Calle Palmira, Tingüindín 139, Cuernavaca.</p>
-            <p style="font-weight: 500; margin-bottom: 25px; color: var(--accent-green);">16:30 hrs Recepción de invitados</p>
+            <p style="font-weight: 500; margin-bottom: 25px; color: var(--accent-green);">16:30 hrs Inicio de Ceremonia</p>
             <a href="https://maps.google.com/?q=Capilla+Sagrada+Familia+Palmira" target="_blank" class="btn-green"><i class="fa-solid fa-location-dot"></i> Ver Mapa</a>
         </div>
 
@@ -566,13 +619,21 @@
         <p class="section-subtitle">Momentos que nos trajeron aquí</p>
         <h2 class="section-title">Nuestra historia</h2>
           
-        <div class="photo-stack-container">
-            <div class="photo-stack">
-                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80" alt="Foto 3" class="photo-3">
-                <img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80" alt="Foto 2" class="photo-2">
-                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80" alt="Foto 1" class="photo-1">
+        <div class="stacked-gallery-container">
+            <div class="stacked-gallery" id="stacked-gallery">
+                <img src="galeria/1.jpeg" alt="Recuerdo 1" class="stacked-card">
+                <img src="galeria/2.jpg" alt="Recuerdo 2" class="stacked-card">
+                <img src="galeria/3.jpeg" alt="Recuerdo 3" class="stacked-card">
+                <img src="galeria/4.jpeg" alt="Recuerdo 4" class="stacked-card">
+                <img src="galeria/5.jpeg" alt="Recuerdo 5" class="stacked-card">
+                <img src="galeria/6.jpeg" alt="Recuerdo 6" class="stacked-card">
+                <img src="galeria/7.jpeg" alt="Recuerdo 7" class="stacked-card">
+                <img src="galeria/8.jpeg" alt="Recuerdo 8" class="stacked-card">
             </div>
-            <a href="#" class="btn-green" style="margin-top: 40px; box-shadow: 0 4px 15px rgba(55, 74, 58, 0.2);">Recorrer galería <i class="fa-solid fa-images"></i></a>
+            <div class="swipe-indicator">
+                <i class="fa-solid fa-hand-pointer"></i>
+                Desliza para ver más fotos
+            </div>
         </div>
     </section>
 
@@ -710,6 +771,103 @@
                 document.getElementById('secs').innerText = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
             }
         }, 1000);
+
+        /* --- LÓGICA DE PILA DE FOTOS DESLIZABLE --- */
+        const stackContainer = document.getElementById('stacked-gallery');
+        // Invertimos el arreglo para que la primera foto del HTML quede hasta arriba
+        let cards = Array.from(stackContainer.querySelectorAll('.stacked-card')).reverse();
+        
+        let isDraggingCard = false;
+        let startX = 0, startY = 0, currentX = 0, currentY = 0;
+        let activeCard = null;
+
+        function updateCardStack() {
+            cards.forEach((card, index) => {
+                card.classList.remove('dragging');
+                
+                // Si es la carta superior
+                const isTop = index === cards.length - 1;
+                const distance = cards.length - 1 - index;
+                
+                // Rotaciones base para darle efecto de pila desordenada
+                const rotations = [-2, 4, -3, 2, -1, 3];
+                const baseRot = isTop ? 0 : rotations[index % rotations.length];
+                
+                // Escala y posición según qué tan abajo esté en la pila
+                const scale = Math.max(1 - (distance * 0.04), 0.85);
+                const translateY = distance * 8; // Las empuja un poco hacia abajo
+
+                card.style.zIndex = index;
+                card.style.transform = `translateY(${translateY}px) scale(${scale}) rotate(${baseRot}deg)`;
+                card.style.opacity = distance > 3 ? '0' : '1'; // Oculta las que están muy abajo
+
+                if (isTop) {
+                    card.addEventListener('pointerdown', handleCardPointerDown);
+                } else {
+                    card.removeEventListener('pointerdown', handleCardPointerDown);
+                }
+            });
+        }
+
+        function handleCardPointerDown(e) {
+            activeCard = e.target;
+            isDraggingCard = true;
+            startX = e.clientX;
+            startY = e.clientY;
+            
+            activeCard.classList.add('dragging');
+            activeCard.setPointerCapture(e.pointerId);
+            
+            activeCard.addEventListener('pointermove', handleCardPointerMove);
+            activeCard.addEventListener('pointerup', handleCardPointerUp);
+            activeCard.addEventListener('pointercancel', handleCardPointerUp);
+        }
+
+        function handleCardPointerMove(e) {
+            if (!isDraggingCard || !activeCard) return;
+            currentX = e.clientX - startX;
+            currentY = e.clientY - startY;
+            
+            // Rota ligeramente mientras arrastras
+            const rotate = currentX * 0.05;
+            activeCard.style.transform = `translate(${currentX}px, ${currentY}px) rotate(${rotate}deg)`;
+        }
+
+        function handleCardPointerUp(e) {
+            if (!isDraggingCard || !activeCard) return;
+            isDraggingCard = false;
+            
+            activeCard.removeEventListener('pointermove', handleCardPointerMove);
+            activeCard.removeEventListener('pointerup', handleCardPointerUp);
+            activeCard.removeEventListener('pointercancel', handleCardPointerUp);
+            activeCard.classList.remove('dragging');
+
+            const threshold = window.innerWidth / 4; // Distancia para considerar un "swipe" exitoso
+            
+            if (Math.abs(currentX) > threshold) {
+                // Animar la foto volando hacia afuera
+                const throwX = currentX * 1.5;
+                const throwY = currentY * 1.5;
+                activeCard.style.transform = `translate(${throwX}px, ${throwY}px) rotate(${currentX * 0.1}deg)`;
+                activeCard.style.opacity = '0';
+                
+                // Mover la carta al final de la pila después de la animación
+                setTimeout(() => {
+                    cards.unshift(cards.pop()); // Pasa la carta de arriba a abajo del arreglo
+                    updateCardStack(); // Vuelve a acomodar la pila
+                }, 300);
+            } else {
+                // Regresar la carta al centro si no se deslizó lo suficiente
+                updateCardStack();
+            }
+            
+            currentX = 0;
+            currentY = 0;
+            activeCard = null;
+        }
+
+        // Inicializar la pila
+        updateCardStack();
     </script>
 </body>
 </html>
