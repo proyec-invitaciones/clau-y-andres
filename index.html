@@ -17,18 +17,45 @@
             --dark-green: #374A3A; 
             --accent-gold: #B59B6D; 
             --card-bg: #FFFFFF;
+            --bg-outer: #EAE6DC; /* Color de fondo exterior para pantallas grandes */
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         
+        /* El fondo exterior solo se apreciará en pantallas de escritorio */
         body { 
             font-family: 'Inter', sans-serif; 
-            background-color: var(--bg-cream); 
-            background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png");
+            background-color: var(--bg-outer); 
             color: var(--text-dark); 
             overflow-x: hidden;
             font-weight: 300;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* --- MARCO CONTENEDOR PRINCIPAL --- */
+        .main-wrapper {
+            width: 100%;
+            max-width: 600px; /* Ancho ideal tipo tarjeta vertical para escritorio */
+            background-color: var(--bg-cream);
+            background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png");
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.08); /* Sombra elegante en los lados en PC */
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Líneas de marco decorativo refinado a los lados (estilo paspartú) */
+        .main-wrapper::before {
+            content: '';
+            position: fixed;
+            top: 15px;
+            bottom: 15px;
+            left: calc(50% - 285px);
+            width: 570px;
+            border: 1px solid rgba(181, 155, 109, 0.2);
+            pointer-events: none;
+            z-index: 999;
         }
 
         h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 500; color: var(--dark-green); }
@@ -259,7 +286,7 @@
 
         .hero-portada {
             width: 100%;
-            max-width: 500px;
+            max-width: 440px;
             margin: 25px 0;
             border: 12px solid #FFFFFF;
             box-shadow: 0 15px 35px rgba(0,0,0,0.1);
@@ -311,11 +338,11 @@
         .time-box p { font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 500; text-transform: uppercase; color: var(--accent-green); letter-spacing: 1px; margin-top: 5px; }
 
         /* --- SECCIONES GENERALES --- */
-        section { padding: 70px 20px; max-width: 900px; margin: 0 auto; text-align: center; }
+        section { padding: 70px 20px; max-width: 100%; margin: 0 auto; text-align: center; }
         .section-subtitle { font-family: 'Inter', sans-serif; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 3px; color: var(--accent-gold); margin-bottom: 10px; font-weight: 500; }
         .section-title { font-size: 3.5rem; color: var(--dark-green); margin-bottom: 30px; font-family: 'Pinyon Script', cursive; }
           
-        .bg-dark-section { background-color: var(--dark-green); color: var(--bg-cream); border-radius: 20px; margin: 20px auto; padding: 70px 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .bg-dark-section { background-color: var(--dark-green); color: var(--bg-cream); border-radius: 20px; margin: 20px 15px; padding: 70px 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
         .bg-dark-section .section-title { color: var(--bg-cream); }
         .bg-dark-section p { color: #E5E7EB; }
 
@@ -334,8 +361,7 @@
             font-size: 2rem; margin: 0 auto 20px auto; box-shadow: 0 0 0 8px rgba(55, 74, 58, 0.1);
         }
           
-        .timeline { position: relative; max-width: 600px; margin: 0 auto; padding: 20px 0; }
-        .timeline::before { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: rgba(55, 74, 58, 0.2); transform: translateX(-50%); display: none; }
+        .timeline { position: relative; max-width: 100%; margin: 0 auto; padding: 20px 0; }
         .timeline-item { position: relative; margin-bottom: 50px; width: 100%; display: flex; flex-direction: column; align-items: center; background: transparent; }
         .timeline-time { position: absolute; left: 0; top: 30px; font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--accent-gold); font-style: italic; }
         .timeline-content h3 { font-family: 'Playfair Display', serif; font-size: 1.6rem; margin-bottom: 10px; color: var(--dark-green); }
@@ -450,263 +476,265 @@
         .btn-outline-light:hover { background: var(--bg-cream); color: var(--dark-green); }
 
         @media (max-width: 768px) {
+            .main-wrapper::before { display: none; } /* Ocultar marco lineal interno en móvil */
             .family-block { grid-template-columns: 1fr; gap: 30px; }
             .hero h1 { font-size: 4rem; }
             .hero .subtitle { font-size: 3.5rem; }
             .timeline-time { position: relative; top: 0; margin-bottom: 20px; text-align: center; }
-            .timeline::before { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <svg width="0" height="0" style="position: absolute;">
-        <filter id="paper-texture">
-            <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="4" result="noise" />
-            <feColorMatrix type="saturate" values="0" in="noise" result="grayNoise" />
-            <feComponentTransfer in="grayNoise" result="fadedNoise">
-                <feFuncA type="linear" slope="0.12" />
-            </feComponentTransfer>
-            <feBlend mode="multiply" in="SourceGraphic" in2="fadedNoise" />
-        </filter>
-    </svg>
+    <div class="main-wrapper">
 
-    <audio id="bg-music" loop>
-        <source src="cty.mp3" type="audio/mpeg">
-    </audio>
+        <svg width="0" height="0" style="position: absolute;">
+            <filter id="paper-texture">
+                <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="4" result="noise" />
+                <feColorMatrix type="saturate" values="0" in="noise" result="grayNoise" />
+                <feComponentTransfer in="grayNoise" result="fadedNoise">
+                    <feFuncA type="linear" slope="0.12" />
+                </feComponentTransfer>
+                <feBlend mode="multiply" in="SourceGraphic" in2="fadedNoise" />
+            </filter>
+        </svg>
 
-    <div class="music-btn" style="position: fixed; bottom: 25px; right: 25px; z-index: 1000; background: white; color: var(--dark-green); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.1); cursor: pointer;" onclick="toggleMusic()">
-        <i id="m-icon" class="fa-solid fa-music"></i>
-    </div>
+        <audio id="bg-music" loop>
+            <source src="cty.mp3" type="audio/mpeg">
+        </audio>
 
-    <div id="envelope-screen">
-        <div class="env-container">
-            <div class="envelope" id="envelope" onclick="abrirSobre()">
-                <div class="env-inside"></div>
-                  
-                <div class="env-card">
-                    <div class="card-border">
-                        <p class="card-subtitle">INVITACIÓN DE BODA</p>
-                        <p class="card-title script-font">Claudia & Andrés</p>
-                        <div class="card-line"></div>
-                        <p class="card-date">19 DE DICIEMBRE DE 2026</p>
+        <div class="music-btn" style="position: fixed; bottom: 25px; right: calc(50% - 275px); z-index: 1000; background: white; color: var(--dark-green); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.1); cursor: pointer;" onclick="toggleMusic()">
+            <i id="m-icon" class="fa-solid fa-music"></i>
+        </div>
+
+        <div id="envelope-screen">
+            <div class="env-container">
+                <div class="envelope" id="envelope" onclick="abrirSobre()">
+                    <div class="env-inside"></div>
+                      
+                    <div class="env-card">
+                        <div class="card-border">
+                            <p class="card-subtitle">INVITACIÓN DE BODA</p>
+                            <p class="card-title script-font">Claudia & Andrés</p>
+                            <div class="card-line"></div>
+                            <p class="card-date">19 DE DICIEMBRE DE 2026</p>
+                        </div>
                     </div>
-                </div>
-                  
-                <svg class="env-pocket" viewBox="0 0 340 220" preserveAspectRatio="none">
-                    <path d="M 0,0 L 170,120 L 340,0 L 340,220 L 0,220 Z" fill="#889d87" />
-                    <path d="M 0,0 L 170,120 L 0,220 Z" fill="#7d927c" />
-                    <path d="M 340,0 L 170,120 L 340,220 Z" fill="#7d927c" />
-                    <path d="M 0,220 L 170,110 L 340,220 Z" fill="#91a790" />
-                </svg>
-                  
-                <div class="env-flap-wrapper">
-                    <svg class="env-flap" viewBox="0 0 340 140" preserveAspectRatio="none">
-                        <path d="M 0,0 L 340,0 L 170,135 Z" fill="#91a790" />
+                      
+                    <svg class="env-pocket" viewBox="0 0 340 220" preserveAspectRatio="none">
+                        <path d="M 0,0 L 170,120 L 340,0 L 340,220 L 0,220 Z" fill="#889d87" />
+                        <path d="M 0,0 L 170,120 L 0,220 Z" fill="#7d927c" />
+                        <path d="M 340,0 L 170,120 L 340,220 Z" fill="#7d927c" />
+                        <path d="M 0,220 L 170,110 L 340,220 Z" fill="#91a790" />
                     </svg>
-                    <div class="wax-seal">
-                        <div class="seal-inner">
-                            <i class="fa-solid fa-leaf"></i>
+                      
+                    <div class="env-flap-wrapper">
+                        <svg class="env-flap" viewBox="0 0 340 140" preserveAspectRatio="none">
+                            <path d="M 0,0 L 340,0 L 170,135 Z" fill="#91a790" />
+                        </svg>
+                        <div class="wax-seal">
+                            <div class="seal-inner">
+                                <i class="fa-solid fa-leaf"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-          
-        <button type="button" class="btn-abrir-sobre" onclick="abrirSobre()">Abrir Invitación <i class="fa-solid fa-arrow-right"></i></button>
-        <p class="hint-text">Toca el sobre para abrir</p>
-    </div>
-
-    <header class="hero">
-        <p class="script-font hero-intro-text">Con la bendición de Dios y nuestros hijos</p>
-          
-        <p class="family-names-top">
-            <span>Andrea Fernanda</span>
-            <span class="bullet-separator">♦</span>
-            <span>Juan Andre</span>
-            <span class="bullet-separator">♦</span>
-            <span>Fernanda Lilith</span>
-        </p>
-
-        <div class="hero-portada">
-            <img src="port1.jpeg" alt="Portada Aniversario">
+              
+            <button type="button" class="btn-abrir-sobre" onclick="abrirSobre()">Abrir Invitación <i class="fa-solid fa-arrow-right"></i></button>
+            <p class="hint-text">Toca el sobre para abrir</p>
         </div>
 
-        <p id="type-intro" class="script-font hero-intro-text typewriter-text" style="margin-top: 35px;"></p>
-        <h2 id="type-subtitle" class="subtitle script-font typewriter-text"></h2>
-        <h1 id="type-names" class="script-font typewriter-text"></h1>
-          
-        <div class="date-divider">
-            Sábado • 19 Diciembre • 2026
-        </div>
-          
-        <div class="countdown" id="countdown">
-            <div class="time-box"><span id="days">00</span><p>Días</p></div>
-            <div class="time-box"><span id="hours">00</span><p>Hrs</p></div>
-            <div class="time-box"><span id="mins">00</span><p>Min</p></div>
-            <div class="time-box"><span id="secs">00</span><p>Seg</p></div>
-        </div>
-    </header>
+        <header class="hero">
+            <p class="script-font hero-intro-text">Con la bendición de Dios y nuestros hijos</p>
+              
+            <p class="family-names-top">
+                <span>Andrea Fernanda</span>
+                <span class="bullet-separator">♦</span>
+                <span>Juan Andre</span>
+                <span class="bullet-separator">♦</span>
+                <span>Fernanda Lilith</span>
+            </p>
 
-    <section>
-        <p class="section-subtitle">Nuestras Raíces</p>
-        <h2 class="section-title">Nuestra Familia</h2>
-          
-        <div class="family-block">
-            <div class="family-column">
-                <h4>Padres de la Novia</h4>
-                <div class="family-names-list">
-                    <p>Ma. Perfecta Lopez Barcenas</p>
-                    <p class="deceased">Salvador Jaime Quiroz Fraga</p>
-                </div>
+            <div class="hero-portada">
+                <img src="port1.jpeg" alt="Portada Aniversario">
             </div>
-            <div class="family-column">
-                <h4>Padres del Novio</h4>
-                <div class="family-names-list">
-                    <p class="deceased">Virginia Garcia Méndez</p>
-                    <p>Cupertino Ortiz Perez</p>
-                </div>
-            </div>
-        </div>
 
-        <div class="godparents">
-            <div class="family-column">
-                <h4>Padrinos de Velación</h4>
-                <div class="family-names-list">
-                    <p>Blanca Flores Carro</p>
-                    <p>Hector Flores Carro</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section>
-        <p class="section-subtitle">Cada momento pensado con amor</p>
-        <h2 class="section-title">Itinerario</h2>
-          
-        <div class="timeline">
-            <div class="timeline-item">
-                <div class="timeline-time"><br><span style="font-size: 0.7rem; color: var(--accent-green); font-family: 'Inter', sans-serif;"></span></div>
-                <div class="icon-circle"><i class="fa-solid fa-church"></i></div>
-                <div class="timeline-content">
-                    <h3>Ceremonia</h3>
-                    <p>Renovación de Votos y Acción de Gracias</p>
-                </div>
+            <p id="type-intro" class="script-font hero-intro-text typewriter-text" style="margin-top: 35px;"></p>
+            <h2 id="type-subtitle" class="subtitle script-font typewriter-text"></h2>
+            <h1 id="type-names" class="script-font typewriter-text"></h1>
+              
+            <div class="date-divider">
+                Sábado • 19 Diciembre • 2026
             </div>
               
-            <div class="timeline-item">
-                <div class="timeline-time"><br><span style="font-size: 0.7rem; color: var(--accent-green); font-family: 'Inter', sans-serif;"></span></div>
-                <div class="icon-circle"><i class="fa-solid fa-camera"></i></div>
-                <div class="timeline-content">
-                    <h3>Sesión de Fotos</h3>
-                    <p>Capturando momentos inolvidables</p>
-                </div>
+            <div class="countdown" id="countdown">
+                <div class="time-box"><span id="days">00</span><p>Días</p></div>
+                <div class="time-box"><span id="hours">00</span><p>Hrs</p></div>
+                <div class="time-box"><span id="mins">00</span><p>Min</p></div>
+                <div class="time-box"><span id="secs">00</span><p>Seg</p></div>
             </div>
+        </header>
 
-            <div class="timeline-item">
-                <div class="timeline-time"><br><span style="font-size: 0.7rem; color: var(--accent-green); font-family: 'Inter', sans-serif;"></span></div>
-                <div class="icon-circle"><i class="fa-solid fa-champagne-glasses"></i></div>
-                <div class="timeline-content">
-                    <h3>Cóctel</h3>
-                    <p>Brindis de bienvenida en el jardín</p>
-                </div>
-            </div>
+        <section>
+            <p class="section-subtitle">Nuestras Raíces</p>
+            <h2 class="section-title">Nuestra Familia</h2>
               
-            <div class="timeline-item">
-                <div class="timeline-time"><br><span style="font-size: 0.7rem; color: var(--accent-green); font-family: 'Inter', sans-serif;"></span></div>
-                <div class="icon-circle"><i class="fa-solid fa-utensils"></i></div>
-                <div class="timeline-content">
-                    <h3>Cena & Baile</h3>
-                    <p>Celebración de Gala</p>
+            <div class="family-block">
+                <div class="family-column">
+                    <h4>Padres de la Novia</h4>
+                    <div class="family-names-list">
+                        <p>Ma. Perfecta Lopez Barcenas</p>
+                        <p class="deceased">Salvador Jaime Quiroz Fraga</p>
+                    </div>
+                </div>
+                <div class="family-column">
+                    <h4>Padres del Novio</h4>
+                    <div class="family-names-list">
+                        <p class="deceased">Virginia Garcia Méndez</p>
+                        <p>Cupertino Ortiz Perez</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <section>
-        <p class="section-subtitle">¿Dónde será?</p>
-        <h2 class="section-title">Ubicación</h2>
-          
-        <div class="location-card">
-            <div class="icon-circle" style="width: 60px; height: 60px; font-size: 1.5rem;"><i class="fa-solid fa-church"></i></div>
-            <p style="font-family: 'Inter', sans-serif; font-size: 0.8rem; letter-spacing: 2px; color: var(--accent-gold); text-transform: uppercase; margin-bottom: 10px; font-weight: 500;">Ceremonia Religiosa</p>
-            <h3>Capilla de la Sagrada Familia</h3>
-            <p style="font-family: 'Inter', sans-serif; font-weight: 300; margin-bottom: 15px; color: var(--text-dark);">Calle Palmira, Tingüindín 139, Cuernavaca.</p>
-            <p style="font-family: 'Inter', sans-serif; font-weight: 500; margin-bottom: 25px; color: var(--accent-green);">16:30 hrs Inicio de la Ceremonia</p>
-            <a href="https://maps.google.com/?q=Capilla+Sagrada+Familia+Palmira" target="_blank" class="btn-green"><i class="fa-solid fa-location-dot"></i> Ver Mapa</a>
-        </div>
-
-        <div class="location-card">
-            <div class="icon-circle" style="width: 60px; height: 60px; font-size: 1.5rem;"><i class="fa-solid fa-champagne-glasses"></i></div>
-            <p style="font-family: 'Inter', sans-serif; font-size: 0.8rem; letter-spacing: 2px; color: var(--accent-gold); text-transform: uppercase; margin-bottom: 10px; font-weight: 500;">Recepción</p>
-            <h3>Romen's Jardín de Eventos</h3>
-            <p style="font-family: 'Inter', sans-serif; font-weight: 300; margin-bottom: 15px; color: var(--text-dark);">C. Colorines, Atlacomulco, Jiutepec.</p>
-            <p style="font-family: 'Inter', sans-serif; font-weight: 500; margin-bottom: 25px; color: var(--accent-green);">18:30 hrs Inicio de recepción</p>
-            <a href="https://maps.app.goo.gl/CA13NXhthvkKY49d8" target="_blank" class="btn-green"><i class="fa-solid fa-location-dot"></i> Ver Mapa</a>
-        </div>
-    </section>
-
-    <section>
-        <p class="section-subtitle">Momentos que nos trajeron aquí</p>
-        <h2 class="section-title">Nuestra historia</h2>
-          
-        <div class="stacked-gallery-container">
-            <div class="stacked-gallery" id="stacked-gallery"></div>
-            <div class="swipe-controls">
-                <button type="button" class="btn-undo" id="btn-undo" onclick="undoSwipe()"><i class="fa-solid fa-rotate-left"></i> Foto anterior</button>
-                <div class="swipe-indicator">
-                    <i class="fa-solid fa-hand-pointer"></i>
-                    Desliza para ver más fotos
+            <div class="godparents">
+                <div class="family-column">
+                    <h4>Padrinos de Velación</h4>
+                    <div class="family-names-list">
+                        <p>Blanca Flores Carro</p>
+                        <p>Hector Flores Carro</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="bg-dark-section">
-        <p class="section-subtitle">Para lucir radiantes</p>
-        <h2 class="section-title">Vestimenta</h2>
-        <p style="font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: 3px; font-size: 1.2rem; margin-bottom: 30px; font-weight: 500; color: var(--bg-cream);">Etiqueta Formal</p>
-          
-        <div style="background: white; border-radius: 16px; padding: 30px; margin: 0 auto 30px auto; max-width: 400px; color: var(--dark-green);">
-            <i class="fa-solid fa-user-tie" style="font-size: 3rem; margin-bottom: 15px;"></i>
-            <p style="font-family: 'Inter', sans-serif; font-weight: 300; color: var(--text-dark); line-height: 1.6;">Damas: Vestido largo elegante.<br>Caballeros: Traje oscuro o Esmoquin.</p>
-        </div>
-        <p style="font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; color: var(--accent-gold);">Ayúdanos a lucir radiantes vistiendo de gala. ¡Tu elegancia hará la noche aún más especial!</p>
-    </section>
+        <section>
+            <p class="section-subtitle">Cada momento pensado con amor</p>
+            <h2 class="section-title">Itinerario</h2>
+              
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-time"><br><span style="font-size: 0.7rem; color: var(--accent-green); font-family: 'Inter', sans-serif;"></span></div>
+                    <div class="icon-circle"><i class="fa-solid fa-church"></i></div>
+                    <div class="timeline-content">
+                        <h3>Ceremonia</h3>
+                        <p>Renovación de Votos y Acción de Gracias</p>
+                    </div>
+                </div>
+                  
+                <div class="timeline-item">
+                    <div class="timeline-time"><br><span style="font-size: 0.7rem; color: var(--accent-green); font-family: 'Inter', sans-serif;"></span></div>
+                    <div class="icon-circle"><i class="fa-solid fa-camera"></i></div>
+                    <div class="timeline-content">
+                        <h3>Sesión de Fotos</h3>
+                        <p>Capturando momentos inolvidables</p>
+                    </div>
+                </div>
 
-    <section>
-        <h2 class="section-title">Mesa de Regalos</h2>
-        <p style="font-family: 'Inter', sans-serif; font-weight: 300; color: var(--text-dark); margin-bottom: 40px; font-size: 1.1rem;">Si deseas obsequiarnos algo más, aquí te dejamos algunas opciones. Lo más importante es contar contigo.</p>
-          
-        <div class="location-card" style="margin-bottom: 20px; text-align: center;">
-            <i class="fa-solid fa-envelope-open-text" style="font-size: 2.5rem; color: var(--accent-green); margin-bottom: 15px;"></i>
-            <h3>Lluvia de Sobres</h3>
-            <p style="font-family: 'Inter', sans-serif; font-weight: 300; color: var(--text-dark);">Tradición de entregar un sobre el día del evento.</p>
-        </div>
-    </section>
-
-    <section class="bg-dark-section" style="margin-bottom: 50px;">
-        <h2 class="section-title">Confirma tu Asistencia</h2>
-        <p style="font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; margin-bottom: 40px; color: var(--accent-gold);">Ayúdanos a preparar cada detalle con amor — tu presencia lo significa todo para nosotros.</p>
-        
-        <div style="border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 40px 20px; max-width: 500px; margin: 0 auto;">
-            <div class="icon-circle" style="background: transparent; border: 1px solid white; margin-bottom: 15px;"><i class="fa-regular fa-heart"></i></div>
-            <p style="font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500;">Confirmar tu lugar</p>
-            
-            <p class="script-font" style="font-size: 3.5rem; color: var(--bg-cream); margin-bottom: 10px; line-height: 1;">Claudia & Andrés</p>
-            <h3 id="nombre-invitado" style="font-family: 'Inter', sans-serif; text-transform: uppercase; margin-bottom: 20px; font-size: 1.2rem; letter-spacing: 1px; color: var(--accent-gold);">Invitado de Honor</h3>
-            
-            <div style="background: white; width: 160px; height: 160px; margin: 0 auto 20px auto; padding: 10px; border-radius: 12px;">
-                <img id="qr-img" src="" alt="QR" style="width: 100%;">
+                <div class="timeline-item">
+                    <div class="timeline-time"><br><span style="font-size: 0.7rem; color: var(--accent-green); font-family: 'Inter', sans-serif;"></span></div>
+                    <div class="icon-circle"><i class="fa-solid fa-champagne-glasses"></i></div>
+                    <div class="timeline-content">
+                        <h3>Cóctel</h3>
+                        <p>Brindis de bienvenida en el jardín</p>
+                    </div>
+                </div>
+                  
+                <div class="timeline-item">
+                    <div class="timeline-time"><br><span style="font-size: 0.7rem; color: var(--accent-green); font-family: 'Inter', sans-serif;"></span></div>
+                    <div class="icon-circle"><i class="fa-solid fa-utensils"></i></div>
+                    <div class="timeline-content">
+                        <h3>Cena & Baile</h3>
+                        <p>Celebración de Gala</p>
+                    </div>
+                </div>
             </div>
-            
-            <p style="font-family: 'Inter', sans-serif; margin-bottom: 30px; font-weight: 300; color: var(--bg-cream);">Pases reservados: <span id="num-pases" style="font-weight: 600; color: var(--accent-gold);">2</span></p>
-            
-            <a href="#" id="btn-confirmar" target="_blank" class="btn-green btn-outline-light">Confirmar Asistencia Digital</a>
-        </div>
-    </section>
+        </section>
 
-    <script>
+        <section>
+            <p class="section-subtitle">¿Dónde será?</p>
+            <h2 class="section-title">Ubicación</h2>
+              
+            <div class="location-card">
+                <div class="icon-circle" style="width: 60px; height: 60px; font-size: 1.5rem;"><i class="fa-solid fa-church"></i></div>
+                <p style="font-family: 'Inter', sans-serif; font-size: 0.8rem; letter-spacing: 2px; color: var(--accent-gold); text-transform: uppercase; margin-bottom: 10px; font-weight: 500;">Ceremonia Religiosa</p>
+                <h3>Capilla de la Sagrada Familia</h3>
+                <p style="font-family: 'Inter', sans-serif; font-weight: 300; margin-bottom: 15px; color: var(--text-dark);">Calle Palmira, Tingüindín 139, Cuernavaca.</p>
+                <p style="font-family: 'Inter', sans-serif; font-weight: 500; margin-bottom: 25px; color: var(--accent-green);">16:30 hrs Inicio de la Ceremonia</p>
+                <a href="https://maps.google.com/?q=Capilla+Sagrada+Familia+Palmira" target="_blank" class="btn-green"><i class="fa-solid fa-location-dot"></i> Ver Mapa</a>
+            </div>
+
+            <div class="location-card">
+                <div class="icon-circle" style="width: 60px; height: 60px; font-size: 1.5rem;"><i class="fa-solid fa-champagne-glasses"></i></div>
+                <p style="font-family: 'Inter', sans-serif; font-size: 0.8rem; letter-spacing: 2px; color: var(--accent-gold); text-transform: uppercase; margin-bottom: 10px; font-weight: 500;">Recepción</p>
+                <h3>Romen's Jardín de Eventos</h3>
+                <p style="font-family: 'Inter', sans-serif; font-weight: 300; margin-bottom: 15px; color: var(--text-dark);">C. Colorines, Atlacomulco, Jiutepec.</p>
+                <p style="font-family: 'Inter', sans-serif; font-weight: 500; margin-bottom: 25px; color: var(--accent-green);">18:30 hrs Inicio de recepción</p>
+                <a href="https://maps.app.goo.gl/CA13NXhthvkKY49d8" target="_blank" class="btn-green"><i class="fa-solid fa-location-dot"></i> Ver Mapa</a>
+            </div>
+        </section>
+
+        <section>
+            <p class="section-subtitle">Momentos que nos trajeron aquí</p>
+            <h2 class="section-title">Nuestra historia</h2>
+              
+            <div class="stacked-gallery-container">
+                <div class="stacked-gallery" id="stacked-gallery"></div>
+                <div class="swipe-controls">
+                    <button type="button" class="btn-undo" id="btn-undo" onclick="undoSwipe()"><i class="fa-solid fa-rotate-left"></i> Foto anterior</button>
+                    <div class="swipe-indicator">
+                        <i class="fa-solid fa-hand-pointer"></i>
+                        Desliza para ver más fotos
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-dark-section">
+            <p class="section-subtitle">Para lucir radiantes</p>
+            <h2 class="section-title">Vestimenta</h2>
+            <p style="font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: 3px; font-size: 1.2rem; margin-bottom: 30px; font-weight: 500; color: var(--bg-cream);">Etiqueta Formal</p>
+              
+            <div style="background: white; border-radius: 16px; padding: 30px; margin: 0 auto 30px auto; max-width: 400px; color: var(--dark-green);">
+                <i class="fa-solid fa-user-tie" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                <p style="font-family: 'Inter', sans-serif; font-weight: 300; color: var(--text-dark); line-height: 1.6;">Damas: Vestido largo elegante.<br>Caballeros: Traje oscuro o Esmoquin.</p>
+            </div>
+            <p style="font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; color: var(--accent-gold);">Ayúdanos a lucir radiantes vistiendo de gala. ¡Tu elegancia hará la noche aún más especial!</p>
+        </section>
+
+        <section>
+            <h2 class="section-title">Mesa de Regalos</h2>
+            <p style="font-family: 'Inter', sans-serif; font-weight: 300; color: var(--text-dark); margin-bottom: 40px; font-size: 1.1rem;">Si deseas obsequiarnos algo más, aquí te dejamos algunas opciones. Lo más importante es contar contigo.</p>
+              
+            <div class="location-card" style="margin-bottom: 20px; text-align: center;">
+                <i class="fa-solid fa-envelope-open-text" style="font-size: 2.5rem; color: var(--accent-green); margin-bottom: 15px;"></i>
+                <h3>Lluvia de Sobres</h3>
+                <p style="font-family: 'Inter', sans-serif; font-weight: 300; color: var(--text-dark);">Tradición de entregar un sobre el día del evento.</p>
+            </div>
+        </section>
+
+        <section class="bg-dark-section" style="margin-bottom: 50px;">
+            <h2 class="section-title">Confirma tu Asistencia</h2>
+            <p style="font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; margin-bottom: 40px; color: var(--accent-gold);">Ayúdanos a preparar cada detalle con amor — tu presencia lo significa todo para nosotros.</p>
+            
+            <div style="border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 40px 20px; max-width: 500px; margin: 0 auto;">
+                <div class="icon-circle" style="background: transparent; border: 1px solid white; margin-bottom: 15px;"><i class="fa-regular fa-heart"></i></div>
+                <p style="font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500;">Confirmar tu lugar</p>
+                
+                <p class="script-font" style="font-size: 3.5rem; color: var(--bg-cream); margin-bottom: 10px; line-height: 1;">Claudia & Andrés</p>
+                <h3 id="nombre-invitado" style="font-family: 'Inter', sans-serif; text-transform: uppercase; margin-bottom: 20px; font-size: 1.2rem; letter-spacing: 1px; color: var(--accent-gold);">Invitado de Honor</h3>
+                
+                <div style="background: white; width: 160px; height: 160px; margin: 0 auto 20px auto; padding: 10px; border-radius: 12px;">
+                    <img id="qr-img" src="" alt="QR" style="width: 100%;">
+                </div>
+                
+                <p style="font-family: 'Inter', sans-serif; margin-bottom: 30px; font-weight: 300; color: var(--bg-cream);">Pases reservados: <span id="num-pases" style="font-weight: 600; color: var(--accent-gold);">2</span></p>
+                
+                <a href="#" id="btn-confirmar" target="_blank" class="btn-green btn-outline-light">Confirmar Asistencia Digital</a>
+            </div>
+        </section>
+
+    </div> <script>
         const bgMusic = document.getElementById('bg-music');
         let isPlaying = false;
 
@@ -774,7 +802,7 @@
             typeLine();
         }
 
-        /* --- LÓGICA DE CONFIRMACIÓN ACTUALIZADA CON GOOGLE FORMS INTEGRADO --- */
+        /* --- LÓGICA DE CONFIRMACIÓN CON GOOGLE FORMS INTEGRADO --- */
         const urlParams = new URLSearchParams(window.location.search);
         const invitado = urlParams.get('invitado') || "Invitado de Honor";
         const pases = urlParams.get('pases') || "2";
@@ -782,20 +810,16 @@
         document.getElementById('nombre-invitado').innerText = invitado;
         document.getElementById('num-pases').innerText = pases;
         
-        // Mantenemos la generación del QR original para escaneo rápido en la entrada
         document.getElementById('qr-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=CA25-${encodeURIComponent(invitado)}-${pases}`;
         
-        // --- ENLACE A TU BASE DE DATOS AUTOMATIZADA ---
         const BASE_FORM_URL = "https://docs.google.com/forms/d/14tNQD2GA5MLZokcpOxa5vEuMtHqpLbtisxmOzvrAVd4/viewform";
         
-        // TODO: Recuerda sustituir estos entry.X con los IDs reales que obtengas en "Obtener enlace prellenado"
+        // Coloca tus IDs reales aquí una vez generados (entry.X)
         const idCampoInvitado = "entry.111111118"; 
         const idCampoPases = "entry.222222222";
         
-        // Construcción y asignación del enlace dinámico
         const googleFormLink = `${BASE_FORM_URL}?usp=pp_url&${idCampoInvitado}=${encodeURIComponent(invitado)}&${idCampoPases}=${pases}`;
         document.getElementById('btn-confirmar').href = googleFormLink;
-        /* ------------------------------------------------------------- */
 
         const targetDate = new Date('Dec 19, 2026 16:30:00').getTime();
         setInterval(function() {
