@@ -6,7 +6,7 @@
     <title>Claudia & Andrés - 25 Aniversario</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600&family=Pinyon+Script&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
@@ -27,11 +27,12 @@
             background-color: var(--bg-cream); 
             background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png");
             color: var(--text-dark); 
-            overflow-x: hidden; 
+            overflow-x: hidden;
+            font-weight: 300;
         }
 
-        h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 600; }
-        .script-font { font-family: 'Pinyon Script', cursive; }
+        h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 500; color: var(--dark-green); }
+        .script-font { font-family: 'Pinyon Script', cursive; font-weight: 400; }
 
         /* --- PANTALLA DE APERTURA (SOBRE INTERACTIVO) --- */
         #envelope-screen {
@@ -60,7 +61,6 @@
             cursor: pointer;
         }
 
-        /* Interior oscuro texturizado */
         .env-inside {
             position: absolute;
             inset: 0;
@@ -70,7 +70,6 @@
             z-index: 1;
         }
 
-        /* Tarjeta / Pase que se desliza */
         .env-card {
             position: absolute;
             top: 12px;
@@ -103,14 +102,15 @@
         .card-subtitle {
             font-size: 0.65rem;
             letter-spacing: 3px;
-            color: #556b53;
+            color: var(--accent-gold);
+            font-family: 'Inter', sans-serif;
             text-transform: uppercase;
-            font-weight: 600;
+            font-weight: 500;
         }
 
         .card-title {
-            font-size: 2.5rem;
-            color: #2C352D;
+            font-size: 2.8rem;
+            color: var(--dark-green);
             margin: 4px 0;
             line-height: 1.1;
         }
@@ -118,18 +118,18 @@
         .card-line {
             width: 40px;
             height: 1px;
-            background: #B59B6D;
+            background: var(--accent-gold);
             margin: 6px 0;
         }
 
         .card-date {
             font-size: 0.65rem;
             letter-spacing: 2px;
-            color: #374A3A;
-            font-weight: 600;
+            color: var(--accent-green);
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
         }
 
-        /* Bolsillo frontal vectorizado con filtro monocromático */
         .env-pocket {
             position: absolute;
             inset: 0;
@@ -140,7 +140,6 @@
             filter: url(#paper-texture) drop-shadow(0 -2px 5px rgba(0,0,0,0.1));
         }
 
-        /* Solapa Superior de Cierre */
         .env-flap-wrapper {
             position: absolute;
             top: 0;
@@ -158,7 +157,6 @@
             filter: url(#paper-texture) drop-shadow(0 6px 10px rgba(0,0,0,0.25));
         }
 
-        /* Sello de Cera Estilo Verde Olivo Monocromático (Realista) */
         .wax-seal {
             position: absolute;
             bottom: -14px;
@@ -201,14 +199,12 @@
             position: relative;
         }
 
-        /* Efecto hundido/embossed de la hoja */
         .seal-inner i {
             color: #728971;
             text-shadow: -1px -1px 1px rgba(0,0,0,0.5), 1px 1px 1px rgba(255,255,255,0.4);
             font-size: 1.4rem;
         }
 
-        /* Estado Abierto */
         .envelope.open .env-flap-wrapper {
             transform: rotateX(180deg);
             z-index: 1;
@@ -224,7 +220,6 @@
             z-index: 5;
         }
 
-        /* Botón de apertura */
         .btn-abrir-sobre {
             background: transparent; 
             border: 1px solid var(--accent-green);
@@ -234,6 +229,7 @@
             letter-spacing: 3px; 
             color: var(--dark-green); 
             text-transform: uppercase;
+            font-weight: 500;
             cursor: pointer; 
             transition: 0.3s; 
             display: inline-flex; 
@@ -244,8 +240,8 @@
         .btn-abrir-sobre:hover { background: rgba(118, 137, 115, 0.15); }
 
         .hint-text { 
-            color: #888; 
-            font-family: 'Inter'; 
+            color: var(--accent-green); 
+            font-family: 'Inter', sans-serif; 
             letter-spacing: 3px; 
             text-transform: uppercase; 
             font-size: 0.7rem; 
@@ -294,47 +290,46 @@
         }
 
         .family-names-top { 
-            font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--text-dark); 
+            font-family: 'Inter', sans-serif; font-size: 0.9rem; color: var(--text-dark); letter-spacing: 2px; text-transform: uppercase;
             margin: 15px 0; display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap;
         }
 
-        .bullet-separator { color: var(--accent-gold); font-size: 0.9rem; }
+        .bullet-separator { color: var(--accent-gold); font-size: 0.8rem; }
 
-        .hero h1 { font-size: 5rem; color: var(--dark-green); font-weight: 400; margin: 5px 0; }
-        .hero .subtitle { font-size: 4rem; color: var(--accent-gold); margin-bottom: 5px; line-height: 1; }
+        .hero h1 { font-size: 5rem; color: var(--dark-green); margin: 5px 0; }
+        .hero .subtitle { font-size: 3.5rem; color: var(--accent-gold); margin-bottom: 5px; line-height: 1; }
 
         .date-divider {
-            margin-top: 30px; font-size: 1.1rem; font-weight: 500; font-family: 'Inter';
+            margin-top: 30px; font-size: 1rem; font-weight: 500; font-family: 'Inter', sans-serif;
             border-top: 1px solid rgba(55, 74, 58, 0.2); border-bottom: 1px solid rgba(55, 74, 58, 0.2); 
-            padding: 15px 40px; color: var(--text-dark); letter-spacing: 1px;
+            padding: 15px 40px; color: var(--text-dark); letter-spacing: 2px; text-transform: uppercase;
         }
 
         .countdown { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 40px; }
         .time-box { background: var(--card-bg); padding: 15px; border-radius: 12px; min-width: 80px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
-        .time-box span { display: block; font-family: 'Playfair Display'; font-size: 2rem; font-weight: 700; color: var(--dark-green); }
-        .time-box p { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; color: var(--text-dark); letter-spacing: 1px; margin-top: 5px; }
+        .time-box span { display: block; font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 500; color: var(--dark-green); }
+        .time-box p { font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 500; text-transform: uppercase; color: var(--accent-green); letter-spacing: 1px; margin-top: 5px; }
 
         /* --- SECCIONES GENERALES --- */
         section { padding: 70px 20px; max-width: 900px; margin: 0 auto; text-align: center; }
-        .section-subtitle { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 3px; color: var(--accent-green); margin-bottom: 10px; }
-        .section-title { font-size: 3.5rem; color: var(--dark-green); margin-bottom: 30px; font-weight: 400; font-family: 'Pinyon Script', cursive; }
+        .section-subtitle { font-family: 'Inter', sans-serif; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 3px; color: var(--accent-gold); margin-bottom: 10px; font-weight: 500; }
+        .section-title { font-size: 3.5rem; color: var(--dark-green); margin-bottom: 30px; font-family: 'Pinyon Script', cursive; }
           
         .bg-dark-section { background-color: var(--dark-green); color: var(--bg-cream); border-radius: 20px; margin: 20px auto; padding: 70px 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-        .bg-dark-section .section-subtitle { color: var(--accent-green); }
         .bg-dark-section .section-title { color: var(--bg-cream); }
         .bg-dark-section p { color: #E5E7EB; }
 
         .family-block { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin: 40px 0; }
-        .family-column h4 { font-family: 'Inter', sans-serif; color: var(--accent-gold); font-size: 0.9rem; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; }
+        .family-column h4 { font-family: 'Inter', sans-serif; color: var(--accent-gold); font-size: 0.9rem; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; font-weight: 500; }
         .family-names-list p { font-size: 1.2rem; margin-bottom: 12px; color: var(--text-dark); font-family: 'Playfair Display', serif; font-style: italic; }
           
-        .deceased { display: inline-flex; align-items: center; gap: 8px; }
-        .deceased::after { content: '†'; color: var(--accent-gold); font-family: serif; font-weight: normal; font-size: 1.3rem; }
+        .deceased { display: inline-flex; align-items: center; gap: 8px; color: var(--accent-green); }
+        .deceased::after { content: '†'; color: var(--accent-gold); font-family: 'Playfair Display', serif; font-weight: normal; font-size: 1.3rem; }
           
         .godparents { margin-top: 50px; border-top: 1px solid rgba(55, 74, 58, 0.1); padding-top: 40px; }
 
         .icon-circle {
-            width: 80px; height: 80px; background: var(--dark-green); color: white;
+            width: 80px; height: 80px; background: var(--dark-green); color: var(--bg-cream);
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
             font-size: 2rem; margin: 0 auto 20px auto; box-shadow: 0 0 0 8px rgba(55, 74, 58, 0.1);
         }
@@ -342,17 +337,16 @@
         .timeline { position: relative; max-width: 600px; margin: 0 auto; padding: 20px 0; }
         .timeline::before { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: rgba(55, 74, 58, 0.2); transform: translateX(-50%); display: none; }
         .timeline-item { position: relative; margin-bottom: 50px; width: 100%; display: flex; flex-direction: column; align-items: center; background: transparent; }
-        .timeline-time { position: absolute; left: 0; top: 30px; font-family: 'Playfair Display'; font-size: 1.2rem; color: var(--accent-green); }
-        .timeline-content h3 { font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; color: var(--text-dark); }
-        .timeline-content p { font-style: italic; color: #555; }
+        .timeline-time { position: absolute; left: 0; top: 30px; font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--accent-gold); font-style: italic; }
+        .timeline-content h3 { font-family: 'Playfair Display', serif; font-size: 1.6rem; margin-bottom: 10px; color: var(--dark-green); }
+        .timeline-content p { font-family: 'Inter', sans-serif; font-weight: 300; color: var(--text-dark); }
 
         .location-card { background: var(--card-bg); padding: 50px 30px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.04); margin-bottom: 30px; }
-        .location-card h3 { font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; color: var(--text-dark); }
+        .location-card h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 15px; color: var(--dark-green); }
           
         /* --- GALERÍA ESTILO PILA DE FOTOS --- */
         .stacked-gallery-container {
             width: 100%;
-            overflow: hidden; /* Evita que la pantalla se mueva a los lados al deslizar */
             padding: 40px 0;
             display: flex;
             flex-direction: column;
@@ -375,26 +369,63 @@
             border: 12px solid #FFFFFF;
             box-shadow: 0 10px 25px rgba(0,0,0,0.15);
             background-color: var(--card-bg);
-            /* Propiedades clave para el deslizamiento */
-            touch-action: none; /* Evita el scroll nativo al tocar la foto */
+            
+            touch-action: none; 
             user-select: none;
+            -webkit-user-drag: none; 
+            
             cursor: grab;
             transform-origin: 50% 100%;
             transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.3s ease;
         }
 
         .stacked-card.dragging {
-            transition: none; /* Quitamos la transición mientras el usuario arrastra */
+            transition: none; 
             cursor: grabbing;
         }
 
+        .swipe-controls {
+            margin-top: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            z-index: 10;
+        }
+
+        .btn-undo {
+            background: transparent;
+            border: 1px solid var(--accent-green);
+            color: var(--dark-green);
+            padding: 8px 20px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s ease;
+            opacity: 0.4;
+            cursor: not-allowed; 
+        }
+        
+        .btn-undo.active {
+            opacity: 1;
+            cursor: pointer;
+        }
+        
+        .btn-undo:hover {
+            background: rgba(118, 137, 115, 0.1);
+        }
+
         .swipe-indicator { 
-            margin-top: 40px; 
             font-size: 0.8rem; 
-            color: var(--dark-green); 
+            color: var(--accent-green); 
             letter-spacing: 2px; 
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
+            font-family: 'Inter', sans-serif;
+            text-transform: uppercase;
         }
         
         .swipe-indicator i {
@@ -402,7 +433,7 @@
             font-size: 1.5rem;
             margin-bottom: 5px;
             animation: swipeAnim 2s infinite ease-in-out;
-            color: var(--accent-green);
+            color: var(--accent-gold);
         }
 
         @keyframes swipeAnim { 
@@ -411,7 +442,7 @@
         }
 
         .btn-green {
-            background-color: var(--dark-green); color: #FFFFFF; padding: 14px 35px; border-radius: 4px; text-decoration: none; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; display: inline-flex; align-items: center; justify-content: center; gap: 10px; margin-top: 20px; font-size: 0.85rem; border: 1px solid var(--dark-green); transition: 0.3s;
+            background-color: var(--dark-green); color: var(--bg-cream); padding: 14px 35px; border-radius: 4px; text-decoration: none; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; display: inline-flex; align-items: center; justify-content: center; gap: 10px; margin-top: 20px; font-size: 0.85rem; border: 1px solid var(--dark-green); transition: 0.3s; font-family: 'Inter', sans-serif;
         }
         .btn-green:hover { background-color: transparent; color: var(--dark-green); }
           
@@ -482,7 +513,7 @@
             </div>
         </div>
           
-        <button class="btn-abrir-sobre" onclick="abrirSobre()">Abrir Invitación <i class="fa-solid fa-arrow-right"></i></button>
+        <button type="button" class="btn-abrir-sobre" onclick="abrirSobre()">Abrir Invitación <i class="fa-solid fa-arrow-right"></i></button>
         <p class="hint-text">Toca el sobre para abrir</p>
     </div>
 
@@ -525,7 +556,7 @@
             <div class="family-column">
                 <h4>Padres de la Novia</h4>
                 <div class="family-names-list">
-                    <p>Ma. Perfecta Barcenas Lopez</p>
+                    <p>Ma. Perfecta Lopez Barcenas</p>
                     <p class="deceased">Salvador Jaime Quiroz Fraga</p>
                 </div>
             </div>
@@ -555,7 +586,7 @@
           
         <div class="timeline">
             <div class="timeline-item">
-                <div class="timeline-time"><br><span style="font-size: 0.6rem; color: #888;"></span></div>
+                <div class="timeline-time"><br><span style="font-size: 0.7rem; color: var(--accent-green); font-family: 'Inter', sans-serif;"></span></div>
                 <div class="icon-circle"><i class="fa-solid fa-church"></i></div>
                 <div class="timeline-content">
                     <h3>Ceremonia</h3>
@@ -564,7 +595,7 @@
             </div>
               
             <div class="timeline-item">
-                <div class="timeline-time"><br><span style="font-size: 0.6rem; color: #888;"></span></div>
+                <div class="timeline-time"><br><span style="font-size: 0.7rem; color: var(--accent-green); font-family: 'Inter', sans-serif;"></span></div>
                 <div class="icon-circle"><i class="fa-solid fa-camera"></i></div>
                 <div class="timeline-content">
                     <h3>Sesión de Fotos</h3>
@@ -573,7 +604,7 @@
             </div>
 
             <div class="timeline-item">
-                <div class="timeline-time"><br><span style="font-size: 0.6rem; color: #888;"></span></div>
+                <div class="timeline-time"><br><span style="font-size: 0.7rem; color: var(--accent-green); font-family: 'Inter', sans-serif;"></span></div>
                 <div class="icon-circle"><i class="fa-solid fa-champagne-glasses"></i></div>
                 <div class="timeline-content">
                     <h3>Cóctel</h3>
@@ -582,7 +613,7 @@
             </div>
               
             <div class="timeline-item">
-                <div class="timeline-time"><br><span style="font-size: 0.6rem; color: #888;"></span></div>
+                <div class="timeline-time"><br><span style="font-size: 0.7rem; color: var(--accent-green); font-family: 'Inter', sans-serif;"></span></div>
                 <div class="icon-circle"><i class="fa-solid fa-utensils"></i></div>
                 <div class="timeline-content">
                     <h3>Cena & Baile</h3>
@@ -598,19 +629,19 @@
           
         <div class="location-card">
             <div class="icon-circle" style="width: 60px; height: 60px; font-size: 1.5rem;"><i class="fa-solid fa-church"></i></div>
-            <p style="font-size: 0.8rem; letter-spacing: 2px; color: #888; text-transform: uppercase; margin-bottom: 10px;">Ceremonia Religiosa</p>
+            <p style="font-family: 'Inter', sans-serif; font-size: 0.8rem; letter-spacing: 2px; color: var(--accent-gold); text-transform: uppercase; margin-bottom: 10px; font-weight: 500;">Ceremonia Religiosa</p>
             <h3>Capilla de la Sagrada Familia</h3>
-            <p style="font-style: italic; margin-bottom: 15px;">Calle Palmira, Tingüindín 139, Cuernavaca.</p>
-            <p style="font-weight: 500; margin-bottom: 25px; color: var(--accent-green);">16:30 hrs Inicio de Ceremonia</p>
+            <p style="font-family: 'Inter', sans-serif; font-weight: 300; margin-bottom: 15px; color: var(--text-dark);">Calle Palmira, Tingüindín 139, Cuernavaca.</p>
+            <p style="font-family: 'Inter', sans-serif; font-weight: 500; margin-bottom: 25px; color: var(--accent-green);">16:30 hrs Inicio de la Ceremonia</p>
             <a href="https://maps.google.com/?q=Capilla+Sagrada+Familia+Palmira" target="_blank" class="btn-green"><i class="fa-solid fa-location-dot"></i> Ver Mapa</a>
         </div>
 
         <div class="location-card">
             <div class="icon-circle" style="width: 60px; height: 60px; font-size: 1.5rem;"><i class="fa-solid fa-champagne-glasses"></i></div>
-            <p style="font-size: 0.8rem; letter-spacing: 2px; color: #888; text-transform: uppercase; margin-bottom: 10px;">Recepción</p>
+            <p style="font-family: 'Inter', sans-serif; font-size: 0.8rem; letter-spacing: 2px; color: var(--accent-gold); text-transform: uppercase; margin-bottom: 10px; font-weight: 500;">Recepción</p>
             <h3>Romen's Jardín de Eventos</h3>
-            <p style="font-style: italic; margin-bottom: 15px;">C. Colorines, Atlacomulco, Jiutepec.</p>
-            <p style="font-weight: 500; margin-bottom: 25px; color: var(--accent-green);">18:30 hrs Inicio de recepción</p>
+            <p style="font-family: 'Inter', sans-serif; font-weight: 300; margin-bottom: 15px; color: var(--text-dark);">C. Colorines, Atlacomulco, Jiutepec.</p>
+            <p style="font-family: 'Inter', sans-serif; font-weight: 500; margin-bottom: 25px; color: var(--accent-green);">18:30 hrs Inicio de recepción</p>
             <a href="https://maps.app.goo.gl/CA13NXhthvkKY49d8" target="_blank" class="btn-green"><i class="fa-solid fa-location-dot"></i> Ver Mapa</a>
         </div>
     </section>
@@ -620,19 +651,13 @@
         <h2 class="section-title">Nuestra historia</h2>
           
         <div class="stacked-gallery-container">
-            <div class="stacked-gallery" id="stacked-gallery">
-                <img src="galeria/1.jpeg" alt="Recuerdo 1" class="stacked-card">
-                <img src="galeria/2.jpg" alt="Recuerdo 2" class="stacked-card">
-                <img src="galeria/3.jpeg" alt="Recuerdo 3" class="stacked-card">
-                <img src="galeria/4.jpeg" alt="Recuerdo 4" class="stacked-card">
-                <img src="galeria/5.jpeg" alt="Recuerdo 5" class="stacked-card">
-                <img src="galeria/6.jpeg" alt="Recuerdo 6" class="stacked-card">
-                <img src="galeria/7.jpeg" alt="Recuerdo 7" class="stacked-card">
-                <img src="galeria/8.jpeg" alt="Recuerdo 8" class="stacked-card">
-            </div>
-            <div class="swipe-indicator">
-                <i class="fa-solid fa-hand-pointer"></i>
-                Desliza para ver más fotos
+            <div class="stacked-gallery" id="stacked-gallery"></div>
+            <div class="swipe-controls">
+                <button type="button" class="btn-undo" id="btn-undo" onclick="undoSwipe()"><i class="fa-solid fa-rotate-left"></i> Foto anterior</button>
+                <div class="swipe-indicator">
+                    <i class="fa-solid fa-hand-pointer"></i>
+                    Desliza para ver más fotos
+                </div>
             </div>
         </div>
     </section>
@@ -640,44 +665,44 @@
     <section class="bg-dark-section">
         <p class="section-subtitle">Para lucir radiantes</p>
         <h2 class="section-title">Vestimenta</h2>
-        <p style="text-transform: uppercase; letter-spacing: 3px; font-size: 1.2rem; margin-bottom: 30px; font-weight: 600;">Etiqueta Formal</p>
+        <p style="font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: 3px; font-size: 1.2rem; margin-bottom: 30px; font-weight: 500; color: var(--bg-cream);">Etiqueta Formal</p>
           
         <div style="background: white; border-radius: 16px; padding: 30px; margin: 0 auto 30px auto; max-width: 400px; color: var(--dark-green);">
             <i class="fa-solid fa-user-tie" style="font-size: 3rem; margin-bottom: 15px;"></i>
-            <p style="font-style: italic; color: #555;">Damas: Vestido largo elegante.<br>Caballeros: Traje oscuro o Esmoquin.</p>
+            <p style="font-family: 'Inter', sans-serif; font-weight: 300; color: var(--text-dark); line-height: 1.6;">Damas: Vestido largo elegante.<br>Caballeros: Traje oscuro o Esmoquin.</p>
         </div>
-        <p style="font-style: italic; font-family: 'Playfair Display', serif; font-size: 1.2rem;">Ayúdanos a lucir radiantes vistiendo de gala. ¡Tu elegancia hará la noche aún más especial!</p>
+        <p style="font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; color: var(--accent-gold);">Ayúdanos a lucir radiantes vistiendo de gala. ¡Tu elegancia hará la noche aún más especial!</p>
     </section>
 
     <section>
         <h2 class="section-title">Mesa de Regalos</h2>
-        <p style="font-style: italic; color: #666; margin-bottom: 40px; font-size: 1.1rem;">Si deseas obsequiarnos algo más, aquí te dejamos algunas opciones. Lo más importante es contar contigo.</p>
+        <p style="font-family: 'Inter', sans-serif; font-weight: 300; color: var(--text-dark); margin-bottom: 40px; font-size: 1.1rem;">Si deseas obsequiarnos algo más, aquí te dejamos algunas opciones. Lo más importante es contar contigo.</p>
           
         <div class="location-card" style="margin-bottom: 20px; text-align: center;">
             <i class="fa-solid fa-envelope-open-text" style="font-size: 2.5rem; color: var(--accent-green); margin-bottom: 15px;"></i>
             <h3>Lluvia de Sobres</h3>
-            <p style="font-style: italic;">Tradición de entregar un sobre el día del evento.</p>
+            <p style="font-family: 'Inter', sans-serif; font-weight: 300; color: var(--text-dark);">Tradición de entregar un sobre el día del evento.</p>
         </div>
     </section>
 
     <section class="bg-dark-section" style="margin-bottom: 50px;">
         <h2 class="section-title">Confirma tu Asistencia</h2>
-        <p style="font-style: italic; font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: 40px;">Ayúdanos a preparar cada detalle con amor — tu presencia lo significa todo para nosotros.</p>
-          
-        <div style="border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 40px 20px;">
+        <p style="font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; margin-bottom: 40px; color: var(--accent-gold);">Ayúdanos a preparar cada detalle con amor — tu presencia lo significa todo para nosotros.</p>
+        
+        <div style="border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 40px 20px; max-width: 500px; margin: 0 auto;">
             <div class="icon-circle" style="background: transparent; border: 1px solid white; margin-bottom: 15px;"><i class="fa-regular fa-heart"></i></div>
-            <p style="text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; font-size: 0.9rem;">Confirmar tu lugar</p>
-              
-            <p class="script-font" style="font-size: 3.5rem; color: var(--accent-gold); margin-bottom: 10px; line-height: 1;">Claudia & Andrés</p>
-            <h3 id="nombre-invitado" style="text-transform: uppercase; margin-bottom: 20px; font-size: 1.2rem;">Invitado de Honor</h3>
-              
+            <p style="font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500;">Confirmar tu lugar</p>
+            
+            <p class="script-font" style="font-size: 3.5rem; color: var(--bg-cream); margin-bottom: 10px; line-height: 1;">Claudia & Andrés</p>
+            <h3 id="nombre-invitado" style="font-family: 'Inter', sans-serif; text-transform: uppercase; margin-bottom: 20px; font-size: 1.2rem; letter-spacing: 1px; color: var(--accent-gold);">Invitado de Honor</h3>
+            
             <div style="background: white; width: 160px; height: 160px; margin: 0 auto 20px auto; padding: 10px; border-radius: 12px;">
                 <img id="qr-img" src="" alt="QR" style="width: 100%;">
             </div>
-              
-            <p style="margin-bottom: 30px;">Pases reservados: <span id="num-pases" style="font-weight: 600; color: var(--accent-gold);">2</span></p>
-              
-            <a href="#" id="btn-wa" target="_blank" class="btn-green btn-outline-light">Confirmar Asistencia</a>
+            
+            <p style="font-family: 'Inter', sans-serif; margin-bottom: 30px; font-weight: 300; color: var(--bg-cream);">Pases reservados: <span id="num-pases" style="font-weight: 600; color: var(--accent-gold);">2</span></p>
+            
+            <a href="#" id="btn-confirmar" target="_blank" class="btn-green btn-outline-light">Confirmar Asistencia Digital</a>
         </div>
     </section>
 
@@ -698,7 +723,6 @@
             
             envelope.classList.add('open');
 
-            // Mantiene la tarjeta fuera 2.5s antes de ocultar la pantalla
             setTimeout(() => { 
                 const screen = document.getElementById('envelope-screen');
                 screen.style.opacity = '0';
@@ -710,7 +734,6 @@
                         document.getElementById('m-icon').className = 'fa-solid fa-music';
                     }).catch(e => console.log("Auto-play prevenido"));
                     
-                    // Inicia el efecto de escritura inmediatamente al revelarse la invitación
                     startTypewriterEffect();
                 }, 1200); 
             }, 2500); 
@@ -738,11 +761,11 @@
                         if (charIndex < currentLine.text.length) {
                             element.innerHTML += currentLine.text.charAt(charIndex);
                             charIndex++;
-                            setTimeout(typeChar, 60); // Velocidad por carácter
+                            setTimeout(typeChar, 60);
                         } else {
                             element.classList.remove('typing-cursor');
                             lineIndex++;
-                            setTimeout(typeLine, 300); // Pausa entre líneas
+                            setTimeout(typeLine, 300);
                         }
                     }
                     typeChar();
@@ -751,14 +774,28 @@
             typeLine();
         }
 
+        /* --- LÓGICA DE CONFIRMACIÓN ACTUALIZADA CON GOOGLE FORMS INTEGRADO --- */
         const urlParams = new URLSearchParams(window.location.search);
         const invitado = urlParams.get('invitado') || "Invitado de Honor";
         const pases = urlParams.get('pases') || "2";
 
         document.getElementById('nombre-invitado').innerText = invitado;
         document.getElementById('num-pases').innerText = pases;
+        
+        // Mantenemos la generación del QR original para escaneo rápido en la entrada
         document.getElementById('qr-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=CA25-${encodeURIComponent(invitado)}-${pases}`;
-        document.getElementById('btn-wa').href = `https://wa.me/?text=Hola! Confirmo la asistencia de ${invitado} (${pases} pases) a sus Bodas de Plata.`;
+        
+        // --- ENLACE A TU BASE DE DATOS AUTOMATIZADA ---
+        const BASE_FORM_URL = "https://docs.google.com/forms/d/14tNQD2GA5MLZokcpOxa5vEuMtHqpLbtisxmOzvrAVd4/viewform";
+        
+        // TODO: Recuerda sustituir estos entry.X con los IDs reales que obtengas en "Obtener enlace prellenado"
+        const idCampoInvitado = "entry.111111118"; 
+        const idCampoPases = "entry.222222222";
+        
+        // Construcción y asignación del enlace dinámico
+        const googleFormLink = `${BASE_FORM_URL}?usp=pp_url&${idCampoInvitado}=${encodeURIComponent(invitado)}&${idCampoPases}=${pases}`;
+        document.getElementById('btn-confirmar').href = googleFormLink;
+        /* ------------------------------------------------------------- */
 
         const targetDate = new Date('Dec 19, 2026 16:30:00').getTime();
         setInterval(function() {
@@ -772,34 +809,101 @@
             }
         }, 1000);
 
-        /* --- LÓGICA DE PILA DE FOTOS DESLIZABLE --- */
+        /* --- CONFIGURACIÓN DE TU REPOSITORIO DE GITHUB --- */
+        const GITHUB_USER = "TU_USUARIO_DE_GITHUB"; 
+        const GITHUB_REPO = "TU_REPOSITORIO"; 
+
+        /* --- LÓGICA DE PILA DE FOTOS DINÁMICA --- */
         const stackContainer = document.getElementById('stacked-gallery');
-        // Invertimos el arreglo para que la primera foto del HTML quede hasta arriba
-        let cards = Array.from(stackContainer.querySelectorAll('.stacked-card')).reverse();
-        
+        const undoButton = document.getElementById('btn-undo');
+        let cards = [];
+        let historyStack = [];
         let isDraggingCard = false;
         let startX = 0, startY = 0, currentX = 0, currentY = 0;
         let activeCard = null;
 
+        async function loadGalleryAutomatically() {
+            try {
+                const response = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/galeria`);
+                if (!response.ok) throw new Error("No se pudo leer la carpeta");
+                
+                const files = await response.json();
+                const validExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'jfif'];
+                
+                const images = files.filter(file => {
+                    const ext = file.name.split('.').pop().toLowerCase();
+                    return validExtensions.includes(ext);
+                });
+
+                if(images.length === 0) {
+                    stackContainer.innerHTML = "<p style='color: var(--accent-green); font-style:italic; font-family: Inter;'>Subiendo recuerdos...</p>";
+                    return;
+                }
+
+                stackContainer.innerHTML = "";
+                images.forEach((img, index) => {
+                    const imgElement = document.createElement('img');
+                    imgElement.src = `galeria/${img.name}`;
+                    imgElement.alt = `Recuerdo ${index + 1}`;
+                    imgElement.className = 'stacked-card';
+                    stackContainer.appendChild(imgElement);
+                });
+
+                cards = Array.from(stackContainer.querySelectorAll('.stacked-card')).reverse();
+                historyStack = []; 
+                updateUndoButtonState();
+                updateCardStack();
+
+            } catch (error) {
+                console.error("Error al cargar la galería automatizada, usando método alternativo por secuencia:", error);
+                loadGalleryFallback();
+            }
+        }
+
+        function loadGalleryFallback() {
+            stackContainer.innerHTML = "";
+            let loadedCount = 0;
+            const maxFallbackPhotos = 15; 
+            
+            for(let i = 1; i <= maxFallbackPhotos; i++) {
+                const imgElement = document.createElement('img');
+                imgElement.src = `galeria/${i}.jpeg`;
+                imgElement.alt = `Recuerdo ${i}`;
+                imgElement.className = 'stacked-card';
+                
+                imgElement.onload = () => {
+                    loadedCount++;
+                    stackContainer.appendChild(imgElement);
+                    cards = Array.from(stackContainer.querySelectorAll('.stacked-card')).reverse();
+                    historyStack = [];
+                    updateUndoButtonState();
+                    updateCardStack();
+                };
+                imgElement.onerror = () => {
+                    imgElement.src = `galeria/${i}.jpg`;
+                    imgElement.onerror = null;
+                };
+            }
+        }
+
         function updateCardStack() {
+            if(cards.length === 0) return;
             cards.forEach((card, index) => {
                 card.classList.remove('dragging');
+                card.draggable = false;
                 
-                // Si es la carta superior
                 const isTop = index === cards.length - 1;
                 const distance = cards.length - 1 - index;
                 
-                // Rotaciones base para darle efecto de pila desordenada
                 const rotations = [-2, 4, -3, 2, -1, 3];
                 const baseRot = isTop ? 0 : rotations[index % rotations.length];
                 
-                // Escala y posición según qué tan abajo esté en la pila
                 const scale = Math.max(1 - (distance * 0.04), 0.85);
-                const translateY = distance * 8; // Las empuja un poco hacia abajo
+                const translateY = distance * 8;
 
                 card.style.zIndex = index;
                 card.style.transform = `translateY(${translateY}px) scale(${scale}) rotate(${baseRot}deg)`;
-                card.style.opacity = distance > 3 ? '0' : '1'; // Oculta las que están muy abajo
+                card.style.opacity = distance > 3 ? '0' : '1';
 
                 if (isTop) {
                     card.addEventListener('pointerdown', handleCardPointerDown);
@@ -828,7 +932,6 @@
             currentX = e.clientX - startX;
             currentY = e.clientY - startY;
             
-            // Rota ligeramente mientras arrastras
             const rotate = currentX * 0.05;
             activeCard.style.transform = `translate(${currentX}px, ${currentY}px) rotate(${rotate}deg)`;
         }
@@ -842,22 +945,26 @@
             activeCard.removeEventListener('pointercancel', handleCardPointerUp);
             activeCard.classList.remove('dragging');
 
-            const threshold = window.innerWidth / 4; // Distancia para considerar un "swipe" exitoso
+            const threshold = Math.min(window.innerWidth / 4, 150); 
             
             if (Math.abs(currentX) > threshold) {
-                // Animar la foto volando hacia afuera
                 const throwX = currentX * 1.5;
                 const throwY = currentY * 1.5;
-                activeCard.style.transform = `translate(${throwX}px, ${throwY}px) rotate(${currentX * 0.1}deg)`;
-                activeCard.style.opacity = '0';
                 
-                // Mover la carta al final de la pila después de la animación
+                const discardedCard = activeCard;
+                discardedCard.style.transform = `translate(${throwX}px, ${throwY}px) rotate(${currentX * 0.1}deg)`;
+                discardedCard.style.opacity = '0';
+                
                 setTimeout(() => {
-                    cards.unshift(cards.pop()); // Pasa la carta de arriba a abajo del arreglo
-                    updateCardStack(); // Vuelve a acomodar la pila
+                    const poppedCard = cards.pop();
+                    historyStack.push(poppedCard);
+                    
+                    cards.unshift(poppedCard);
+                    
+                    updateUndoButtonState();
+                    updateCardStack();
                 }, 300);
             } else {
-                // Regresar la carta al centro si no se deslizó lo suficiente
                 updateCardStack();
             }
             
@@ -866,8 +973,38 @@
             activeCard = null;
         }
 
-        // Inicializar la pila
-        updateCardStack();
+        function undoSwipe() {
+            if (!undoButton.classList.contains('active') || historyStack.length === 0) return;
+            
+            const lastCard = historyStack.pop();
+            
+            const indexInCards = cards.indexOf(lastCard);
+            if (indexInCards > -1) {
+                cards.splice(indexInCards, 1);
+            }
+            
+            cards.push(lastCard);
+            
+            lastCard.style.transition = 'none';
+            lastCard.style.transform = `translate(-250px, -50px) rotate(-15deg)`;
+            lastCard.style.opacity = '0';
+            
+            setTimeout(() => {
+                lastCard.style.transition = 'transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.3s ease';
+                updateUndoButtonState();
+                updateCardStack();
+            }, 50);
+        }
+
+        function updateUndoButtonState() {
+            if (historyStack.length > 0) {
+                undoButton.classList.add('active');
+            } else {
+                undoButton.classList.remove('active');
+            }
+        }
+
+        loadGalleryAutomatically();
     </script>
 </body>
 </html>
