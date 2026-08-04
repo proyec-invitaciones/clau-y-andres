@@ -349,13 +349,23 @@
         .bg-dark-section p { color: #E5E7EB; }
 
         .family-block { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin: 40px 0; }
-        .family-column h4 { font-family: 'Inter', sans-serif; color: var(--accent-gold); font-size: 0.9rem; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; font-weight: 500; }
+        
+        /* Modificado: Aplica la fuente Manuscrita ('Pinyon Script') conservando el color y tamaño original */
+        .family-column h4 { 
+            font-family: 'Pinyon Script', cursive; 
+            color: var(--accent-gold); 
+            font-size: 1.8rem; /* Aumentamos el tamaño para recuperar la legibilidad */
+            margin-bottom: 15px; 
+            letter-spacing: normal; /* Quitamos la separación para unir los trazos de la cursiva */
+            font-weight: 400; 
+        }
+        
         .family-names-list p { font-size: 1.2rem; margin-bottom: 12px; color: var(--text-dark); font-family: 'Playfair Display', serif; font-style: italic; }
           
         .deceased { display: inline-flex; align-items: center; gap: 8px; color: var(--accent-green); }
         .deceased::after { content: '†'; color: var(--accent-gold); font-family: 'Playfair Display', serif; font-weight: normal; font-size: 1.3rem; }
           
-        .godparents { margin-top: 50px; border-top: 1px solid rgba(55, 74, 58, 0.1); padding-top: 40px; }
+        .godparents { margin-top: 20px; border-top: 1px solid rgba(55, 74, 58, 0.1); padding-top: 40px; }
 
         .icon-circle {
             width: 80px; height: 80px; background: var(--dark-green); color: var(--bg-cream);
@@ -585,8 +595,8 @@
         </header>
 
         <section>
-            <p class="section-subtitle">Nuestras Raíces</p>
-            <h2 class="section-title">Nuestra Familia</h2>
+            <p class="section-subtitle"></p>
+            <h2 class="section-title">Nuestras Raíces</h2>
               
             <div class="family-block">
                 <div class="family-column">
@@ -677,7 +687,7 @@
                 <p style="font-family: 'Inter', sans-serif; font-size: 0.8rem; letter-spacing: 2px; color: var(--accent-gold); text-transform: uppercase; margin-bottom: 10px; font-weight: 500;">Recepción</p>
                 <h3>Romen's Jardín de Eventos</h3>
                 <p style="font-family: 'Inter', sans-serif; font-weight: 300; margin-bottom: 15px; color: var(--text-dark);">C. Colorines, Atlacomulco, Jiutepec.</p>
-                <p style="font-family: 'Inter', sans-serif; font-weight: 500; margin-bottom: 25px; color: var(--accent-green);">18:30 hrs Inicio de recepción</p>
+                <p style="font-family: 'Inter', sans-serif; font-weight: 500; margin-bottom: 25px; color: var(--accent-green);">Al termino de la Ceremonia Religiosa</p>
                 <a href="https://maps.app.goo.gl/CA13NXhthvkKY49d8" target="_blank" class="btn-green"><i class="fa-solid fa-location-dot"></i> Ver Mapa</a>
             </div>
         </section>
