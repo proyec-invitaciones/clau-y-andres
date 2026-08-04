@@ -151,7 +151,7 @@
             margin: 6px 0;
         }
 
-        .card-date {
+        .card-doc {
             font-size: 0.65rem;
             letter-spacing: 2px;
             color: var(--accent-green);
@@ -350,13 +350,12 @@
 
         .family-block { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin: 40px 0; }
         
-        /* Modificado: Aplica la fuente Manuscrita ('Pinyon Script') conservando el color y tamaño original */
         .family-column h4 { 
             font-family: 'Pinyon Script', cursive; 
             color: var(--accent-gold); 
-            font-size: 1.8rem; /* Aumentamos el tamaño para recuperar la legibilidad */
+            font-size: 1.8rem; 
             margin-bottom: 15px; 
-            letter-spacing: normal; /* Quitamos la separación para unir los trazos de la cursiva */
+            letter-spacing: normal; 
             font-weight: 400; 
         }
         
@@ -535,7 +534,7 @@
                             <p class="card-subtitle">INVITACIÓN DE BODA</p>
                             <p class="card-title script-font">Claudia & Andrés</p>
                             <div class="card-line"></div>
-                            <p class="card-date">19 DE DICIEMBRE DE 2026</p>
+                            <p class="card-doc">19 DE DICIEMBRE DE 2026</p>
                         </div>
                     </div>
                       
@@ -854,8 +853,8 @@
         }, 1000);
 
         /* --- CONFIGURACIÓN DE TU REPOSITORIO DE GITHUB --- */
-        const GITHUB_USER = "TU_USUARIO_DE_GITHUB"; 
-        const GITHUB_REPO = "TU_REPOSITORIO"; 
+        const GITHUB_USER = "clauyandres"; 
+        const GITHUB_REPO = "felicesporsiempremx"; 
 
         /* --- LÓGICA DE PILA DE FOTOS DINÁMICA --- */
         const stackContainer = document.getElementById('stacked-gallery');
@@ -925,7 +924,10 @@
                 };
                 imgElement.onerror = () => {
                     imgElement.src = `galeria/${i}.jpg`;
-                    imgElement.onerror = null;
+                    imgElement.onerror = () => {
+                        imgElement.src = `galeria/${i}.png`;
+                        imgElement.onerror = null;
+                    };
                 };
             }
         }
