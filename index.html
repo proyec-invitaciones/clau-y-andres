@@ -427,7 +427,8 @@
             flex-direction: column;
             align-items: center;
             gap: 15px;
-            z-index: 10;
+            position: relative; /* Ajuste: Posiciona la caja sobre las fotos transparentes */
+            z-index: 100; /* Ajuste: Garantiza que el botón siempre sea cliqueable */
         }
 
         .btn-undo {
@@ -906,7 +907,7 @@
         function loadGalleryFallback() {
             stackContainer.innerHTML = "";
             let loadedCount = 0;
-            const maxFallbackPhotos = 15; 
+            const maxFallbackPhotos = 60; 
             
             for(let i = 1; i <= maxFallbackPhotos; i++) {
                 const imgElement = document.createElement('img');
@@ -950,6 +951,9 @@
                 card.style.zIndex = index;
                 card.style.transform = `translateY(${translateY}px) scale(${scale}) rotate(${baseRot}deg)`;
                 card.style.opacity = distance > 3 ? '0' : '1';
+                
+                // Ajuste crítico: Solo la foto de arriba registra toques. Esto evita el bloqueo invisible del botón.
+                card.style.pointerEvents = isTop ? 'auto' : 'none';
 
                 if (isTop) {
                     card.addEventListener('pointerdown', handleCardPointerDown);
@@ -1000,12 +1004,11 @@
                 const discardedCard = activeCard;
                 discardedCard.style.transform = `translate(${throwX}px, ${throwY}px) rotate(${currentX * 0.1}deg)`;
                 discardedCard.style.opacity = '0';
+                discardedCard.style.pointerEvents = 'none'; // Evita que la carta tirada bloquee toques en la pantalla
                 
                 setTimeout(() => {
-                    const poppedCard = cards.pop();
-                    historyStack.push(poppedCard);
-                    
-                    cards.unshift(poppedCard);
+                    const poppedCard = cards.pop(); // Saca la foto de arriba
+                    historyStack.push(poppedCard);  // La manda al historial de deshacer
                     
                     updateUndoButtonState();
                     updateCardStack();
@@ -1022,14 +1025,9 @@
         function undoSwipe() {
             if (!undoButton.classList.contains('active') || historyStack.length === 0) return;
             
-            const lastCard = historyStack.pop();
+            const lastCard = historyStack.pop(); // Trae la última foto del historial
             
-            const indexInCards = cards.indexOf(lastCard);
-            if (indexInCards > -1) {
-                cards.splice(indexInCards, 1);
-            }
-            
-            cards.push(lastCard);
+            cards.push(lastCard); // La inserta directo en la cima de la pila activa
             
             lastCard.style.transition = 'none';
             lastCard.style.transform = `translate(-250px, -50px) rotate(-15deg)`;
