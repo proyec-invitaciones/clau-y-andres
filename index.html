@@ -1,181 +1,1054 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Claudia & Andrés - 25 Aniversario</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600&family=Pinyon+Script&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Claudia & Andrés - 25 Aniversario</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <style>
-        :root {
-            --bg-cream: #F8F6F0; 
-            --text-dark: #2C352D; 
-            --accent-green: #768973; 
-            --dark-green: #374A3A; 
-            --accent-gold: #B59B6D; 
-            --card-bg: #FFFFFF;
-            --bg-outer: #EAE6DC; /* Color de fondo exterior para pantallas grandes */
-        }
+    <style>
+        :root {
+            --bg-cream: #F8F6F0; 
+            --text-dark: #2C352D; 
+            --accent-green: #768973; 
+            --dark-green: #374A3A; 
+            --accent-gold: #B59B6D; 
+            --card-bg: #FFFFFF;
+            --bg-outer: #EAE6DC; /* Color de fondo exterior para pantallas grandes */
+        }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        
-        /* El fondo exterior solo se apreciará en pantallas de escritorio */
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background-color: var(--bg-outer); 
-            color: var(--text-dark); 
-            overflow-x: hidden;
-            font-weight: 300;
-            display: flex;
-            justify-content: center;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        
+        /* El fondo exterior solo se apreciará en pantallas de escritorio */
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg-outer); 
+            color: var(--text-dark); 
+            overflow-x: hidden;
+            font-weight: 300;
+            display: flex;
+            justify-content: center;
+        }
 
-        /* --- MARCO CONTENEDOR PRINCIPAL --- */
-        .main-wrapper {
-            width: 100%;
-            max-width: 600px; /* Ancho ideal tipo tarjeta vertical para escritorio */
-            background-color: var(--bg-cream);
-            background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png");
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.08); /* Sombra elegante en los lados en PC */
-            position: relative;
-            min-height: 100vh;
-        }
+        /* --- MARCO CONTENEDOR PRINCIPAL --- */
+        .main-wrapper {
+            width: 100%;
+            max-width: 600px; /* Ancho ideal tipo tarjeta vertical para escritorio */
+            background-color: var(--bg-cream);
+            background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png");
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.08); /* Sombra elegante en los lados en PC */
+            position: relative;
+            min-height: 100vh;
+        }
 
-        /* Líneas de marco decorativo refinado a los lados (estilo paspartú) */
-        .main-wrapper::before {
-            content: '';
-            position: fixed;
-            top: 15px;
-            bottom: 15px;
-            left: calc(50% - 285px);
-            width: 570px;
-            border: 1px solid rgba(181, 155, 109, 0.2);
-            pointer-events: none;
-            z-index: 999;
-        }
+        /* Líneas de marco decorativo refinado a los lados (estilo paspartú) */
+        .main-wrapper::before {
+            content: '';
+            position: fixed;
+            top: 15px;
+            bottom: 15px;
+            left: calc(50% - 285px);
+            width: 570px;
+            border: 1px solid rgba(181, 155, 109, 0.2);
+            pointer-events: none;
+            z-index: 999;
+        }
 
-        h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 500; color: var(--dark-green); }
-        .script-font { font-family: 'Pinyon Script', cursive; font-weight: 400; }
+        h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 500; color: var(--dark-green); }
+        .script-font { font-family: 'Pinyon Script', cursive; font-weight: 400; }
 
-        /* --- PANTALLA DE APERTURA (SOBRE INTERACTIVO) --- */
-        #envelope-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background-color: rgba(248, 246, 240, 0.75); /* Crema semitransparente */
-            backdrop-filter: blur(5px); /* Efecto difuminado tenue al fondo */
-            -webkit-backdrop-filter: blur(5px);
-            z-index: 9999; display: flex; flex-direction: column; 
-            align-items: center; justify-content: center;
-            transition: opacity 1.2s ease, backdrop-filter 1.2s ease;
-        }
+        /* --- PANTALLA DE APERTURA (SOBRE INTERACTIVO) --- */
+        #envelope-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background-color: rgba(248, 246, 240, 0.75); /* Crema semitransparente */
+            backdrop-filter: blur(5px); /* Efecto difuminado tenue al fondo */
+            -webkit-backdrop-filter: blur(5px);
+            z-index: 9999; display: flex; flex-direction: column; 
+            align-items: center; justify-content: center;
+            transition: opacity 1.2s ease, backdrop-filter 1.2s ease;
+        }
 
-        .env-container {
-            position: relative;
-            width: 340px;
-            height: 220px;
-            perspective: 1200px;
-            margin-bottom: 25px;
-            transition: transform 0.3s ease;
-        }
+        .env-container {
+            position: relative;
+            width: 340px;
+            height: 220px;
+            perspective: 1200px;
+            margin-bottom: 25px;
+            transition: transform 0.3s ease;
+        }
 
-        .envelope {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            box-shadow: 0 25px 55px rgba(0,0,0,0.22);
-            border-radius: 6px;
-            cursor: pointer;
-        }
+        .envelope {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            box-shadow: 0 25px 55px rgba(0,0,0,0.22);
+            border-radius: 6px;
+            cursor: pointer;
+        }
 
-        .env-inside {
-            position: absolute;
-            inset: 0;
-            background-color: #1a2e1e;
-            background-image: url("https://www.transparenttextures.com/patterns/floral.png");
-            border-radius: 6px;
-            z-index: 1;
-        }
+        .env-inside {
+            position: absolute;
+            inset: 0;
+            background-color: #1a2e1e;
+            background-image: url("https://www.transparenttextures.com/patterns/floral.png");
+            border-radius: 6px;
+            z-index: 1;
+        }
 
-        .env-card {
-            position: absolute;
-            top: 12px;
-            left: 15px;
-            width: 310px;
-            height: 196px;
-            background: #FCFAF5;
-            background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png");
-            border-radius: 4px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            z-index: 2;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
-        }
+        .env-card {
+            position: absolute;
+            top: 12px;
+            left: 15px;
+            width: 310px;
+            height: 196px;
+            background: #FCFAF5;
+            background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png");
+            border-radius: 4px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+        }
 
-        .card-border {
-            border: 1px solid rgba(118, 137, 115, 0.35);
-            padding: 15px 10px;
-            width: calc(100% - 16px);
-            height: calc(100% - 16px);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
+        .card-border {
+            border: 1px solid rgba(118, 137, 115, 0.35);
+            padding: 15px 10px;
+            width: calc(100% - 16px);
+            height: calc(100% - 16px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
 
-        .card-subtitle {
-            font-size: 0.65rem;
-            letter-spacing: 3px;
-            color: var(--accent-gold);
-            font-family: 'Inter', sans-serif;
-            text-transform: uppercase;
-            font-weight: 500;
-        }
+        .card-subtitle {
+            font-size: 0.65rem;
+            letter-spacing: 3px;
+            color: var(--accent-gold);
+            font-family: 'Inter', sans-serif;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
 
-        .card-title {
-            font-size: 2.8rem;
-            color: var(--dark-green);
-            margin: 4px 0;
-            line-height: 1.1;
-        }
+        .card-title {
+            font-size: 2.8rem;
+            color: var(--dark-green);
+            margin: 4px 0;
+            line-height: 1.1;
+        }
 
-        .card-line {
-            width: 40px;
-            height: 1px;
-            background: var(--accent-gold);
-            margin: 6px 0;
-        }
+        .card-line {
+            width: 40px;
+            height: 1px;
+            background: var(--accent-gold);
+            margin: 6px 0;
+        }
 
-        .card-doc {
-            font-size: 0.65rem;
-            letter-spacing: 2px;
-            color: var(--accent-green);
-            font-family: 'Inter', sans-serif;
-            font-weight: 500;
-        }
+        .card-doc {
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            color: var(--accent-green);
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+        }
 
-        .env-pocket {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 3;
-            pointer-events: none;
-            filter: url(#paper-texture) drop-shadow(0 -2px 5px rgba(0,0,0,0.1));
-        }
+        .env-pocket {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            pointer-events: none;
+            filter: url(#paper-texture) drop-shadow(0 -2px 5px rgba(0,0,0,0.1));
+        }
 
-        .env-flap-wrapper {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 140px;
-            z-index: 4;
-            transform-origin: top center;
-            transition: transform 0.8s ease-in-out;
-        }
+        .env-flap-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 140px;
+            z-index: 4;
+            transform-origin: top center;
+            transition: transform 0.8s ease-in-out;
+        }
+
+        .env-flap {
+            width: 100%;
+            height: 100%;
+            filter: url(#paper-texture) drop-shadow(0 6px 10px rgba(0,0,0,0.25));
+        }
+
+        .wax-seal {
+            position: absolute;
+            bottom: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 64px;
+            height: 64px;
+            border-radius: 48% 52% 51% 49% / 53% 48% 52% 47%;
+            background: radial-gradient(circle at 35% 35%, #9cb29b 0%, #6b826a 45%, #465b45 100%);
+            box-shadow: 
+                0 6px 14px rgba(0,0,0,0.35), 
+                inset 0 3px 6px rgba(255,255,255,0.4),
+                inset 0 -4px 8px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+            transition: opacity 0.4s ease, transform 0.3s ease;
+        }
+        
+        .wax-seal::before {
+            content: '';
+            position: absolute;
+            inset: 5px;
+            border-radius: 50%;
+            background: transparent;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.4), 0 1px 2px rgba(255,255,255,0.3);
+        }
+
+        .seal-inner {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 1px solid rgba(0,0,0,0.1);
+            background: #5a7059;
+            box-shadow: inset 0 3px 6px rgba(0,0,0,0.45), 0 1px 2px rgba(255,255,255,0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .seal-inner i {
+            color: #728971;
+            text-shadow: -1px -1px 1px rgba(0,0,0,0.5), 1px 1px 1px rgba(255,255,255,0.4);
+            font-size: 1.4rem;
+        }
+
+        .envelope.open .env-flap-wrapper {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .envelope.open .wax-seal {
+            opacity: 0;
+            transform: translateX(-50%) scale(0.8);
+        }
+
+        .envelope.open .env-card {
+            transform: translateY(-165px);
+            z-index: 5;
+        }
+
+        .btn-abrir-sobre {
+            background: transparent; 
+            border: 1px solid var(--accent-green);
+            padding: 12px 35px; 
+            font-family: 'Inter', sans-serif; 
+            font-size: 0.8rem;
+            letter-spacing: 3px; 
+            color: var(--dark-green); 
+            text-transform: uppercase;
+            font-weight: 500;
+            cursor: pointer; 
+            transition: 0.3s; 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .btn-abrir-sobre:hover { background: rgba(118, 137, 115, 0.15); }
+
+        .hint-text { 
+            color: var(--accent-green); 
+            font-family: 'Inter', sans-serif; 
+            letter-spacing: 3px; 
+            text-transform: uppercase; 
+            font-size: 0.7rem; 
+            animation: pulse 2s infinite; 
+            margin-top: 15px; 
+        }
+        @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+
+        /* --- HERO --- */
+        .hero {
+            min-height: 100vh;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; padding: 50px 20px;
+        }
+
+        .hero-portada {
+            width: 100%;
+            max-width: 440px;
+            margin: 25px 0;
+            border: 12px solid #FFFFFF;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border-radius: 4px;
+        }
+        .hero-portada img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .typewriter-text {
+            display: block;
+            min-height: 1.2em;
+        }
+        
+        .typing-cursor::after {
+            content: '|';
+            color: var(--accent-gold);
+            animation: blink 0.8s infinite;
+            font-weight: 300;
+            margin-left: 2px;
+        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        .hero-intro-text {
+            font-size: 2.2rem; color: var(--accent-gold); line-height: 1.2; margin-bottom: 10px;
+        }
+
+        .family-names-top { 
+            font-family: 'Inter', sans-serif; font-size: 0.9rem; color: var(--text-dark); letter-spacing: 2px; text-transform: uppercase;
+            margin: 15px 0; display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap;
+        }
+
+        .bullet-separator { color: var(--accent-gold); font-size: 0.8rem; }
+
+        .hero h1 { font-size: 5rem; color: var(--dark-green); margin: 5px 0; }
+        .hero .subtitle { font-size: 3.5rem; color: var(--accent-gold); margin-bottom: 5px; line-height: 1; }
+
+        .date-divider {
+            margin-top: 30px; font-size: 1rem; font-weight: 500; font-family: 'Inter', sans-serif;
+            border-top: 1px solid rgba(55, 74, 58, 0.2); border-bottom: 1px solid rgba(55, 74, 58, 0.2); 
+            padding: 15px 40px; color: var(--text-dark); letter-spacing: 2px; text-transform: uppercase;
+        }
+
+        .countdown { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 40px; }
+        .time-box { background: var(--card-bg); padding: 15px; border-radius: 12px; min-width: 80px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+        .time-box span { display: block; font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 500; color: var(--dark-green); }
+        .time-box p { font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 500; text-transform: uppercase; color: var(--accent-green); letter-spacing: 1px; margin-top: 5px; }
+
+        /* --- SECCIONES GENERALES --- */
+        section { padding: 70px 20px; max-width: 100%; margin: 0 auto; text-align: center; }
+        .section-subtitle { font-family: 'Inter', sans-serif; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 3px; color: var(--accent-gold); margin-bottom: 10px; font-weight: 500; }
+        .section-title { font-size: 3.5rem; color: var(--dark-green); margin-bottom: 30px; font-family: 'Pinyon Script', cursive; }
+          
+        .bg-dark-section { background-color: var(--dark-green); color: var(--bg-cream); border-radius: 20px; margin: 20px 15px; padding: 70px 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .bg-dark-section .section-title { color: var(--bg-cream); }
+        .bg-dark-section p { color: #E5E7EB; }
+
+        .family-block { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin: 40px 0; }
+        
+        .family-column h4 { 
+            font-family: 'Pinyon Script', cursive; 
+            color: var(--accent-gold); 
+            font-size: 1.8rem; 
+            margin-bottom: 15px; 
+            letter-spacing: normal; 
+            font-weight: 400; 
+        }
+        
+        .family-names-list p { font-size: 1.2rem; margin-bottom: 12px; color: var(--text-dark); font-family: 'Playfair Display', serif; font-style: italic; }
+          
+        .deceased { display: inline-flex; align-items: center; gap: 8px; color: var(--accent-green); }
+        .deceased::after { content: '†'; color: var(--accent-gold); font-family: 'Playfair Display', serif; font-weight: normal; font-size: 1.3rem; }
+          
+        .godparents { margin-top: 20px; border-top: 1px solid rgba(55, 74, 58, 0.1); padding-top: 40px; }
+
+        .icon-circle {
+            width: 80px; height: 80px; background: var(--dark-green); color: var(--bg-cream);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 2rem; margin: 0 auto 20px auto; box-shadow: 0 0 0 8px rgba(55, 74, 58, 0.1);
+        }
+          
+        .timeline { position: relative; max-width: 100%; margin: 0 auto; padding: 20px 0; }
+        .timeline-item { position: relative; margin-bottom: 50px; width: 100%; display: flex; flex-direction: column; align-items: center; background: transparent; }
+        .timeline-time { position: absolute; left: 0; top: 30px; font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--accent-gold); font-style: italic; }
+        .timeline-content h3 { font-family: 'Playfair Display', serif; font-size: 1.6rem; margin-bottom: 10px; color: var(--dark-green); }
+        .timeline-content p { font-family: 'Inter', sans-serif; font-weight: 300; color: var(--text-dark); }
+
+        .location-card { background: var(--card-bg); padding: 50px 30px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.04); margin-bottom: 30px; }
+        .location-card h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 15px; color: var(--dark-green); }
+          
+        /* --- GALERÍA ESTILO PILA DE FOTOS --- */
+        .stacked-gallery-container {
+            width: 100%;
+            padding: 40px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .stacked-gallery {
+            position: relative;
+            width: 280px;
+            height: 380px;
+        }
+
+        .stacked-card {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: 12px solid #FFFFFF;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            background-color: var(--card-bg);
+            
+            touch-action: none; 
+            user-select: none;
+            -webkit-user-drag: none; 
+            
+            cursor: grab;
+            transform-origin: 50% 100%;
+            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.3s ease;
+        }
+
+        .stacked-card.dragging {
+            transition: none; 
+            cursor: grabbing;
+        }
+
+        .swipe-controls {
+            margin-top: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            position: relative; /* Ajuste: Posiciona la caja sobre las fotos transparentes */
+            z-index: 100; /* Ajuste: Garantiza que el botón siempre sea cliqueable */
+        }
+
+        .btn-undo {
+            background: transparent;
+            border: 1px solid var(--accent-green);
+            color: var(--dark-green);
+            padding: 8px 20px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s ease;
+            opacity: 0.4;
+            cursor: not-allowed; 
+        }
+        
+        .btn-undo.active {
+            opacity: 1;
+            cursor: pointer;
+        }
+        
+        .btn-undo:hover {
+            background: rgba(118, 137, 115, 0.1);
+        }
+
+        .swipe-indicator { 
+            font-size: 0.8rem; 
+            color: var(--accent-green); 
+            letter-spacing: 2px; 
+            font-family: 'Inter', sans-serif;
+            text-transform: uppercase;
+        }
+        
+        .swipe-indicator i {
+            display: block;
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+            animation: swipeAnim 2s infinite ease-in-out;
+            color: var(--accent-gold);
+        }
+
+        @keyframes swipeAnim { 
+            0%, 100% { transform: translateX(0) rotate(0deg); } 
+            50% { transform: translateX(15px) rotate(5deg); } 
+        }
+
+        .btn-green {
+            background-color: var(--dark-green); color: var(--bg-cream); padding: 14px 35px; border-radius: 4px; text-decoration: none; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; display: inline-flex; align-items: center; justify-content: center; gap: 10px; margin-top: 20px; font-size: 0.85rem; border: 1px solid var(--dark-green); transition: 0.3s; font-family: 'Inter', sans-serif;
+        }
+        .btn-green:hover { background-color: transparent; color: var(--dark-green); }
+          
+        .btn-outline-light { background: transparent; border: 1px solid var(--bg-cream); color: var(--bg-cream); }
+        .btn-outline-light:hover { background: var(--bg-cream); color: var(--dark-green); }
+
+        @media (max-width: 768px) {
+            .main-wrapper::before { display: none; } /* Ocultar marco lineal interno en móvil */
+            .family-block { grid-template-columns: 1fr; gap: 30px; }
+            .hero h1 { font-size: 4rem; }
+            .hero .subtitle { font-size: 3.5rem; }
+            .timeline-time { position: relative; top: 0; margin-bottom: 20px; text-align: center; }
+            
+            /* --- ESCALADO DEL SOBRE EN MÓVIL --- */
+            .env-container {
+                transform: scale(1.15);
+                margin-bottom: 45px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-wrapper">
+
+        <svg width="0" height="0" style="position: absolute;">
+            <filter id="paper-texture">
+                <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="4" result="noise" />
+                <feColorMatrix type="saturate" values="0" in="noise" result="grayNoise" />
+                <feComponentTransfer in="grayNoise" result="fadedNoise">
+                    <feFuncA type="linear" slope="0.12" />
+                </feComponentTransfer>
+                <feBlend mode="multiply" in="SourceGraphic" in2="fadedNoise" />
+            </filter>
+        </svg>
+
+        <audio id="bg-music" loop>
+            <source src="cty.mp3" type="audio/mpeg">
+        </audio>
+
+        <div class="music-btn" style="position: fixed; bottom: 25px; right: calc(50% - 275px); z-index: 1000; background: white; color: var(--dark-green); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.1); cursor: pointer;" onclick="toggleMusic()">
+            <i id="m-icon" class="fa-solid fa-music"></i>
+        </div>
+
+        <div id="envelope-screen">
+            <div class="env-container">
+                <div class="envelope" id="envelope" onclick="abrirSobre()">
+                    <div class="env-inside"></div>
+                      
+                    <div class="env-card">
+                        <div class="card-border">
+                            <p class="card-subtitle">INVITACIÓN DE BODA</p>
+                            <p class="card-title script-font">Claudia & Andrés</p>
+                            <div class="card-line"></div>
+                            <p class="card-doc">19 DE DICIEMBRE DE 2026</p>
+                        </div>
+                    </div>
+                      
+                    <svg class="env-pocket" viewBox="0 0 340 220" preserveAspectRatio="none">
+                        <path d="M 0,0 L 170,120 L 340,0 L 340,220 L 0,220 Z" fill="#889d87" />
+                        <path d="M 0,0 L 170,120 L 0,220 Z" fill="#7d927c" />
+                        <path d="M 340,0 L 170,120 L 340,220 Z" fill="#7d927c" />
+                        <path d="M 0,220 L 170,110 L 340,220 Z" fill="#91a790" />
+                    </svg>
+                      
+                    <div class="env-flap-wrapper">
+                        <svg class="env-flap" viewBox="0 0 340 140" preserveAspectRatio="none">
+                            <path d="M 0,0 L 340,0 L 170,135 Z" fill="#91a790" />
+                        </svg>
+                        <div class="wax-seal">
+                            <div class="seal-inner">
+                                <i class="fa-solid fa-leaf"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+              
+            <button type="button" class="btn-abrir-sobre" onclick="abrirSobre()">Abrir Invitación <i class="fa-solid fa-arrow-right"></i></button>
+            <p class="hint-text">Toca el sobre para abrir</p>
+        </div>
+
+        <header class="hero">
+            <p class="script-font hero-intro-text">Con la bendición de Dios y nuestros hijos</p>
+              
+            <p class="family-names-top">
+                <span>Andrea Fernanda</span>
+                <span class="bullet-separator">♦</span>
+                <span>Juan Andre</span>
+                <span class="bullet-separator">♦</span>
+                <span>Fernanda Lilith</span>
+            </p>
+
+            <div class="hero-portada">
+                <img src="port1.jpeg" alt="Portada Aniversario">
+            </div>
+
+            <p id="type-intro" class="script-font hero-intro-text typewriter-text" style="margin-top: 35px;"></p>
+            <h2 id="type-subtitle" class="subtitle script-font typewriter-text"></h2>
+            <h1 id="type-names" class="script-font typewriter-text"></h1>
+              
+            <div class="date-divider">
+                Sábado • 19 Diciembre • 2026
+            </div>
+              
+            <div class="countdown" id="countdown">
+                <div class="time-box"><span id="days">00</span><p>Días</p></div>
+                <div class="time-box"><span id="hours">00</span><p>Hrs</p></div>
+                <div class="time-box"><span id="mins">00</span><p>Min</p></div>
+                <div class="time-box"><span id="secs">00</span><p>Seg</p></div>
+            </div>
+        </header>
+
+        <section>
+            <p class="section-subtitle"></p>
+            <h2 class="section-title">Nuestras Raíces</h2>
+              
+            <div class="family-block">
+                <div class="family-column">
+                    <h4>Padres de la Novia</h4>
+                    <div class="family-names-list">
+                        <p>Ma. Perfecta Lopez Barcenas</p>
+                        <p class="deceased">Salvador Jaime Quiroz Fraga</p>
+                    </div>
+                </div>
+                <div class="family-column">
+                    <h4>Padres del Novio</h4>
+                    <div class="family-names-list">
+                        <p class="deceased">Virginia Garcia Méndez</p>
+                        <p>Cupertino Ortiz Perez</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="godparents">
+                <div class="family-column">
+                    <h4>Padrinos de Velación</h4>
+                    <div class="family-names-list">
+                        <p>Blanca Flores Carro</p>
+                        <p>Hector Flores Carro</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <p class="section-subtitle">Cada momento pensado con amor</p>
+            <h2 class="section-title">Itinerario</h2>
+              
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-time"><br><span style="font-size: 0.7rem; color: var(--accent-green); font-family: 'Inter', sans-serif;"></span></div>
+                    <div class="icon-circle"><i class="fa-solid fa-church"></i></div>
+                    <div class="timeline-content">
+                        <h3>Ceremonia</h3>
+                        <p>Renovación de Votos y Acción de Gracias</p>
+                    </div>
+                </div>
+                  
+                <div class="timeline-item">
+                    <div class="timeline-time"><br><span style="font-size: 0.7rem; color: var(--accent-green); font-family: 'Inter', sans-serif;"></span></div>
+                    <div class="icon-circle"><i class="fa-solid fa-camera"></i></div>
+                    <div class="timeline-content">
+                        <h3>Sesión de Fotos</h3>
+                        <p>Capturando momentos inolvidables</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-time"><br><span style="font-size: 0.7rem; color: var(--accent-green); font-family: 'Inter', sans-serif;"></span></div>
+                    <div class="icon-circle"><i class="fa-solid fa-champagne-glasses"></i></div>
+                    <div class="timeline-content">
+                        <h3>Cóctel</h3>
+                        <p>Brindis de bienvenida en el jardín</p>
+                    </div>
+                </div>
+                  
+                <div class="timeline-item">
+                    <div class="timeline-time"><br><span style="font-size: 0.7rem; color: var(--accent-green); font-family: 'Inter', sans-serif;"></span></div>
+                    <div class="icon-circle"><i class="fa-solid fa-utensils"></i></div>
+                    <div class="timeline-content">
+                        <h3>Cena & Baile</h3>
+                        <p>Celebración de Gala</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <p class="section-subtitle">¿Dónde será?</p>
+            <h2 class="section-title">Ubicación</h2>
+              
+            <div class="location-card">
+                <div class="icon-circle" style="width: 60px; height: 60px; font-size: 1.5rem;"><i class="fa-solid fa-church"></i></div>
+                <p style="font-family: 'Inter', sans-serif; font-size: 0.8rem; letter-spacing: 2px; color: var(--accent-gold); text-transform: uppercase; margin-bottom: 10px; font-weight: 500;">Ceremonia Religiosa</p>
+                <h3>Capilla de la Sagrada Familia</h3>
+                <p style="font-family: 'Inter', sans-serif; font-weight: 300; margin-bottom: 15px; color: var(--text-dark);">Calle Palmira, Tingüindín 139, Cuernavaca.</p>
+                <p style="font-family: 'Inter', sans-serif; font-weight: 500; margin-bottom: 25px; color: var(--accent-green);">16:30 hrs Inicio de la Ceremonia</p>
+                <a href="https://maps.google.com/?q=Capilla+Sagrada+Familia+Palmira" target="_blank" class="btn-green"><i class="fa-solid fa-location-dot"></i> Ver Mapa</a>
+            </div>
+
+            <div class="location-card">
+                <div class="icon-circle" style="width: 60px; height: 60px; font-size: 1.5rem;"><i class="fa-solid fa-champagne-glasses"></i></div>
+                <p style="font-family: 'Inter', sans-serif; font-size: 0.8rem; letter-spacing: 2px; color: var(--accent-gold); text-transform: uppercase; margin-bottom: 10px; font-weight: 500;">Recepción</p>
+                <h3>Romen's Jardín de Eventos</h3>
+                <p style="font-family: 'Inter', sans-serif; font-weight: 300; margin-bottom: 15px; color: var(--text-dark);">C. Colorines, Atlacomulco, Jiutepec.</p>
+                <p style="font-family: 'Inter', sans-serif; font-weight: 500; margin-bottom: 25px; color: var(--accent-green);">Al termino de la Ceremonia Religiosa</p>
+                <a href="https://maps.app.goo.gl/CA13NXhthvkKY49d8" target="_blank" class="btn-green"><i class="fa-solid fa-location-dot"></i> Ver Mapa</a>
+            </div>
+        </section>
+
+        <section>
+            <p class="section-subtitle">Momentos que nos trajeron aquí</p>
+            <h2 class="section-title">Nuestra historia</h2>
+              
+            <div class="stacked-gallery-container">
+                <div class="stacked-gallery" id="stacked-gallery"></div>
+                <div class="swipe-controls">
+                    <button type="button" class="btn-undo" id="btn-undo" onclick="undoSwipe()"><i class="fa-solid fa-rotate-left"></i> Foto anterior</button>
+                    <div class="swipe-indicator">
+                        <i class="fa-solid fa-hand-pointer"></i>
+                        Desliza para ver más fotos
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-dark-section">
+            <p class="section-subtitle">Para lucir radiantes</p>
+            <h2 class="section-title">Vestimenta</h2>
+            <p style="font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: 3px; font-size: 1.2rem; margin-bottom: 30px; font-weight: 500; color: var(--bg-cream);">Etiqueta Formal</p>
+              
+            <div style="background: white; border-radius: 16px; padding: 30px; margin: 0 auto 30px auto; max-width: 400px; color: var(--dark-green);">
+                <i class="fa-solid fa-user-tie" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                <p style="font-family: 'Inter', sans-serif; font-weight: 300; color: var(--text-dark); line-height: 1.6;">Damas: Vestido largo elegante.<br>Caballeros: Traje oscuro o Esmoquin.</p>
+            </div>
+            <p style="font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; color: var(--accent-gold);">Ayúdanos a lucir radiantes vistiendo de gala. ¡Tu elegancia hará la noche aún más especial!</p>
+        </section>
+
+        <section>
+            <h2 class="section-title">Mesa de Regalos</h2>
+            <p style="font-family: 'Inter', sans-serif; font-weight: 300; color: var(--text-dark); margin-bottom: 40px; font-size: 1.1rem;">Si deseas obsequiarnos algo más, aquí te dejamos algunas opciones. Lo más importante es contar contigo.</p>
+              
+            <div class="location-card" style="margin-bottom: 20px; text-align: center;">
+                <i class="fa-solid fa-envelope-open-text" style="font-size: 2.5rem; color: var(--accent-green); margin-bottom: 15px;"></i>
+                <h3>Lluvia de Sobres</h3>
+                <p style="font-family: 'Inter', sans-serif; font-weight: 300; color: var(--text-dark);">Tradición de entregar un sobre el día del evento.</p>
+            </div>
+        </section>
+
+        <section class="bg-dark-section" style="margin-bottom: 50px;">
+            <h2 class="section-title">Confirma tu Asistencia</h2>
+            <p style="font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; margin-bottom: 40px; color: var(--accent-gold);">Ayúdanos a preparar cada detalle con amor — tu presencia lo significa todo para nosotros.</p>
+            
+            <div style="border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 40px 20px; max-width: 500px; margin: 0 auto;">
+                <div class="icon-circle" style="background: transparent; border: 1px solid white; margin-bottom: 15px;"><i class="fa-regular fa-heart"></i></div>
+                <p style="font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; font-size: 0.9rem; font-weight: 500;">Confirmar tu lugar</p>
+                
+                <p class="script-font" style="font-size: 3.5rem; color: var(--bg-cream); margin-bottom: 10px; line-height: 1;">Claudia & Andrés</p>
+                <h3 id="nombre-invitado" style="font-family: 'Inter', sans-serif; text-transform: uppercase; margin-bottom: 20px; font-size: 1.2rem; letter-spacing: 1px; color: var(--accent-gold);">Invitado de Honor</h3>
+                
+                <div style="background: white; width: 160px; height: 160px; margin: 0 auto 20px auto; padding: 10px; border-radius: 12px;">
+                    <img id="qr-img" src="" alt="QR" style="width: 100%;">
+                </div>
+                
+                <p style="font-family: 'Inter', sans-serif; margin-bottom: 30px; font-weight: 300; color: var(--bg-cream);">Pases reservados: <span id="num-pases" style="font-weight: 600; color: var(--accent-gold);">2</span></p>
+                
+                <a href="#" id="btn-confirmar" target="_blank" class="btn-green btn-outline-light">Confirmar Asistencia Digital</a>
+            </div>
+        </section>
+
+    </div> 
+    
+    <script>
+        const bgMusic = document.getElementById('bg-music');
+        let isPlaying = false;
+
+        function toggleMusic() {
+            const icon = document.getElementById('m-icon');
+            if (isPlaying) { bgMusic.pause(); icon.className = 'fa-solid fa-music-slash'; isPlaying = false; }
+            else { bgMusic.play(); icon.className = 'fa-solid fa-music'; isPlaying = true; }
+        }
+
+        /* LOGICA DE APERTURA DEL SOBRE */
+        function abrirSobre() {
+            const envelope = document.getElementById('envelope');
+            if(envelope.classList.contains('open')) return;
+            
+            envelope.classList.add('open');
+
+            setTimeout(() => { 
+                const screen = document.getElementById('envelope-screen');
+                screen.style.opacity = '0';
+                  
+                setTimeout(() => {
+                    screen.style.display = 'none'; 
+                    bgMusic.play().then(() => {
+                        isPlaying = true;
+                        document.getElementById('m-icon').className = 'fa-solid fa-music';
+                    }).catch(e => console.log("Auto-play prevenido"));
+                    
+                    startTypewriterEffect();
+                }, 1200); 
+            }, 2500); 
+        }
+
+        /* EFECTO MÁQUINA DE ESCRIBIR CONTROLOGADO */
+        function startTypewriterEffect() {
+            const lines = [
+                { id: 'type-intro', text: 'Tenemos el honor de invitarles a nuestras' },
+                { id: 'type-subtitle', text: 'Bodas de Plata' },
+                { id: 'type-names', text: 'Claudia & Andrés' }
+            ];
+
+            let lineIndex = 0;
+            
+            function typeLine() {
+                if (lineIndex < lines.length) {
+                    const currentLine = lines[lineIndex];
+                    const element = document.getElementById(currentLine.id);
+                    let charIndex = 0;
+                    
+                    element.classList.add('typing-cursor');
+
+                    function typeChar() {
+                        if (charIndex < currentLine.text.length) {
+                            element.innerHTML += currentLine.text.charAt(charIndex);
+                            charIndex++;
+                            setTimeout(typeChar, 60);
+                        } else {
+                            element.classList.remove('typing-cursor');
+                            lineIndex++;
+                            setTimeout(typeLine, 300);
+                        }
+                    }
+                    typeChar();
+                }
+            }
+            typeLine();
+        }
+
+        /* --- LÓGICA DE CONFIRMACIÓN CON GOOGLE FORMS INTEGRADO --- */
+        const urlParams = new URLSearchParams(window.location.search);
+        const invitado = urlParams.get('invitado') || "Invitado de Honor";
+        const pases = urlParams.get('pases') || "2";
+
+        document.getElementById('nombre-invitado').innerText = invitado;
+        document.getElementById('num-pases').innerText = pases;
+        
+        document.getElementById('qr-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=CA25-${encodeURIComponent(invitado)}-${pases}`;
+        
+        const BASE_FORM_URL = "https://docs.google.com/forms/d/14tNQD2GA5MLZokcpOxa5vEuMtHqpLbtisxmOzvrAVd4/viewform";
+        
+        // Coloca tus IDs reales aquí una vez generados (entry.X)
+        const idCampoInvitado = "entry.111111118"; 
+        const idCampoPases = "entry.222222222";
+        
+        const googleFormLink = `${BASE_FORM_URL}?usp=pp_url&${idCampoInvitado}=${encodeURIComponent(invitado)}&${idCampoPases}=${pases}`;
+        document.getElementById('btn-confirmar').href = googleFormLink;
+
+        const targetDate = new Date('Dec 19, 2026 16:30:00').getTime();
+        setInterval(function() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+            if (distance > 0) {
+                document.getElementById('days').innerText = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+                document.getElementById('hours').innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+                document.getElementById('mins').innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+                document.getElementById('secs').innerText = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
+            }
+        }, 1000);
+
+        /* --- CONFIGURACIÓN DE TU REPOSITORIO DE GITHUB --- */
+        const GITHUB_USER = "clauyandres"; 
+        const GITHUB_REPO = "felicesporsiempremx"; 
+
+        /* --- LÓGICA DE PILA DE FOTOS DINÁMICA --- */
+        const stackContainer = document.getElementById('stacked-gallery');
+        const undoButton = document.getElementById('btn-undo');
+        let cards = [];
+        let historyStack = [];
+        let isDraggingCard = false;
+        let startX = 0, startY = 0, currentX = 0, currentY = 0;
+        let activeCard = null;
+
+        async function loadGalleryAutomatically() {
+            try {
+                const response = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/galeria`);
+                if (!response.ok) throw new Error("No se pudo leer la carpeta");
+                
+                const files = await response.json();
+                const validExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'jfif'];
+                
+                const images = files.filter(file => {
+                    const ext = file.name.split('.').pop().toLowerCase();
+                    return validExtensions.includes(ext);
+                });
+
+                if(images.length === 0) {
+                    stackContainer.innerHTML = "<p style='color: var(--accent-green); font-style:italic; font-family: Inter;'>Subiendo recuerdos...</p>";
+                    return;
+                }
+
+                stackContainer.innerHTML = "";
+                images.forEach((img, index) => {
+                    const imgElement = document.createElement('img');
+                    imgElement.src = `galeria/${img.name}`;
+                    imgElement.alt = `Recuerdo ${index + 1}`;
+                    imgElement.className = 'stacked-card';
+                    stackContainer.appendChild(imgElement);
+                });
+
+                cards = Array.from(stackContainer.querySelectorAll('.stacked-card')).reverse();
+                historyStack = []; 
+                updateUndoButtonState();
+                updateCardStack();
+
+            } catch (error) {
+                console.error("Error al cargar la galería automatizada, usando método alternativo por secuencia:", error);
+                loadGalleryFallback();
+            }
+        }
+
+        function loadGalleryFallback() {
+            stackContainer.innerHTML = "";
+            let loadedCount = 0;
+            const maxFallbackPhotos = 60; 
+            
+            for(let i = 1; i <= maxFallbackPhotos; i++) {
+                const imgElement = document.createElement('img');
+                imgElement.src = `galeria/${i}.jpeg`;
+                imgElement.alt = `Recuerdo ${i}`;
+                imgElement.className = 'stacked-card';
+                
+                imgElement.onload = () => {
+                    loadedCount++;
+                    stackContainer.appendChild(imgElement);
+                    cards = Array.from(stackContainer.querySelectorAll('.stacked-card')).reverse();
+                    historyStack = [];
+                    updateUndoButtonState();
+                    updateCardStack();
+                };
+                imgElement.onerror = () => {
+                    imgElement.src = `galeria/${i}.jpg`;
+                    imgElement.onerror = () => {
+                        imgElement.src = `galeria/${i}.png`;
+                        imgElement.onerror = null;
+                    };
+                };
+            }
+        }
+
+        function updateCardStack() {
+            if(cards.length === 0) return;
+            cards.forEach((card, index) => {
+                card.classList.remove('dragging');
+                card.draggable = false;
+                
+                const isTop = index === cards.length - 1;
+                const distance = cards.length - 1 - index;
+                
+                const rotations = [-2, 4, -3, 2, -1, 3];
+                const baseRot = isTop ? 0 : rotations[index % rotations.length];
+                
+                const scale = Math.max(1 - (distance * 0.04), 0.85);
+                const translateY = distance * 8;
+
+                card.style.zIndex = index;
+                card.style.transform = `translateY(${translateY}px) scale(${scale}) rotate(${baseRot}deg)`;
+                card.style.opacity = distance > 3 ? '0' : '1';
+                
+                // Ajuste crítico: Solo la foto de arriba registra toques. Esto evita el bloqueo invisible del botón.
+                card.style.pointerEvents = isTop ? 'auto' : 'none';
+
+                if (isTop) {
+                    card.addEventListener('pointerdown', handleCardPointerDown);
+                } else {
+                    card.removeEventListener('pointerdown', handleCardPointerDown);
+                }
+            });
+        }
+
+        function handleCardPointerDown(e) {
+            activeCard = e.target;
+            isDraggingCard = true;
+            startX = e.clientX;
+            startY = e.clientY;
+            
+            activeCard.classList.add('dragging');
+            activeCard.setPointerCapture(e.pointerId);
+            
+            activeCard.addEventListener('pointermove', handleCardPointerMove);
+            activeCard.addEventListener('pointerup', handleCardPointerUp);
+            activeCard.addEventListener('pointercancel', handleCardPointerUp);
+        }
+
+        function handleCardPointerMove(e) {
+            if (!isDraggingCard || !activeCard) return;
+            currentX = e.clientX - startX;
+            currentY = e.clientY - startY;
+            
+            const rotate = currentX * 0.05;
+            activeCard.style.transform = `translate(${currentX}px, ${currentY}px) rotate(${rotate}deg)`;
+        }
+
+        function handleCardPointerUp(e) {
+            if (!isDraggingCard || !activeCard) return;
+            isDraggingCard = false;
+            
+            activeCard.removeEventListener('pointermove', handleCardPointerMove);
+            activeCard.removeEventListener('pointerup', handleCardPointerUp);
+            activeCard.removeEventListener('pointercancel', handleCardPointerUp);
+            activeCard.classList.remove('dragging');
+
+            const threshold = Math.min(window.innerWidth / 4, 150); 
+            
+            if (Math.abs(currentX) > threshold) {
+                const throwX = currentX * 1.5;
+                const throwY = currentY * 1.5;
+                
+                const discardedCard = activeCard;
+                discardedCard.style.transform = `translate(${throwX}px, ${throwY}px) rotate(${currentX * 0.1}deg)`;
+                discardedCard.style.opacity = '0';
+                discardedCard.style.pointerEvents = 'none'; // Evita que la carta tirada bloquee toques en la pantalla
+                
+                setTimeout(() => {
+                    const poppedCard = cards.pop(); // Saca la foto de arriba
+                    historyStack.push(poppedCard);  // La manda al historial de deshacer
+                    
+                    updateUndoButtonState();
+                    updateCardStack();
+                }, 300);
+            } else {
+                updateCardStack();
+            }
+            
+            currentX = 0;
+            currentY = 0;
+            activeCard = null;
+        }
+
+        function undoSwipe() {
+            if (!undoButton.classList.contains('active') || historyStack.length === 0) return;
+            
+            const lastCard = historyStack.pop(); // Trae la última foto del historial
+            
+            cards.push(lastCard); // La inserta directo en la cima de la pila activa
+            
+            lastCard.style.transition = 'none';
+            lastCard.style.transform = `translate(-250px, -50px) rotate(-15deg)`;
+            lastCard.style.opacity = '0';
+            
+            setTimeout(() => {
+                lastCard.style.transition = 'transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.3s ease';
+                updateUndoButtonState();
+                updateCardStack();
+            }, 50);
+        }
+
+        function updateUndoButtonState() {
+            if (historyStack.length > 0) {
+                undoButton.classList.add('active');
+            } else {
+                undoButton.classList.remove('active');
+            }
+        }
+
+        loadGalleryAutomatically();
+    </script>
+</body>
+</html>
