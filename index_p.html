@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control - Invitaciones C&A</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { font-family: 'Montserrat', sans-serif; background: #f1f5f9; padding: 40px 20px; color: #1e293b; }
+        .container { max-width: 900px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+        h1, h2, h3 { color: #0f172a; margin-bottom: 15px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 0.9rem; }
+        input[type="text"], input[type="number"], input[type="file"] { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; font-family: inherit; }
+        button, .btn-primary { background: #0f172a; color: white; padding: 12px 20px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+        button:hover { background: #1e293b; }
+        
+        /* Estilos Carga CSV */
+        .csv-box { background: #f8fafc; border: 2px dashed #cbd5e1; padding: 25px; border-radius: 8px; text-align: center; margin-top: 20px; }
+        .btn-wa { background: #25d366; color: white; padding: 8px 14px; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 6px; transition: 0.2s; }
+        .btn-wa:hover { background: #1da851; color: white; }
+        
+        .link-generado { background: #f8fafc; padding: 15px; border-left: 4px solid #0f172a; margin-top: 20px; display: none; word-break: break-all; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; border-bottom: 1px solid #e2e8f0; text-align: left; font-size: 0.9rem; }
+        th { background: #f8fafc; font-weight: 600; color: #475569; }
+        
+        .tab-divider { margin: 40px 0; border: 0; border-top: 1px solid #e2e8f0; }
+        .badge { padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; }
+        .badge-pending { background: #fef3c7; color: #d97706; }
+        .badge-confirmed { background: #dcfce7; color: #15803d; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1><i class="fa-solid fa-wand-magic-sparkles"></i> Creador de Pases Exclusivos</h1>
+        <p style="color: #64748b;">Panel de administración para la generación y envío de invitaciones digitales de Claudia y Andrés.</p>
+        
+        <div style="margin-top: 30px;">
+            <h2><i class="fa-solid fa-file-csv"></i> Carga Masiva de Invitados (CSV)</h2>
+            <p style="font-size: 0.85rem; color: #64748b;">Sube un archivo CSV con las columnas: <code>telefono, nombre, pases, mensaje</code></p>
+            
+            <div class="csv-box">
+                <input type="file" id="input-csv" accept=".csv" style="margin-bottom: 15px;">
+                <br>
+                <button onclick="procesarCSV()"><i class="fa-solid fa-gears"></i> Generar Lista de Envíos</button>
+            </div>
+
+            <div id="resultado-csv" style="display: none; margin-top: 25px;">
+                <h3><i class="fa-solid fa-list-check"></i> Enlaces Listos para Enviar</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Invitado</th>
+                            <th>Pases</th>
+                            <th>Teléfono</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-csv-body"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <hr class="tab-divider">
+
+        <div>
+            <h2><i class="fa-solid fa-user-plus"></i> Generación Individual</h2>
+            <div class="form-group">
+                <label>Nombre del Invitado / Familia</label>
+                <input type="text" id="input-nombre" placeholder="Ej. Familia Martínez Pérez">
+            </div>
+            <div class="form-group">
+                <label>Número de Pases Asignados</label>
+                <input type="number" id="input-pases" value="2" min="1">
+            </div>
+            <button onclick="generarInvitacion()"><i class="fa-solid fa-link"></i> Generar Enlace Único</button>
+
+            <div class="link-generado" id="resultado-enlace">
+                <strong>Enlace personalizado:</strong>
+                <p id="url-texto" style="margin-top: 10px; color: #25d366; font-weight: 600;"></p>
+            </div>
+        </div>
+
+        <hr class="tab-divider">
+
+        <h2><i class="fa-solid fa-chart-pie"></i> Control de Confirmaciones (Local)</h2>
+        <button onclick="cargarReporte()" style="background:#475569; margin-bottom: 15px;">
+            <i class="fa-solid fa-rotate"></i> Actualizar Estado
+        </button>
+        <table>
+            <thead>
+                <tr>
+                    <th>Invitado</th>
+                    <th>Estado de Confirmación</th>
+                </tr>
+            </thead>
+            <tbody id="tabla-asistencia"></tbody>
+        </table>
+    </div>
+
+    <script>
+        // --- LÓGICA DE CARGA Y PROCESAMIENTO DE CSV ---
+        function procesarCSV() {
+            const fileInput = document.getElementById('input-csv');
+            const file = fileInput.files[0];
+            
+            if (!file) return alert("Por favor selecciona un archivo CSV primero.");
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const contenido = e.target.result;
+                const lineas = contenido.split(/\r?\n/);
+                const tablaBody = document.getElementById('tabla-csv-body');
+                tablaBody.innerHTML = "";
+
+                // Detectar automáticamente la URL de la invitación
+                const urlBase = window.location.href.includes('index_p.html') 
+                    ? window.location.href.replace('index_p.html', 'index.html')
+                    : 'index.html';
+
+                let contador = 0;
+
+                for (let i = 0; i < lineas.length; i++) {
+                    const linea = lineas[i].trim();
+                    if (!linea) continue;
+
+                    // Omitir la primera línea si son encabezados
+                    if (i === 0 && (linea.toLowerCase().includes('nombre') || linea.toLowerCase().includes('telefono'))) {
+                        continue;
+                    }
+
+                    // Separar columnas respetando comas
+                    const partes = linea.split(',').map(p => p.trim().replace(/^"|"$/g, ''));
+                    
+                    const telefono = partes[0] || '';
+                    const nombre = partes[1] || '';
+                    const pases = partes[2] || '2';
+                    const mensaje = partes[3] || '¡Hola! Nos llena de alegría invitarte a celebrar con nosotros nuestras Bodas de Plata.';
+
+                    if (!nombre || !telefono) continue;
+
+                    // Construir URL de la invitación
+                    const urlInvitacion = `${urlBase}?invitado=${encodeURIComponent(nombre)}&pases=${pases}`;
+                    
+                    // Construir mensaje completo para WhatsApp
+                    const mensajeWhatsApp = `${mensaje}\n\nAquí tienes tu pase de acceso exclusivo:\n${urlInvitacion}`;
+                    const linkWA = `https://wa.me/${telefono.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(mensajeWhatsApp)}`;
+
+                    // Registrar en lista local
+                    if(!localStorage.getItem(`confirma-${nombre}`)) {
+                        localStorage.setItem(`confirma-${nombre}`, 'Pendiente');
+                    }
+
+                    const fila = `
+                        <tr>
+                            <td><strong>${nombre}</strong></td>
+                            <td>${pases}</td>
+                            <td>${telefono}</td>
+                            <td>
+                                <a href="${linkWA}" target="_blank" class="btn-wa">
+                                    <i class="fa-brands fa-whatsapp"></i> Enviar Pase
+                                </a>
+                            </td>
+                        </tr>
+                    `;
+                    tablaBody.innerHTML += fila;
+                    contador++;
+                }
+
+                if (contador > 0) {
+                    document.getElementById('resultado-csv').style.display = 'block';
+                    cargarReporte();
+                } else {
+                    alert("No se encontraron registros válidos en el archivo CSV.");
+                }
+            };
+
+            reader.readAsText(file);
+        }
+
+        // --- LÓGICA DE GENERACIÓN INDIVIDUAL ---
+        function generarInvitacion() {
+            const nombre = document.getElementById('input-nombre').value;
+            const pases = document.getElementById('input-pases').value;
+            
+            if(!nombre) return alert("Por favor escribe un nombre");
+
+            const urlBase = window.location.href.includes('index_p.html') 
+                ? window.location.href.replace('index_p.html', 'index.html')
+                : 'index.html';
+
+            const urlFinal = `${urlBase}?invitado=${encodeURIComponent(nombre)}&pases=${pases}`;
+
+            document.getElementById('resultado-enlace').style.display = "block";
+            document.getElementById('url-texto').innerText = urlFinal;
+            
+            if(!localStorage.getItem(`confirma-${nombre}`)) {
+                localStorage.setItem(`confirma-${nombre}`, 'Pendiente');
+            }
+            cargarReporte();
+        }
+
+        // --- LÓGICA DE REPORTE DE ASISTENCIA ---
+        function cargarReporte() {
+            const tbody = document.getElementById('tabla-asistencia');
+            tbody.innerHTML = "";
+
+            for (let i = 0; i < localStorage.length; i++) {
+                const clave = localStorage.key(i);
+                if (clave.startsWith('confirma-')) {
+                    const nombreInvitado = clave.replace('confirma-', '');
+                    const estado = localStorage.getItem(clave);
+                    
+                    const badgeClass = estado === 'Confirmado' ? 'badge-confirmed' : 'badge-pending';
+                    
+                    const fila = `<tr>
+                        <td>${nombreInvitado}</td>
+                        <td><span class="badge ${badgeClass}">${estado}</span></td>
+                    </tr>`;
+                    tbody.innerHTML += fila;
+                }
+            }
+        }
+
+        window.onload = cargarReporte;
+    </script>
+</body>
+</html>
