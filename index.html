@@ -192,6 +192,18 @@
             .timeline-time { position: relative; top: 0; margin-bottom: 20px; text-align: center; }
             .music-btn { right: 20px !important; bottom: 20px !important; }
         }
+
+        /* --- CORRECCIÓN DE COLOR PARA EL BOTÓN ESPECÍFICO --- */
+        #seccion-subir-fotos .btn-green {
+            background-color: var(--accent-green);
+            border-color: var(--accent-green);
+            color: var(--card-bg); /* Texto claro */
+        }
+
+        #seccion-subir-fotos .btn-green:hover {
+            background-color: transparent;
+            color: var(--accent-green);
+        }
     </style>
 </head>
 <body>
@@ -255,7 +267,7 @@
             <p class="hint-text">Toca el sobre para abrir</p>
         </div>
 
- <header class="hero">
+        <header class="hero">
             <p class="script-font hero-intro-text">Con la bendición de Dios y nuestros hijos</p>
               
             <p class="family-names-top">
@@ -285,6 +297,7 @@
                 <div class="time-box"><span id="secs">00</span><p>Seg</p></div>
             </div>
         </header>
+
         <section>
             <p class="section-subtitle"></p>
             <h2 class="section-title">Nuestras Raíces</h2>
@@ -402,13 +415,22 @@
         <section class="bg-dark-section">
             <p class="section-subtitle">Para lucir radiantes</p>
             <h2 class="section-title">Vestimenta</h2>
-            <p style="font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: 3px; font-size: 1.2rem; margin-bottom: 30px; font-weight: 500; color: var(--bg-cream);">Formal</p>
+            <p style="font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: 3px; font-size: 1.2rem; margin-bottom: 30px; font-weight: 500; color: var(--bg-cream);">Formal / Vaquero</p>
               
             <div style="background: white; border-radius: 16px; padding: 30px; margin: 0 auto 30px auto; max-width: 450px; color: var(--dark-green);">
-                <i class="fa-solid fa-user-tie" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                
+                <div style="position: relative; width: 100%; height: 60px; margin-bottom: 20px; display: flex; justify-content: center;">
+                    <div style="position: relative; width: 60px;">
+                        <i class="fa-solid fa-user-tie" style="font-size: 3rem; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);"></i>
+                        <i class="fa-solid fa-hat-cowboy" style="font-size: 2.1rem; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); color: var(--dark-green);"></i>
+                    </div>
+                </div>
+
                 <p style="font-family: 'Inter', sans-serif; font-weight: 300; color: var(--text-dark); line-height: 1.6; margin-bottom: 15px;">
                     <strong>Damas:</strong> Vestimenta formal.<br>
-                    <strong>Caballeros:</strong> Formal.
+                    <strong>Caballeros:</strong> Formal.<br><br>
+                    <span style="color: var(--accent-gold); font-weight: 500;">¡Toque Vaquero!</span><br>
+                    Además de su atuendo formal, los invitamos a complementar su estilo llevando <strong>botas y sombrero</strong>.
                 </p>
                 <div style="border-top: 1px solid #e2e8f0; padding-top: 15px; font-size: 0.85rem; color: #475569;">
                     <i class="fa-solid fa-palette" style="color: var(--accent-gold); margin-bottom: 5px; font-size: 1.2rem;"></i><br>
@@ -426,41 +448,6 @@
                 <i class="fa-solid fa-envelope-open-text" style="font-size: 2.5rem; color: var(--accent-green); margin-bottom: 15px;"></i>
                 <h3>Lluvia de Sobres</h3>
                 <p style="font-family: 'Inter', sans-serif; font-weight: 300; color: var(--text-dark);">Tradición de entregar un sobre el día del evento.</p>
-            </div>
-        </section>
-
-        <section id="seccion-espera-fotos">
-            <h2 class="section-title" style="font-size: 3.2rem;">Captura el Momento</h2>
-            <div class="icon-circle" style="background: transparent; color: var(--dark-green); border: 1px solid var(--accent-green); margin-bottom: 20px;">
-                <i class="fa-solid fa-camera-retro"></i>
-            </div>
-            <p style="font-family: 'Inter', sans-serif; font-weight: 300; color: var(--text-dark); margin-bottom: 10px; font-size: 1.1rem;">
-                Ayúdanos a guardar cada recuerdo de esta gran noche.
-            </p>
-            <p style="font-family: 'Inter', sans-serif; font-weight: 500; color: var(--accent-gold); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">
-                Esta sección se activará el día del evento para que puedas subir tus fotos directamente a nuestro álbum digital.
-            </p>
-        </section>
-
-        <section id="seccion-subir-fotos" style="display: none;">
-            <p class="section-subtitle">Desde tu perspectiva</p>
-            <h2 class="section-title" style="font-size: 3.2rem;">Sube tus Fotos</h2>
-            <p style="font-family: 'Inter', sans-serif; font-weight: 300; color: var(--text-dark); margin-bottom: 30px; font-size: 1.1rem;">
-                Selecciona las fotos que tomaste y compártelas con nosotros.
-            </p>
-            
-            <div class="upload-container">
-                <input type="file" id="foto-input" accept="image/*" multiple style="display: none;">
-                <button type="button" class="btn-green" onclick="document.getElementById('foto-input').click()">
-                    <i class="fa-solid fa-images"></i> Elegir Fotos
-                </button>
-                
-                <div id="preview-container" class="preview-grid"></div>
-                
-                <button type="button" id="btn-enviar-fotos" class="btn-green" style="display: none; background-color: var(--accent-gold); border-color: var(--accent-gold); width: 100%;">
-                    <i class="fa-solid fa-cloud-arrow-up"></i> Enviar a los Novios
-                </button>
-                <p id="upload-status" style="margin-top: 15px; font-family: 'Inter', sans-serif; font-size: 0.85rem; color: var(--accent-green); font-weight: 500;"></p>
             </div>
         </section>
 
@@ -483,6 +470,41 @@
                 <p id="contenedor-mesa" style="font-family: 'Inter', sans-serif; margin-bottom: 30px; font-weight: 300; color: var(--bg-cream); display: none;">Mesa asignada: <span id="num-mesa" style="font-weight: 600; color: var(--accent-gold);">0</span></p>
                 
                 <a href="#" id="btn-confirmar" class="btn-green btn-outline-light">Confirmar Asistencia</a>
+            </div>
+        </section>
+
+        <section id="seccion-espera-fotos" style="display: none;">
+            <h2 class="section-title" style="font-size: 3.2rem;">Captura el Momento</h2>
+            <div class="icon-circle" style="background: transparent; color: var(--dark-green); border: 1px solid var(--accent-green); margin-bottom: 20px;">
+                <i class="fa-solid fa-camera-retro"></i>
+            </div>
+            <p style="font-family: 'Inter', sans-serif; font-weight: 300; color: var(--text-dark); margin-bottom: 10px; font-size: 1.1rem;">
+                Ayúdanos a guardar cada recuerdo de esta gran noche.
+            </p>
+            <p style="font-family: 'Inter', sans-serif; font-weight: 500; color: var(--accent-gold); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">
+                Esta sección se activará el día del evento para que puedas subir tus fotos directamente a nuestro álbum digital.
+            </p>
+        </section>
+
+        <section id="seccion-subir-fotos" style="display: block;">
+            <p class="section-subtitle">Desde tu perspectiva</p>
+            <h2 class="section-title" style="font-size: 3.2rem;">Sube tus Fotos</h2>
+            <p style="font-family: 'Inter', sans-serif; font-weight: 300; color: var(--text-dark); margin-bottom: 30px; font-size: 1.1rem;">
+                Selecciona las fotos que tomaste y compártelas con nosotros.
+            </p>
+            
+            <div class="upload-container">
+                <input type="file" id="foto-input" accept="image/*" multiple style="display: none;">
+                <button type="button" class="btn-green" onclick="document.getElementById('foto-input').click()">
+                    <i class="fa-solid fa-images"></i> Elegir Fotos
+                </button>
+                
+                <div id="preview-container" class="preview-grid"></div>
+                
+                <button type="button" id="btn-enviar-fotos" class="btn-green" style="display: none; background-color: var(--accent-gold); border-color: var(--accent-gold); width: 100%;">
+                    <i class="fa-solid fa-cloud-arrow-up"></i> Enviar a los Novios
+                </button>
+                <p id="upload-status" style="margin-top: 15px; font-family: 'Inter', sans-serif; font-size: 0.85rem; color: var(--accent-green); font-weight: 500;"></p>
             </div>
         </section>
 
@@ -852,20 +874,17 @@
         const seccionEspera = document.getElementById('seccion-espera-fotos');
         const seccionSubir = document.getElementById('seccion-subir-fotos');
         
-        const diaDelEvento = new Date('Dec 19, 2026 00:00:00').getTime();
-        const testFotosActivo = urlParams.has('test_fotos'); 
-
-        if (new Date().getTime() >= diaDelEvento || testFotosActivo) {
-            seccionEspera.style.display = 'none';
-            seccionSubir.style.display = 'block';
-        }
+        // Habilitado de forma permanente para hacer las pruebas
+        seccionEspera.style.display = 'none';
+        seccionSubir.style.display = 'block';
 
         const fotoInput = document.getElementById('foto-input');
         const previewContainer = document.getElementById('preview-container');
         const btnEnviarFotos = document.getElementById('btn-enviar-fotos');
         const uploadStatus = document.getElementById('upload-status');
         
-        const GOOGLE_SCRIPT_URL = "TU_URL_DE_APPS_SCRIPT_AQUI"; 
+        // URL de tu aplicación web (Apps Script) ya integrada
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw4VQ5Vbsk0xfG1tVVh8ejrKM7_Ko_Wl7eOvMTwdLlTuZLriZAJ4tdcQMNMQ14Av9jH/exec"; 
         let fotosSeleccionadas = [];
 
         fotoInput.addEventListener('change', function(e) {
