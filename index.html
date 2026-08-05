@@ -494,10 +494,10 @@
             .hero .subtitle { font-size: 3.5rem; }
             .timeline-time { position: relative; top: 0; margin-bottom: 20px; text-align: center; }
             
-            /* --- ESCALADO DEL SOBRE EN MÓVIL --- */
-            .env-container {
-                transform: scale(1.15);
-                margin-bottom: 45px;
+            /* --- CORRECCIÓN CRÍTICA: ICONO DE MÚSICA FLOTANTE EN MÓVIL --- */
+            .music-btn {
+                right: 20px !important; /* Lo fija de forma segura a la derecha de la pantalla del celular */
+                bottom: 20px !important;
             }
         }
     </style>
@@ -709,7 +709,7 @@
         </section>
 
         <section class="bg-dark-section">
-            <p class="section-subtitle">Para lucir radiantes</p>
+            <p class="section-subtitle">Para luccir radiantes</p>
             <h2 class="section-title">Vestimenta</h2>
             <p style="font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: 3px; font-size: 1.2rem; margin-bottom: 30px; font-weight: 500; color: var(--bg-cream);">Etiqueta Formal</p>
               
@@ -822,7 +822,7 @@
             typeLine();
         }
 
-        /* --- LÓGICA DE CONFIRMACIÓN INVISIBLE (MÉTODO INFALIBLE) --- */
+        /* --- LÓGICA DE CONFIRMACIÓN INVISIBLE --- */
         const urlParams = new URLSearchParams(window.location.search);
         const invitado = urlParams.get('invitado') || "Invitado de Honor";
         const pases = urlParams.get('pases') || "2";
@@ -832,16 +832,22 @@
         
         document.getElementById('qr-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=CA25-${encodeURIComponent(invitado)}-${pases}`;
         
+        // --- TU GOOGLE FORMS REAL (El que termina en OzvrAVd4) ---
+        const BASE_FORM_URL = "https://docs.google.com/forms/d/14tNQD2GA5MLZokcpOxa5vEuMtHqpLbtisxmOzvrAVd4/viewform";
+        
+        // IDs Reales para tu formulario de dos preguntas:
+        const idCampoInvitado = "entry.111111118"; 
+        const idCampoPases = "entry.222222222";    
+        
         const btnConfirmar = document.getElementById('btn-confirmar');
         
         btnConfirmar.addEventListener('click', function(e) {
             e.preventDefault();
             
-            // Cambiar estado visual del botón
             btnConfirmar.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Confirmando...';
             btnConfirmar.style.pointerEvents = 'none'; 
 
-            // 1. Crear el marco iframe invisible en la memoria del DOM
+            // 1. Crear el iframe invisible si no existe
             let iframe = document.getElementById('hidden_iframe');
             if (!iframe) {
                 iframe = document.createElement('iframe');
@@ -851,26 +857,23 @@
                 document.body.appendChild(iframe);
             }
 
-            // 2. Crear el contenedor de formulario invisible
+            // 2. Crear el formulario invisible apuntando al action correcto
             let form = document.getElementById('hidden_form');
             if (!form) {
                 form = document.createElement('form');
                 form.id = 'hidden_form';
-                form.action = 'https://docs.google.com/forms/d/e/1FAIpQLScw4OIlrWiH6vLhfgRb1h7muYFI1xOFEykHSbARY9f02FCEoA/formResponse';
+                form.action = BASE_FORM_URL.replace('/viewform', '/formResponse');
                 form.method = 'POST';
-                form.target = 'hidden_iframe'; // Fuerza el redireccionamiento al iframe oculto
+                form.target = 'hidden_iframe'; 
                 document.body.appendChild(form);
             }
 
-            // Limpieza interna preventiva de campos duplicados
             form.innerHTML = '';
 
-            // 3. Empaquetar las entradas con tus identificadores entry exactos
+            // 3. Crear los campos requeridos basados en tus dos únicas preguntas
             const inputs = [
-                { name: 'entry.192369526', value: invitado },
-                { name: 'entry.597904299', value: pases },
-                { name: 'entry.2052817495', value: 'Sí, asistiré' },
-                { name: 'entry.44556970', value: pases }
+                { name: idCampoInvitado, value: invitado },
+                { name: idCampoPases, value: pases }
             ];
 
             inputs.forEach(inputData => {
@@ -881,7 +884,7 @@
                 form.appendChild(input);
             });
 
-            // 4. Capturar el evento de retorno de Google Forms para confirmar visualmente
+            // 4. Esperar la respuesta nativa de Google
             iframe.onload = function() {
                 btnConfirmar.innerHTML = '<i class="fa-solid fa-check"></i> ¡Asistencia Confirmada!';
                 btnConfirmar.style.backgroundColor = '#25d366'; 
@@ -889,7 +892,7 @@
                 btnConfirmar.style.color = '#fff';
             };
 
-            // Disparar envío nativo
+            // Enviar los datos
             form.submit();
         });
 
