@@ -17,13 +17,12 @@
             --dark-green: #374A3A; 
             --accent-gold: #B59B6D; 
             --card-bg: #FFFFFF;
-            --bg-outer: #EAE6DC; /* Color de fondo exterior para pantallas grandes */
+            --bg-outer: #EAE6DC;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         
-        /* El fondo exterior solo se apreciará en pantallas de escritorio */
         body { 
             font-family: 'Inter', sans-serif; 
             background-color: var(--bg-outer); 
@@ -37,15 +36,14 @@
         /* --- MARCO CONTENEDOR PRINCIPAL --- */
         .main-wrapper {
             width: 100%;
-            max-width: 600px; /* Ancho ideal tipo tarjeta vertical para escritorio */
+            max-width: 600px;
             background-color: var(--bg-cream);
             background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png");
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.08); /* Sombra elegante en los lados en PC */
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.08);
             position: relative;
             min-height: 100vh;
         }
 
-        /* Líneas de marco decorativo refinado a los lados (estilo paspartú) */
         .main-wrapper::before {
             content: '';
             position: fixed;
@@ -61,279 +59,75 @@
         h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 500; color: var(--dark-green); }
         .script-font { font-family: 'Pinyon Script', cursive; font-weight: 400; }
 
-        /* --- PANTALLA DE APERTURA (SOBRE INTERACTIVO) --- */
+        /* --- PANTALLA DE APERTURA --- */
         #envelope-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background-color: rgba(248, 246, 240, 0.75); /* Crema semitransparente */
-            backdrop-filter: blur(5px); /* Efecto difuminado tenue al fondo */
+            background-color: rgba(248, 246, 240, 0.75);
+            backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
             z-index: 9999; display: flex; flex-direction: column; 
             align-items: center; justify-content: center;
             transition: opacity 1.2s ease, backdrop-filter 1.2s ease;
         }
 
-        .env-container {
-            position: relative;
-            width: 340px;
-            height: 220px;
-            perspective: 1200px;
-            margin-bottom: 25px;
-            transition: transform 0.3s ease;
-        }
-
-        .envelope {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            box-shadow: 0 25px 55px rgba(0,0,0,0.22);
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        .env-inside {
-            position: absolute;
-            inset: 0;
-            background-color: #1a2e1e;
-            background-image: url("https://www.transparenttextures.com/patterns/floral.png");
-            border-radius: 6px;
-            z-index: 1;
-        }
-
+        .env-container { position: relative; width: 340px; height: 220px; perspective: 1200px; margin-bottom: 25px; transition: transform 0.3s ease; }
+        .envelope { position: relative; width: 100%; height: 100%; box-shadow: 0 25px 55px rgba(0,0,0,0.22); border-radius: 6px; cursor: pointer; }
+        .env-inside { position: absolute; inset: 0; background-color: #1a2e1e; background-image: url("https://www.transparenttextures.com/patterns/floral.png"); border-radius: 6px; z-index: 1; }
+        
         .env-card {
-            position: absolute;
-            top: 12px;
-            left: 15px;
-            width: 310px;
-            height: 196px;
-            background: #FCFAF5;
-            background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png");
-            border-radius: 4px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            z-index: 2;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+            position: absolute; top: 12px; left: 15px; width: 310px; height: 196px;
+            background: #FCFAF5; background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png");
+            border-radius: 4px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); z-index: 2;
+            display: flex; align-items: center; justify-content: center; transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        .card-border {
-            border: 1px solid rgba(118, 137, 115, 0.35);
-            padding: 15px 10px;
-            width: calc(100% - 16px);
-            height: calc(100% - 16px);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-
-        .card-subtitle {
-            font-size: 0.65rem;
-            letter-spacing: 3px;
-            color: var(--accent-gold);
-            font-family: 'Inter', sans-serif;
-            text-transform: uppercase;
-            font-weight: 500;
-        }
-
-        .card-title {
-            font-size: 2.8rem;
-            color: var(--dark-green);
-            margin: 4px 0;
-            line-height: 1.1;
-        }
-
-        .card-line {
-            width: 40px;
-            height: 1px;
-            background: var(--accent-gold);
-            margin: 6px 0;
-        }
-
-        .card-doc {
-            font-size: 0.65rem;
-            letter-spacing: 2px;
-            color: var(--accent-green);
-            font-family: 'Inter', sans-serif;
-            font-weight: 500;
-        }
-
-        .env-pocket {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 3;
-            pointer-events: none;
-            filter: url(#paper-texture) drop-shadow(0 -2px 5px rgba(0,0,0,0.1));
-        }
-
-        .env-flap-wrapper {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 140px;
-            z-index: 4;
-            transform-origin: top center;
-            transition: transform 0.8s ease-in-out;
-        }
-
-        .env-flap {
-            width: 100%;
-            height: 100%;
-            filter: url(#paper-texture) drop-shadow(0 6px 10px rgba(0,0,0,0.25));
-        }
+        .card-border { border: 1px solid rgba(118, 137, 115, 0.35); padding: 15px 10px; width: calc(100% - 16px); height: calc(100% - 16px); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+        .card-subtitle { font-size: 0.65rem; letter-spacing: 3px; color: var(--accent-gold); font-family: 'Inter', sans-serif; text-transform: uppercase; font-weight: 500; }
+        .card-title { font-size: 2.8rem; color: var(--dark-green); margin: 4px 0; line-height: 1.1; }
+        .card-line { width: 40px; height: 1px; background: var(--accent-gold); margin: 6px 0; }
+        .card-doc { font-size: 0.65rem; letter-spacing: 2px; color: var(--accent-green); font-family: 'Inter', sans-serif; font-weight: 500; }
+        .env-pocket { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 3; pointer-events: none; filter: url(#paper-texture) drop-shadow(0 -2px 5px rgba(0,0,0,0.1)); }
+        .env-flap-wrapper { position: absolute; top: 0; left: 0; width: 100%; height: 140px; z-index: 4; transform-origin: top center; transition: transform 0.8s ease-in-out; }
+        .env-flap { width: 100%; height: 100%; filter: url(#paper-texture) drop-shadow(0 6px 10px rgba(0,0,0,0.25)); }
 
         .wax-seal {
-            position: absolute;
-            bottom: -14px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 64px;
-            height: 64px;
-            border-radius: 48% 52% 51% 49% / 53% 48% 52% 47%;
-            background: radial-gradient(circle at 35% 35%, #9cb29b 0%, #6b826a 45%, #465b45 100%);
-            box-shadow: 
-                0 6px 14px rgba(0,0,0,0.35), 
-                inset 0 3px 6px rgba(255,255,255,0.4),
-                inset 0 -4px 8px rgba(0,0,0,0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 5;
-            transition: opacity 0.4s ease, transform 0.3s ease;
+            position: absolute; bottom: -14px; left: 50%; transform: translateX(-50%); width: 64px; height: 64px;
+            border-radius: 48% 52% 51% 49% / 53% 48% 52% 47%; background: radial-gradient(circle at 35% 35%, #9cb29b 0%, #6b826a 45%, #465b45 100%);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.35), inset 0 3px 6px rgba(255,255,255,0.4), inset 0 -4px 8px rgba(0,0,0,0.5);
+            display: flex; align-items: center; justify-content: center; z-index: 5; transition: opacity 0.4s ease, transform 0.3s ease;
         }
         
-        .wax-seal::before {
-            content: '';
-            position: absolute;
-            inset: 5px;
-            border-radius: 50%;
-            background: transparent;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.4), 0 1px 2px rgba(255,255,255,0.3);
-        }
+        .wax-seal::before { content: ''; position: absolute; inset: 5px; border-radius: 50%; background: transparent; box-shadow: inset 0 2px 4px rgba(0,0,0,0.4), 0 1px 2px rgba(255,255,255,0.3); }
+        .seal-inner { width: 42px; height: 42px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.1); background: #5a7059; box-shadow: inset 0 3px 6px rgba(0,0,0,0.45), 0 1px 2px rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; position: relative; }
+        .seal-inner i { color: #728971; text-shadow: -1px -1px 1px rgba(0,0,0,0.5), 1px 1px 1px rgba(255,255,255,0.4); font-size: 1.4rem; }
 
-        .seal-inner {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            border: 1px solid rgba(0,0,0,0.1);
-            background: #5a7059;
-            box-shadow: inset 0 3px 6px rgba(0,0,0,0.45), 0 1px 2px rgba(255,255,255,0.25);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
+        .envelope.open .env-flap-wrapper { transform: rotateX(180deg); z-index: 1; }
+        .envelope.open .wax-seal { opacity: 0; transform: translateX(-50%) scale(0.8); }
+        .envelope.open .env-card { transform: translateY(-165px); z-index: 5; }
 
-        .seal-inner i {
-            color: #728971;
-            text-shadow: -1px -1px 1px rgba(0,0,0,0.5), 1px 1px 1px rgba(255,255,255,0.4);
-            font-size: 1.4rem;
-        }
-
-        .envelope.open .env-flap-wrapper {
-            transform: rotateX(180deg);
-            z-index: 1;
-        }
-
-        .envelope.open .wax-seal {
-            opacity: 0;
-            transform: translateX(-50%) scale(0.8);
-        }
-
-        .envelope.open .env-card {
-            transform: translateY(-165px);
-            z-index: 5;
-        }
-
-        .btn-abrir-sobre {
-            background: transparent; 
-            border: 1px solid var(--accent-green);
-            padding: 12px 35px; 
-            font-family: 'Inter', sans-serif; 
-            font-size: 0.8rem;
-            letter-spacing: 3px; 
-            color: var(--dark-green); 
-            text-transform: uppercase;
-            font-weight: 500;
-            cursor: pointer; 
-            transition: 0.3s; 
-            display: inline-flex; 
-            align-items: center; 
-            gap: 10px;
-            margin-top: 10px;
-        }
+        .btn-abrir-sobre { background: transparent; border: 1px solid var(--accent-green); padding: 12px 35px; font-family: 'Inter', sans-serif; font-size: 0.8rem; letter-spacing: 3px; color: var(--dark-green); text-transform: uppercase; font-weight: 500; cursor: pointer; transition: 0.3s; display: inline-flex; align-items: center; gap: 10px; margin-top: 10px; }
         .btn-abrir-sobre:hover { background: rgba(118, 137, 115, 0.15); }
-
-        .hint-text { 
-            color: var(--accent-green); 
-            font-family: 'Inter', sans-serif; 
-            letter-spacing: 3px; 
-            text-transform: uppercase; 
-            font-size: 0.7rem; 
-            animation: pulse 2s infinite; 
-            margin-top: 15px; 
-        }
+        .hint-text { color: var(--accent-green); font-family: 'Inter', sans-serif; letter-spacing: 3px; text-transform: uppercase; font-size: 0.7rem; animation: pulse 2s infinite; margin-top: 15px; }
         @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
 
         /* --- HERO --- */
-        .hero {
-            min-height: 100vh;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            text-align: center; padding: 50px 20px;
-        }
-
-        .hero-portada {
-            width: 100%;
-            max-width: 440px;
-            margin: 25px 0;
-            border: 12px solid #FFFFFF;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            border-radius: 4px;
-        }
-        .hero-portada img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .typewriter-text {
-            display: block;
-            min-height: 1.2em;
-        }
+        .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 50px 20px; }
+        .hero-portada { width: 100%; max-width: 440px; margin: 25px 0; border: 12px solid #FFFFFF; box-shadow: 0 15px 35px rgba(0,0,0,0.1); border-radius: 4px; }
+        .hero-portada img { width: 100%; height: auto; display: block; }
         
-        .typing-cursor::after {
-            content: '|';
-            color: var(--accent-gold);
-            animation: blink 0.8s infinite;
-            font-weight: 300;
-            margin-left: 2px;
-        }
+        .typewriter-text { display: block; min-height: 1.2em; }
+        .typing-cursor::after { content: '|'; color: var(--accent-gold); animation: blink 0.8s infinite; font-weight: 300; margin-left: 2px; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-
-        .hero-intro-text {
-            font-size: 2.2rem; color: var(--accent-gold); line-height: 1.2; margin-bottom: 10px;
-        }
-
-        .family-names-top { 
-            font-family: 'Inter', sans-serif; font-size: 0.9rem; color: var(--text-dark); letter-spacing: 2px; text-transform: uppercase;
-            margin: 15px 0; display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap;
-        }
-
+        .hero-intro-text { font-size: 2.2rem; color: var(--accent-gold); line-height: 1.2; margin-bottom: 10px; }
+        
+        .family-beltran { font-family: 'Inter', sans-serif; letter-spacing: 3px; font-size: 0.85rem; text-transform: uppercase; color: var(--accent-gold); margin-bottom: 5px; font-weight: 500; }
+        .family-names-top { font-family: 'Inter', sans-serif; font-size: 0.9rem; color: var(--text-dark); letter-spacing: 2px; text-transform: uppercase; margin: 5px 0 15px 0; display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
         .bullet-separator { color: var(--accent-gold); font-size: 0.8rem; }
 
         .hero h1 { font-size: 5rem; color: var(--dark-green); margin: 5px 0; }
         .hero .subtitle { font-size: 3.5rem; color: var(--accent-gold); margin-bottom: 5px; line-height: 1; }
 
-        .date-divider {
-            margin-top: 30px; font-size: 1rem; font-weight: 500; font-family: 'Inter', sans-serif;
-            border-top: 1px solid rgba(55, 74, 58, 0.2); border-bottom: 1px solid rgba(55, 74, 58, 0.2); 
-            padding: 15px 40px; color: var(--text-dark); letter-spacing: 2px; text-transform: uppercase;
-        }
-
+        .date-divider { margin-top: 30px; font-size: 1rem; font-weight: 500; font-family: 'Inter', sans-serif; border-top: 1px solid rgba(55, 74, 58, 0.2); border-bottom: 1px solid rgba(55, 74, 58, 0.2); padding: 15px 40px; color: var(--text-dark); letter-spacing: 2px; text-transform: uppercase; }
         .countdown { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 40px; }
         .time-box { background: var(--card-bg); padding: 15px; border-radius: 12px; min-width: 80px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
         .time-box span { display: block; font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 500; color: var(--dark-green); }
@@ -349,29 +143,13 @@
         .bg-dark-section p { color: #E5E7EB; }
 
         .family-block { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin: 40px 0; }
-        
-        .family-column h4 { 
-            font-family: 'Pinyon Script', cursive; 
-            color: var(--accent-gold); 
-            font-size: 1.8rem; 
-            margin-bottom: 15px; 
-            letter-spacing: normal; 
-            font-weight: 400; 
-        }
-        
+        .family-column h4 { font-family: 'Pinyon Script', cursive; color: var(--accent-gold); font-size: 1.8rem; margin-bottom: 15px; letter-spacing: normal; font-weight: 400; }
         .family-names-list p { font-size: 1.2rem; margin-bottom: 12px; color: var(--text-dark); font-family: 'Playfair Display', serif; font-style: italic; }
-          
         .deceased { display: inline-flex; align-items: center; gap: 8px; color: var(--accent-green); }
         .deceased::after { content: '†'; color: var(--accent-gold); font-family: 'Playfair Display', serif; font-weight: normal; font-size: 1.3rem; }
-          
         .godparents { margin-top: 20px; border-top: 1px solid rgba(55, 74, 58, 0.1); padding-top: 40px; }
 
-        .icon-circle {
-            width: 80px; height: 80px; background: var(--dark-green); color: var(--bg-cream);
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-size: 2rem; margin: 0 auto 20px auto; box-shadow: 0 0 0 8px rgba(55, 74, 58, 0.1);
-        }
-          
+        .icon-circle { width: 80px; height: 80px; background: var(--dark-green); color: var(--bg-cream); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 20px auto; box-shadow: 0 0 0 8px rgba(55, 74, 58, 0.1); }
         .timeline { position: relative; max-width: 100%; margin: 0 auto; padding: 20px 0; }
         .timeline-item { position: relative; margin-bottom: 50px; width: 100%; display: flex; flex-direction: column; align-items: center; background: transparent; }
         .timeline-time { position: absolute; left: 0; top: 30px; font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--accent-gold); font-style: italic; }
@@ -380,125 +158,39 @@
 
         .location-card { background: var(--card-bg); padding: 50px 30px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.04); margin-bottom: 30px; }
         .location-card h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 15px; color: var(--dark-green); }
-          
+
         /* --- GALERÍA ESTILO PILA DE FOTOS --- */
-        .stacked-gallery-container {
-            width: 100%;
-            padding: 40px 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+        .stacked-gallery-container { width: 100%; padding: 40px 0; display: flex; flex-direction: column; align-items: center; }
+        .stacked-gallery { position: relative; width: 280px; height: 380px; }
+        .stacked-card { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; border: 12px solid #FFFFFF; box-shadow: 0 10px 25px rgba(0,0,0,0.15); background-color: var(--card-bg); touch-action: none; user-select: none; -webkit-user-drag: none; cursor: grab; transform-origin: 50% 100%; transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.3s ease; }
+        .stacked-card.dragging { transition: none; cursor: grabbing; }
 
-        .stacked-gallery {
-            position: relative;
-            width: 280px;
-            height: 380px;
-        }
+        .swipe-controls { margin-top: 25px; display: flex; flex-direction: column; align-items: center; gap: 15px; position: relative; z-index: 100; }
+        .btn-undo { background: transparent; border: 1px solid var(--accent-green); color: var(--dark-green); padding: 8px 20px; font-family: 'Inter', sans-serif; font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase; border-radius: 20px; display: inline-flex; align-items: center; gap: 8px; transition: 0.3s ease; opacity: 0.4; cursor: not-allowed; }
+        .btn-undo.active { opacity: 1; cursor: pointer; }
+        .btn-undo:hover { background: rgba(118, 137, 115, 0.1); }
+        .swipe-indicator { font-size: 0.8rem; color: var(--accent-green); letter-spacing: 2px; font-family: 'Inter', sans-serif; text-transform: uppercase; }
+        .swipe-indicator i { display: block; font-size: 1.5rem; margin-bottom: 5px; animation: swipeAnim 2s infinite ease-in-out; color: var(--accent-gold); }
+        @keyframes swipeAnim { 0%, 100% { transform: translateX(0) rotate(0deg); } 50% { transform: translateX(15px) rotate(5deg); } }
 
-        .stacked-card {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border: 12px solid #FFFFFF;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-            background-color: var(--card-bg);
-            
-            touch-action: none; 
-            user-select: none;
-            -webkit-user-drag: none; 
-            
-            cursor: grab;
-            transform-origin: 50% 100%;
-            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.3s ease;
-        }
-
-        .stacked-card.dragging {
-            transition: none; 
-            cursor: grabbing;
-        }
-
-        .swipe-controls {
-            margin-top: 25px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-            position: relative; /* Ajuste: Posiciona la caja sobre las fotos transparentes */
-            z-index: 100; /* Ajuste: Garantiza que el botón siempre sea cliqueable */
-        }
-
-        .btn-undo {
-            background: transparent;
-            border: 1px solid var(--accent-green);
-            color: var(--dark-green);
-            padding: 8px 20px;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.75rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            border-radius: 20px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: 0.3s ease;
-            opacity: 0.4;
-            cursor: not-allowed; 
-        }
-        
-        .btn-undo.active {
-            opacity: 1;
-            cursor: pointer;
-        }
-        
-        .btn-undo:hover {
-            background: rgba(118, 137, 115, 0.1);
-        }
-
-        .swipe-indicator { 
-            font-size: 0.8rem; 
-            color: var(--accent-green); 
-            letter-spacing: 2px; 
-            font-family: 'Inter', sans-serif;
-            text-transform: uppercase;
-        }
-        
-        .swipe-indicator i {
-            display: block;
-            font-size: 1.5rem;
-            margin-bottom: 5px;
-            animation: swipeAnim 2s infinite ease-in-out;
-            color: var(--accent-gold);
-        }
-
-        @keyframes swipeAnim { 
-            0%, 100% { transform: translateX(0) rotate(0deg); } 
-            50% { transform: translateX(15px) rotate(5deg); } 
-        }
-
-        .btn-green {
-            background-color: var(--dark-green); color: var(--bg-cream); padding: 14px 35px; border-radius: 4px; text-decoration: none; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; display: inline-flex; align-items: center; justify-content: center; gap: 10px; margin-top: 20px; font-size: 0.85rem; border: 1px solid var(--dark-green); transition: 0.3s; font-family: 'Inter', sans-serif;
-        }
+        /* --- BOTONES --- */
+        .btn-green { background-color: var(--dark-green); color: var(--bg-cream); padding: 14px 35px; border-radius: 4px; text-decoration: none; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; display: inline-flex; align-items: center; justify-content: center; gap: 10px; margin-top: 20px; font-size: 0.85rem; border: 1px solid var(--dark-green); transition: 0.3s; font-family: 'Inter', sans-serif; cursor: pointer; }
         .btn-green:hover { background-color: transparent; color: var(--dark-green); }
-          
         .btn-outline-light { background: transparent; border: 1px solid var(--bg-cream); color: var(--bg-cream); }
         .btn-outline-light:hover { background: var(--bg-cream); color: var(--dark-green); }
 
+        /* --- ESTILOS PARA SUBIDA DE FOTOS --- */
+        .upload-container { background: var(--card-bg); padding: 40px 20px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.04); max-width: 500px; margin: 0 auto; border: 1px solid rgba(181, 155, 109, 0.2); }
+        .preview-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 10px; margin-top: 20px; margin-bottom: 20px; }
+        .preview-img { width: 100%; height: 80px; object-fit: cover; border-radius: 8px; border: 2px solid var(--bg-outer); }
+
         @media (max-width: 768px) {
-            .main-wrapper::before { display: none; } /* Ocultar marco lineal interno en móvil */
+            .main-wrapper::before { display: none; }
             .family-block { grid-template-columns: 1fr; gap: 30px; }
             .hero h1 { font-size: 4rem; }
             .hero .subtitle { font-size: 3.5rem; }
             .timeline-time { position: relative; top: 0; margin-bottom: 20px; text-align: center; }
-            
-            /* --- CORRECCIÓN CRÍTICA: ICONO DE MÚSICA FLOTANTE EN MÓVIL --- */
-            .music-btn {
-                right: 20px !important; /* Lo fija de forma segura a la derecha de la pantalla del celular */
-                bottom: 20px !important;
-            }
+            .music-btn { right: 20px !important; bottom: 20px !important; }
         }
     </style>
 </head>
@@ -563,7 +255,7 @@
             <p class="hint-text">Toca el sobre para abrir</p>
         </div>
 
-        <header class="hero">
+ <header class="hero">
             <p class="script-font hero-intro-text">Con la bendición de Dios y nuestros hijos</p>
               
             <p class="family-names-top">
@@ -593,7 +285,6 @@
                 <div class="time-box"><span id="secs">00</span><p>Seg</p></div>
             </div>
         </header>
-
         <section>
             <p class="section-subtitle"></p>
             <h2 class="section-title">Nuestras Raíces</h2>
@@ -602,7 +293,7 @@
                 <div class="family-column">
                     <h4>Padres de la Novia</h4>
                     <div class="family-names-list">
-                        <p>Ma. Perfecta Lopez Barcenas</p>
+                        <p>Ma. Perfecta López Barcenas</p>
                         <p class="deceased">Salvador Jaime Quiroz Fraga</p>
                     </div>
                 </div>
@@ -738,6 +429,41 @@
             </div>
         </section>
 
+        <section id="seccion-espera-fotos">
+            <h2 class="section-title" style="font-size: 3.2rem;">Captura el Momento</h2>
+            <div class="icon-circle" style="background: transparent; color: var(--dark-green); border: 1px solid var(--accent-green); margin-bottom: 20px;">
+                <i class="fa-solid fa-camera-retro"></i>
+            </div>
+            <p style="font-family: 'Inter', sans-serif; font-weight: 300; color: var(--text-dark); margin-bottom: 10px; font-size: 1.1rem;">
+                Ayúdanos a guardar cada recuerdo de esta gran noche.
+            </p>
+            <p style="font-family: 'Inter', sans-serif; font-weight: 500; color: var(--accent-gold); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">
+                Esta sección se activará el día del evento para que puedas subir tus fotos directamente a nuestro álbum digital.
+            </p>
+        </section>
+
+        <section id="seccion-subir-fotos" style="display: none;">
+            <p class="section-subtitle">Desde tu perspectiva</p>
+            <h2 class="section-title" style="font-size: 3.2rem;">Sube tus Fotos</h2>
+            <p style="font-family: 'Inter', sans-serif; font-weight: 300; color: var(--text-dark); margin-bottom: 30px; font-size: 1.1rem;">
+                Selecciona las fotos que tomaste y compártelas con nosotros.
+            </p>
+            
+            <div class="upload-container">
+                <input type="file" id="foto-input" accept="image/*" multiple style="display: none;">
+                <button type="button" class="btn-green" onclick="document.getElementById('foto-input').click()">
+                    <i class="fa-solid fa-images"></i> Elegir Fotos
+                </button>
+                
+                <div id="preview-container" class="preview-grid"></div>
+                
+                <button type="button" id="btn-enviar-fotos" class="btn-green" style="display: none; background-color: var(--accent-gold); border-color: var(--accent-gold); width: 100%;">
+                    <i class="fa-solid fa-cloud-arrow-up"></i> Enviar a los Novios
+                </button>
+                <p id="upload-status" style="margin-top: 15px; font-family: 'Inter', sans-serif; font-size: 0.85rem; color: var(--accent-green); font-weight: 500;"></p>
+            </div>
+        </section>
+
         <section class="bg-dark-section" style="margin-bottom: 50px;">
             <h2 class="section-title">Confirma tu Asistencia</h2>
             <p style="font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; margin-bottom: 40px; color: var(--accent-gold);">Ayúdanos a preparar cada detalle con amor — tu presencia lo significa todo para nosotros.</p>
@@ -834,39 +560,33 @@
         const urlParams = new URLSearchParams(window.location.search);
         const invitado = urlParams.get('invitado') || "Invitado de Honor";
         const pases = urlParams.get('pases') || "2";
-        const mesa = urlParams.get('mesa') || ""; // Extraer el parámetro de la mesa
+        const mesa = urlParams.get('mesa') || ""; 
 
         document.getElementById('nombre-invitado').innerText = invitado;
         document.getElementById('num-pases').innerText = pases;
         
-        // Si hay una mesa asignada, mostrar el contenedor visualmente
         if (mesa) {
             document.getElementById('num-mesa').innerText = mesa;
             document.getElementById('contenedor-mesa').style.display = 'block';
         }
 
-        // Agregar la mesa al QR solo si existe
         const qrMesaData = mesa ? `-${mesa}` : '';
         document.getElementById('qr-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=CA25-${encodeURIComponent(invitado)}-${pases}${qrMesaData}`;
         
-        // --- TU GOOGLE FORMS REAL ---
         const BASE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLScw4OIlrWiH6vLhfgRb1h7muYFI1xOFEykHSbARY9f02FCEoA/viewform";
-        
-        // IDs extraídos de tu cadena proporcionada
         const idCampoInvitado = "entry.192369526"; 
         const idCampoPases = "entry.597904299";    
         const idCampoConfirmacion = "entry.2052817495"; 
         
         const btnConfirmar = document.getElementById('btn-confirmar');
 
-        // VERIFICAR SI YA CONFIRMÓ ANTES EN ESTE DISPOSITIVO
         if (localStorage.getItem('confirmado_' + invitado)) {
             btnConfirmar.innerHTML = '<i class="fa-solid fa-check-double"></i> Ya Confirmaste';
             btnConfirmar.style.backgroundColor = '#25d366'; 
             btnConfirmar.style.borderColor = '#25d366';
             btnConfirmar.style.color = '#fff';
-            btnConfirmar.style.pointerEvents = 'none'; // Deshabilita los clics
-            btnConfirmar.style.opacity = '0.7'; // Le da un efecto visual de "apagado"
+            btnConfirmar.style.pointerEvents = 'none'; 
+            btnConfirmar.style.opacity = '0.7'; 
         }
         
         btnConfirmar.addEventListener('click', function(e) {
@@ -875,7 +595,6 @@
             btnConfirmar.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Confirmando...';
             btnConfirmar.style.pointerEvents = 'none'; 
 
-            // 1. Crear el iframe invisible si no existe
             let iframe = document.getElementById('hidden_iframe');
             if (!iframe) {
                 iframe = document.createElement('iframe');
@@ -885,7 +604,6 @@
                 document.body.appendChild(iframe);
             }
 
-            // 2. Crear el formulario invisible apuntando al action correcto
             let form = document.getElementById('hidden_form');
             if (!form) {
                 form = document.createElement('form');
@@ -898,11 +616,10 @@
 
             form.innerHTML = '';
 
-            // 3. Crear los campos requeridos
             const inputs = [
                 { name: idCampoInvitado, value: invitado },
                 { name: idCampoPases, value: pases },
-                { name: idCampoConfirmacion, value: 'Sí, asistiré' } // Valor exacto para evitar el bloqueo
+                { name: idCampoConfirmacion, value: 'Sí, asistiré' } 
             ];
 
             inputs.forEach(inputData => {
@@ -913,20 +630,15 @@
                 form.appendChild(input);
             });
 
-            // 4. Esperar la respuesta nativa de Google
             iframe.onload = function() {
-                // GUARDAR CONFIRMACIÓN EN EL CELULAR
                 localStorage.setItem('confirmado_' + invitado, 'true');
-
-                // ACTUALIZAR Y BLOQUEAR EL BOTÓN
                 btnConfirmar.innerHTML = '<i class="fa-solid fa-check"></i> ¡Asistencia Confirmada!';
                 btnConfirmar.style.backgroundColor = '#25d366'; 
                 btnConfirmar.style.borderColor = '#25d366';
                 btnConfirmar.style.color = '#fff';
-                btnConfirmar.style.pointerEvents = 'none'; // Evitar doble clic permanente
+                btnConfirmar.style.pointerEvents = 'none'; 
             };
 
-            // Enviar los datos
             form.submit();
         });
 
@@ -942,11 +654,9 @@
             }
         }, 1000);
 
-        /* --- CONFIGURACIÓN DE TU REPOSITORIO DE GITHUB --- */
         const GITHUB_USER = "clauyandres"; 
         const GITHUB_REPO = "felicesporsiempremx"; 
 
-        /* --- LÓGICA DE PILA DE FOTOS DINÁMICA --- */
         const stackContainer = document.getElementById('stacked-gallery');
         const undoButton = document.getElementById('btn-undo');
         let cards = [];
@@ -1137,6 +847,103 @@
         }
 
         loadGalleryAutomatically();
+
+        /* --- LÓGICA DE SUBIDA DE FOTOS A DRIVE --- */
+        const seccionEspera = document.getElementById('seccion-espera-fotos');
+        const seccionSubir = document.getElementById('seccion-subir-fotos');
+        
+        const diaDelEvento = new Date('Dec 19, 2026 00:00:00').getTime();
+        const testFotosActivo = urlParams.has('test_fotos'); 
+
+        if (new Date().getTime() >= diaDelEvento || testFotosActivo) {
+            seccionEspera.style.display = 'none';
+            seccionSubir.style.display = 'block';
+        }
+
+        const fotoInput = document.getElementById('foto-input');
+        const previewContainer = document.getElementById('preview-container');
+        const btnEnviarFotos = document.getElementById('btn-enviar-fotos');
+        const uploadStatus = document.getElementById('upload-status');
+        
+        const GOOGLE_SCRIPT_URL = "TU_URL_DE_APPS_SCRIPT_AQUI"; 
+        let fotosSeleccionadas = [];
+
+        fotoInput.addEventListener('change', function(e) {
+            fotosSeleccionadas = Array.from(e.target.files);
+            previewContainer.innerHTML = '';
+            
+            if(fotosSeleccionadas.length > 0) {
+                btnEnviarFotos.style.display = 'inline-flex';
+                
+                fotosSeleccionadas.forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        const img = document.createElement('img');
+                        img.src = event.target.result;
+                        img.className = 'preview-img';
+                        previewContainer.appendChild(img);
+                    }
+                    reader.readAsDataURL(file);
+                });
+            } else {
+                btnEnviarFotos.style.display = 'none';
+            }
+        });
+
+        btnEnviarFotos.addEventListener('click', async function() {
+            if (fotosSeleccionadas.length === 0) return;
+            
+            btnEnviarFotos.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Subiendo...';
+            btnEnviarFotos.style.pointerEvents = 'none';
+            uploadStatus.innerText = `Subiendo 0 de ${fotosSeleccionadas.length}...`;
+            
+            let subidasExitosas = 0;
+
+            for (let i = 0; i < fotosSeleccionadas.length; i++) {
+                const file = fotosSeleccionadas[i];
+                const reader = new FileReader();
+                
+                await new Promise((resolve) => {
+                    reader.onload = async function(event) {
+                        const base64Data = event.target.result.split(',')[1]; 
+                        
+                        try {
+                            const response = await fetch(GOOGLE_SCRIPT_URL, {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                                body: new URLSearchParams({
+                                    fileName: file.name,
+                                    mimeType: file.type,
+                                    fileData: base64Data
+                                })
+                            });
+                            subidasExitosas++;
+                            uploadStatus.innerText = `Subiendo ${subidasExitosas} de ${fotosSeleccionadas.length}...`;
+                        } catch (error) {
+                            console.error("Error al subir:", error);
+                        }
+                        resolve();
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+
+            btnEnviarFotos.innerHTML = '<i class="fa-solid fa-check"></i> ¡Gracias!';
+            btnEnviarFotos.style.backgroundColor = '#25d366';
+            btnEnviarFotos.style.borderColor = '#25d366';
+            uploadStatus.innerText = "Las fotos se han guardado en nuestro baúl de recuerdos.";
+            
+            setTimeout(() => {
+                previewContainer.innerHTML = '';
+                btnEnviarFotos.style.display = 'none';
+                btnEnviarFotos.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Enviar a los Novios';
+                btnEnviarFotos.style.backgroundColor = 'var(--accent-gold)';
+                btnEnviarFotos.style.borderColor = 'var(--accent-gold)';
+                btnEnviarFotos.style.pointerEvents = 'auto';
+                uploadStatus.innerText = "";
+                fotosSeleccionadas = [];
+            }, 5000);
+        });
     </script>
 </body>
 </html>
