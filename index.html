@@ -748,7 +748,7 @@
                 
                 <p style="font-family: 'Inter', sans-serif; margin-bottom: 30px; font-weight: 300; color: var(--bg-cream);">Pases reservados: <span id="num-pases" style="font-weight: 600; color: var(--accent-gold);">2</span></p>
                 
-                <a href="#" id="btn-confirmar" target="_blank" class="btn-green btn-outline-light">Confirmar Asistencia Digital</a>
+                <a href="#" id="btn-confirmar" class="btn-green btn-outline-light">Confirmar Asistencia Digital</a>
             </div>
         </section>
 
@@ -822,7 +822,7 @@
             typeLine();
         }
 
-        /* --- LÓGICA DE CONFIRMACIÓN INVISIBLE --- */
+        /* --- LÓGICA DE CONFIRMACIÓN INVISIBLE (MÉTODO INFALIBLE) --- */
         const urlParams = new URLSearchParams(window.location.search);
         const invitado = urlParams.get('invitado') || "Invitado de Honor";
         const pases = urlParams.get('pases') || "2";
@@ -832,49 +832,65 @@
         
         document.getElementById('qr-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=CA25-${encodeURIComponent(invitado)}-${pases}`;
         
-        // --- TU GOOGLE FORMS REAL ---
-        const BASE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLScw4OIlrWiH6vLhfgRb1h7muYFI1xOFEykHSbARY9f02FCEoA/viewform";
-        
-        // Tus IDs exactos extraídos del enlace
-        const idCampoInvitado = "entry.192369526"; 
-        const idCampoPases = "entry.597904299";    
-        const idCampoConfirmacion = "entry.2052817495"; 
-        const idCampoExtra = "entry.44556970"; 
-        
         const btnConfirmar = document.getElementById('btn-confirmar');
         
         btnConfirmar.addEventListener('click', function(e) {
-            e.preventDefault(); // Evita que se abra otra pestaña
+            e.preventDefault();
             
+            // Cambiar estado visual del botón
             btnConfirmar.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Confirmando...';
             btnConfirmar.style.pointerEvents = 'none'; 
 
-            const formActionURL = BASE_FORM_URL.replace('/viewform', '/formResponse');
-            
-            const formData = new URLSearchParams();
-            formData.append(idCampoInvitado, invitado);
-            formData.append(idCampoPases, pases);
-            
-            // Llenamos las preguntas extra de tu formulario en automático
-            formData.append(idCampoConfirmacion, "Sí, asistiré"); 
-            formData.append(idCampoExtra, pases); 
+            // 1. Crear el marco iframe invisible en la memoria del DOM
+            let iframe = document.getElementById('hidden_iframe');
+            if (!iframe) {
+                iframe = document.createElement('iframe');
+                iframe.name = 'hidden_iframe';
+                iframe.id = 'hidden_iframe';
+                iframe.style.display = 'none';
+                document.body.appendChild(iframe);
+            }
 
-            fetch(formActionURL, {
-                method: 'POST',
-                mode: 'no-cors', // El truco para que sea silencioso
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: formData
-            }).then(() => {
+            // 2. Crear el contenedor de formulario invisible
+            let form = document.getElementById('hidden_form');
+            if (!form) {
+                form = document.createElement('form');
+                form.id = 'hidden_form';
+                form.action = 'https://docs.google.com/forms/d/e/1FAIpQLScw4OIlrWiH6vLhfgRb1h7muYFI1xOFEykHSbARY9f02FCEoA/formResponse';
+                form.method = 'POST';
+                form.target = 'hidden_iframe'; // Fuerza el redireccionamiento al iframe oculto
+                document.body.appendChild(form);
+            }
+
+            // Limpieza interna preventiva de campos duplicados
+            form.innerHTML = '';
+
+            // 3. Empaquetar las entradas con tus identificadores entry exactos
+            const inputs = [
+                { name: 'entry.192369526', value: invitado },
+                { name: 'entry.597904299', value: pases },
+                { name: 'entry.2052817495', value: 'Sí, asistiré' },
+                { name: 'entry.44556970', value: pases }
+            ];
+
+            inputs.forEach(inputData => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = inputData.name;
+                input.value = inputData.value;
+                form.appendChild(input);
+            });
+
+            // 4. Capturar el evento de retorno de Google Forms para confirmar visualmente
+            iframe.onload = function() {
                 btnConfirmar.innerHTML = '<i class="fa-solid fa-check"></i> ¡Asistencia Confirmada!';
                 btnConfirmar.style.backgroundColor = '#25d366'; 
                 btnConfirmar.style.borderColor = '#25d366';
                 btnConfirmar.style.color = '#fff';
-            }).catch(err => {
-                btnConfirmar.innerHTML = 'Error. Intentar de nuevo';
-                btnConfirmar.style.pointerEvents = 'auto';
-            });
+            };
+
+            // Disparar envío nativo
+            form.submit();
         });
 
         const targetDate = new Date('Dec 19, 2026 16:30:00').getTime();
@@ -988,7 +1004,6 @@
                 card.style.transform = `translateY(${translateY}px) scale(${scale}) rotate(${baseRot}deg)`;
                 card.style.opacity = distance > 3 ? '0' : '1';
                 
-                // Ajuste crítico: Solo la foto de arriba registra toques. Esto evita el bloqueo invisible del botón.
                 card.style.pointerEvents = isTop ? 'auto' : 'none';
 
                 if (isTop) {
@@ -1040,11 +1055,11 @@
                 const discardedCard = activeCard;
                 discardedCard.style.transform = `translate(${throwX}px, ${throwY}px) rotate(${currentX * 0.1}deg)`;
                 discardedCard.style.opacity = '0';
-                discardedCard.style.pointerEvents = 'none'; // Evita que la carta tirada bloquee toques en la pantalla
+                discardedCard.style.pointerEvents = 'none'; 
                 
                 setTimeout(() => {
-                    const poppedCard = cards.pop(); // Saca la foto de arriba
-                    historyStack.push(poppedCard);  // La manda al historial de deshacer
+                    const poppedCard = cards.pop(); 
+                    historyStack.push(poppedCard);  
                     
                     updateUndoButtonState();
                     updateCardStack();
@@ -1061,9 +1076,9 @@
         function undoSwipe() {
             if (!undoButton.classList.contains('active') || historyStack.length === 0) return;
             
-            const lastCard = historyStack.pop(); // Trae la última foto del historial
+            const lastCard = historyStack.pop(); 
             
-            cards.push(lastCard); // La inserta directo en la cima de la pila activa
+            cards.push(lastCard); 
             
             lastCard.style.transition = 'none';
             lastCard.style.transform = `translate(-250px, -50px) rotate(-15deg)`;
