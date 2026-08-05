@@ -753,7 +753,8 @@
                     <img id="qr-img" src="" alt="QR" style="width: 100%;">
                 </div>
                 
-                <p style="font-family: 'Inter', sans-serif; margin-bottom: 30px; font-weight: 300; color: var(--bg-cream);">Pases reservados: <span id="num-pases" style="font-weight: 600; color: var(--accent-gold);">2</span></p>
+                <p style="font-family: 'Inter', sans-serif; margin-bottom: 10px; font-weight: 300; color: var(--bg-cream);">Pases reservados: <span id="num-pases" style="font-weight: 600; color: var(--accent-gold);">2</span></p>
+                <p id="contenedor-mesa" style="font-family: 'Inter', sans-serif; margin-bottom: 30px; font-weight: 300; color: var(--bg-cream); display: none;">Mesa asignada: <span id="num-mesa" style="font-weight: 600; color: var(--accent-gold);">0</span></p>
                 
                 <a href="#" id="btn-confirmar" class="btn-green btn-outline-light">Confirmar Asistencia Digital</a>
             </div>
@@ -833,11 +834,20 @@
         const urlParams = new URLSearchParams(window.location.search);
         const invitado = urlParams.get('invitado') || "Invitado de Honor";
         const pases = urlParams.get('pases') || "2";
+        const mesa = urlParams.get('mesa') || ""; // Extraer el parámetro de la mesa
 
         document.getElementById('nombre-invitado').innerText = invitado;
         document.getElementById('num-pases').innerText = pases;
         
-        document.getElementById('qr-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=CA25-${encodeURIComponent(invitado)}-${pases}`;
+        // Si hay una mesa asignada, mostrar el contenedor visualmente
+        if (mesa) {
+            document.getElementById('num-mesa').innerText = mesa;
+            document.getElementById('contenedor-mesa').style.display = 'block';
+        }
+
+        // Agregar la mesa al QR solo si existe
+        const qrMesaData = mesa ? `-${mesa}` : '';
+        document.getElementById('qr-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=CA25-${encodeURIComponent(invitado)}-${pases}${qrMesaData}`;
         
         // --- TU GOOGLE FORMS REAL ---
         const BASE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLScw4OIlrWiH6vLhfgRb1h7muYFI1xOFEykHSbARY9f02FCEoA/viewform";

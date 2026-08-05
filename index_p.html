@@ -40,7 +40,7 @@
         
         <div style="margin-top: 30px;">
             <h2><i class="fa-solid fa-file-csv"></i> Carga Masiva de Invitados (CSV)</h2>
-            <p style="font-size: 0.85rem; color: #64748b;">Sube un archivo CSV con las columnas: <code>telefono, nombre, pases, mensaje</code></p>
+            <p style="font-size: 0.85rem; color: #64748b;">Sube un archivo CSV con las columnas estrictamente en este orden: <code>telefono, nombre, pases, mesa, mensaje</code></p>
             
             <div class="csv-box">
                 <input type="file" id="input-csv" accept=".csv" style="margin-bottom: 15px;">
@@ -55,6 +55,7 @@
                         <tr>
                             <th>Invitado</th>
                             <th>Pases</th>
+                            <th>Mesa</th>
                             <th>Teléfono</th>
                             <th>Acción</th>
                         </tr>
@@ -72,9 +73,15 @@
                 <label>Nombre del Invitado / Familia</label>
                 <input type="text" id="input-nombre" placeholder="Ej. Familia Martínez Pérez">
             </div>
-            <div class="form-group">
-                <label>Número de Pases Asignados</label>
-                <input type="number" id="input-pases" value="2" min="1">
+            <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div>
+                    <label>Número de Pases Asignados</label>
+                    <input type="number" id="input-pases" value="2" min="1">
+                </div>
+                <div>
+                    <label>Mesa Asignada (Opcional)</label>
+                    <input type="number" id="input-mesa" placeholder="Ej. 5" min="1">
+                </div>
             </div>
             <button onclick="generarInvitacion()"><i class="fa-solid fa-link"></i> Generar Enlace Único</button>
 
@@ -116,7 +123,6 @@
                 const tablaBody = document.getElementById('tabla-csv-body');
                 tablaBody.innerHTML = "";
 
-                // Detectar automáticamente la URL de la invitación
                 const urlBase = window.location.href.includes('index_p.html') 
                     ? window.location.href.replace('index_p.html', 'index.html')
                     : 'index.html';
@@ -127,29 +133,29 @@
                     const linea = lineas[i].trim();
                     if (!linea) continue;
 
-                    // Omitir la primera línea si son encabezados
                     if (i === 0 && (linea.toLowerCase().includes('nombre') || linea.toLowerCase().includes('telefono'))) {
                         continue;
                     }
 
-                    // Separar columnas respetando comas
                     const partes = linea.split(',').map(p => p.trim().replace(/^"|"$/g, ''));
                     
                     const telefono = partes[0] || '';
                     const nombre = partes[1] || '';
                     const pases = partes[2] || '2';
-                    const mensaje = partes[3] || '¡Hola! Nos llena de alegría invitarte a celebrar con nosotros nuestras Bodas de Plata.';
+                    const mesa = partes[3] || ''; // Nuevo campo: Mesa
+                    const mensaje = partes[4] || '¡Hola! Nos llena de alegría invitarte a celebrar con nosotros nuestras Bodas de Plata.';
 
                     if (!nombre || !telefono) continue;
 
-                    // Construir URL de la invitación
-                    const urlInvitacion = `${urlBase}?invitado=${encodeURIComponent(nombre)}&pases=${pases}`;
+                    // Construir URL de la invitación incluyendo la mesa si existe
+                    let urlInvitacion = `${urlBase}?invitado=${encodeURIComponent(nombre)}&pases=${pases}`;
+                    if(mesa) {
+                        urlInvitacion += `&mesa=${encodeURIComponent(mesa)}`;
+                    }
                     
-                    // Construir mensaje completo para WhatsApp
                     const mensajeWhatsApp = `${mensaje}\n\nAquí tienes tu pase de acceso exclusivo:\n${urlInvitacion}`;
                     const linkWA = `https://wa.me/${telefono.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(mensajeWhatsApp)}`;
 
-                    // Registrar en lista local
                     if(!localStorage.getItem(`confirma-${nombre}`)) {
                         localStorage.setItem(`confirma-${nombre}`, 'Pendiente');
                     }
@@ -158,6 +164,7 @@
                         <tr>
                             <td><strong>${nombre}</strong></td>
                             <td>${pases}</td>
+                            <td>${mesa || '-'}</td>
                             <td>${telefono}</td>
                             <td>
                                 <a href="${linkWA}" target="_blank" class="btn-wa">
@@ -185,6 +192,7 @@
         function generarInvitacion() {
             const nombre = document.getElementById('input-nombre').value;
             const pases = document.getElementById('input-pases').value;
+            const mesa = document.getElementById('input-mesa').value;
             
             if(!nombre) return alert("Por favor escribe un nombre");
 
@@ -192,7 +200,10 @@
                 ? window.location.href.replace('index_p.html', 'index.html')
                 : 'index.html';
 
-            const urlFinal = `${urlBase}?invitado=${encodeURIComponent(nombre)}&pases=${pases}`;
+            let urlFinal = `${urlBase}?invitado=${encodeURIComponent(nombre)}&pases=${pases}`;
+            if(mesa) {
+                urlFinal += `&mesa=${encodeURIComponent(mesa)}`;
+            }
 
             document.getElementById('resultado-enlace').style.display = "block";
             document.getElementById('url-texto').innerText = urlFinal;
