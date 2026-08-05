@@ -709,15 +709,22 @@
         </section>
 
         <section class="bg-dark-section">
-            <p class="section-subtitle">Para luccir radiantes</p>
+            <p class="section-subtitle">Para lucir radiantes</p>
             <h2 class="section-title">Vestimenta</h2>
-            <p style="font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: 3px; font-size: 1.2rem; margin-bottom: 30px; font-weight: 500; color: var(--bg-cream);">Etiqueta Formal</p>
+            <p style="font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: 3px; font-size: 1.2rem; margin-bottom: 30px; font-weight: 500; color: var(--bg-cream);">Formal</p>
               
-            <div style="background: white; border-radius: 16px; padding: 30px; margin: 0 auto 30px auto; max-width: 400px; color: var(--dark-green);">
+            <div style="background: white; border-radius: 16px; padding: 30px; margin: 0 auto 30px auto; max-width: 450px; color: var(--dark-green);">
                 <i class="fa-solid fa-user-tie" style="font-size: 3rem; margin-bottom: 15px;"></i>
-                <p style="font-family: 'Inter', sans-serif; font-weight: 300; color: var(--text-dark); line-height: 1.6;">Damas: Vestido largo elegante.<br>Caballeros: Traje oscuro o Esmoquin.</p>
+                <p style="font-family: 'Inter', sans-serif; font-weight: 300; color: var(--text-dark); line-height: 1.6; margin-bottom: 15px;">
+                    <strong>Damas:</strong> Vestimenta formal.<br>
+                    <strong>Caballeros:</strong> Formal.
+                </p>
+                <div style="border-top: 1px solid #e2e8f0; padding-top: 15px; font-size: 0.85rem; color: #475569;">
+                    <i class="fa-solid fa-palette" style="color: var(--accent-gold); margin-bottom: 5px; font-size: 1.2rem;"></i><br>
+                    <strong>Nota para las damas:</strong> Les pedimos amablemente evitar los colores <em>blanco, beige y plata</em> (exclusivos de la novia), así como el <em>ocre</em> (reservado para las damas de honor).
+                </div>
             </div>
-            <p style="font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; color: var(--accent-gold);">Ayúdanos a lucir radiantes vistiendo de gala. ¡Tu elegancia hará la noche aún más especial!</p>
+            <p style="font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; color: var(--accent-gold);">¡Tu presencia y elegancia harán la noche aún más especial!</p>
         </section>
 
         <section>
@@ -832,14 +839,25 @@
         
         document.getElementById('qr-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=CA25-${encodeURIComponent(invitado)}-${pases}`;
         
-        // --- TU GOOGLE FORMS REAL (El que termina en OzvrAVd4) ---
-        const BASE_FORM_URL = "https://docs.google.com/forms/d/14tNQD2GA5MLZokcpOxa5vEuMtHqpLbtisxmOzvrAVd4/viewform";
+        // --- TU GOOGLE FORMS REAL ---
+        const BASE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLScw4OIlrWiH6vLhfgRb1h7muYFI1xOFEykHSbARY9f02FCEoA/viewform";
         
-        // IDs Reales para tu formulario de dos preguntas:
-        const idCampoInvitado = "entry.111111118"; 
-        const idCampoPases = "entry.222222222";    
+        // IDs extraídos de tu cadena proporcionada
+        const idCampoInvitado = "entry.192369526"; 
+        const idCampoPases = "entry.597904299";    
+        const idCampoConfirmacion = "entry.2052817495"; 
         
         const btnConfirmar = document.getElementById('btn-confirmar');
+
+        // VERIFICAR SI YA CONFIRMÓ ANTES EN ESTE DISPOSITIVO
+        if (localStorage.getItem('confirmado_' + invitado)) {
+            btnConfirmar.innerHTML = '<i class="fa-solid fa-check-double"></i> Ya Confirmaste';
+            btnConfirmar.style.backgroundColor = '#25d366'; 
+            btnConfirmar.style.borderColor = '#25d366';
+            btnConfirmar.style.color = '#fff';
+            btnConfirmar.style.pointerEvents = 'none'; // Deshabilita los clics
+            btnConfirmar.style.opacity = '0.7'; // Le da un efecto visual de "apagado"
+        }
         
         btnConfirmar.addEventListener('click', function(e) {
             e.preventDefault();
@@ -870,10 +888,11 @@
 
             form.innerHTML = '';
 
-            // 3. Crear los campos requeridos basados en tus dos únicas preguntas
+            // 3. Crear los campos requeridos
             const inputs = [
                 { name: idCampoInvitado, value: invitado },
-                { name: idCampoPases, value: pases }
+                { name: idCampoPases, value: pases },
+                { name: idCampoConfirmacion, value: 'Sí, asistiré' } // Valor exacto para evitar el bloqueo
             ];
 
             inputs.forEach(inputData => {
@@ -886,10 +905,15 @@
 
             // 4. Esperar la respuesta nativa de Google
             iframe.onload = function() {
+                // GUARDAR CONFIRMACIÓN EN EL CELULAR
+                localStorage.setItem('confirmado_' + invitado, 'true');
+
+                // ACTUALIZAR Y BLOQUEAR EL BOTÓN
                 btnConfirmar.innerHTML = '<i class="fa-solid fa-check"></i> ¡Asistencia Confirmada!';
                 btnConfirmar.style.backgroundColor = '#25d366'; 
                 btnConfirmar.style.borderColor = '#25d366';
                 btnConfirmar.style.color = '#fff';
+                btnConfirmar.style.pointerEvents = 'none'; // Evitar doble clic permanente
             };
 
             // Enviar los datos
