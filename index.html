@@ -160,28 +160,26 @@
         .location-card h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 15px; color: var(--dark-green); }
 
         /* --- GALERÍA ESTILO PILA DE FOTOS --- */
-               
         .stacked-gallery-container { width: 100%; padding: 40px 0; display: flex; flex-direction: column; align-items: center; }
         .stacked-gallery { position: relative; width: 280px; height: 380px; }
         .stacked-card { 
-        position: absolute; 
-        top: 0; 
-        left: 0; 
-        width: 100%; 
-        height: 100%; 
-        object-fit: contain; 
-        background-color: #1a1a1a; /* Un fondo oscuro o neutro elegante */
-        border: 12px solid #FFFFFF; 
-        box-shadow: 0 10px 25px rgba(0,0,0,0.15); 
-        touch-action: none; 
-        user-select: none; 
-        -webkit-user-drag: none; 
-        cursor: grab; 
-        transform-origin: 50% 100%; 
-        transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.3s ease; 
-    }
-	    .stacked-card.dragging { transition: none; cursor: grabbing; }
-
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            object-fit: contain; 
+            background-color: #1a1a1a; 
+            border: 12px solid #FFFFFF; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15); 
+            touch-action: none; 
+            user-select: none; 
+            -webkit-user-drag: none; 
+            cursor: grab; 
+            transform-origin: 50% 100%; 
+            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.3s ease; 
+        }
+        .stacked-card.dragging { transition: none; cursor: grabbing; }
 
         .swipe-controls { margin-top: 25px; display: flex; flex-direction: column; align-items: center; gap: 15px; position: relative; z-index: 100; }
         .btn-undo { background: transparent; border: 1px solid var(--accent-green); color: var(--dark-green); padding: 8px 20px; font-family: 'Inter', sans-serif; font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase; border-radius: 20px; display: inline-flex; align-items: center; gap: 8px; transition: 0.3s ease; opacity: 0.4; cursor: not-allowed; }
@@ -192,10 +190,38 @@
         @keyframes swipeAnim { 0%, 100% { transform: translateX(0) rotate(0deg); } 50% { transform: translateX(15px) rotate(5deg); } }
 
         /* --- BOTONES --- */
-        .btn-green { background-color: var(--dark-green); color: var(--bg-cream); padding: 14px 35px; border-radius: 4px; text-decoration: none; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; display: inline-flex; align-items: center; justify-content: center; gap: 10px; margin-top: 20px; font-size: 0.85rem; border: 1px solid var(--dark-green); transition: 0.3s; font-family: 'Inter', sans-serif; cursor: pointer; }
+        .btn-green { background-color: var(--dark-green); color: var(--bg-cream); padding: 14px 35px; border-radius: 4px; text-decoration: none; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; display: inline-flex; align-items: center; justify-content: center; gap: 10px; margin-top: 20px; font-size: 0.85rem; border: 1px solid var(--dark-green); transition: 0.3s; font-family: 'Inter', sans-serif; cursor: pointer; width: 100%; }
         .btn-green:hover { background-color: transparent; color: var(--dark-green); }
         .btn-outline-light { background: transparent; border: 1px solid var(--bg-cream); color: var(--bg-cream); }
         .btn-outline-light:hover { background: var(--bg-cream); color: var(--dark-green); }
+
+        /* Estilo para el botón de no asistir */
+        .btn-declinar {
+            background: transparent;
+            border: 1px dashed rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 12px 25px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 400;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            font-family: 'Inter', sans-serif;
+            transition: 0.3s ease;
+            width: 100%;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        .btn-declinar:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #FFFFFF;
+            border-color: #FFFFFF;
+        }
 
         /* --- ESTILOS PARA SUBIDA DE FOTOS --- */
         .upload-container { background: var(--card-bg); padding: 40px 20px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.04); max-width: 500px; margin: 0 auto; border: 1px solid rgba(181, 155, 109, 0.2); }
@@ -215,7 +241,7 @@
         #seccion-subir-fotos .btn-green {
             background-color: var(--accent-green);
             border-color: var(--accent-green);
-            color: var(--card-bg); /* Texto claro */
+            color: var(--card-bg);
         }
 
         #seccion-subir-fotos .btn-green:hover {
@@ -498,7 +524,15 @@
                 <p style="font-family: 'Inter', sans-serif; margin-bottom: 10px; font-weight: 300; color: var(--bg-cream);">Pases reservados: <span id="num-pases" style="font-weight: 600; color: var(--accent-gold);">2</span></p>
                 <p id="contenedor-mesa" style="font-family: 'Inter', sans-serif; margin-bottom: 30px; font-weight: 300; color: var(--bg-cream); display: none;">Mesa asignada: <span id="num-mesa" style="font-weight: 600; color: var(--accent-gold);">0</span></p>
                 
-                <a href="#" id="btn-confirmar" class="btn-green btn-outline-light">Confirmar Asistencia</a>
+                <!-- Botón de Asistencia Positiva -->
+                <a href="#" id="btn-confirmar" class="btn-green btn-outline-light">
+                    <i class="fa-solid fa-check"></i> Confirmar Asistencia
+                </a>
+
+                <!-- Botón de Declinación (No podré asistir) -->
+                <a href="#" id="btn-declinar" class="btn-declinar">
+                    <i class="fa-solid fa-xmark"></i> No podré asistir
+                </a>
             </div>
         </section>
 
@@ -630,21 +664,20 @@
         const idCampoConfirmacion = "entry.2052817495"; 
         
         const btnConfirmar = document.getElementById('btn-confirmar');
+        const btnDeclinar = document.getElementById('btn-declinar');
 
-        if (localStorage.getItem('confirmado_' + invitado)) {
-            btnConfirmar.innerHTML = '<i class="fa-solid fa-check-double"></i> Ya Confirmaste';
-            btnConfirmar.style.backgroundColor = '#25d366'; 
-            btnConfirmar.style.borderColor = '#25d366';
-            btnConfirmar.style.color = '#fff';
-            btnConfirmar.style.pointerEvents = 'none'; 
-            btnConfirmar.style.opacity = '0.7'; 
+        // Control si ya confirmó antes
+        if (localStorage.getItem('estado_asistencia_' + invitado)) {
+            const estadoPrevio = localStorage.getItem('estado_asistencia_' + invitado);
+            bloquearBotonesTrasEnvio(estadoPrevio);
         }
         
-        btnConfirmar.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            btnConfirmar.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Confirmando...';
-            btnConfirmar.style.pointerEvents = 'none'; 
+        // Función auxiliar para enviar datos al formulario en segundo plano (Ajax con iframe)
+        function enviarRespuestaFormulario(estadoAsistencia, btnActivo, btnSecundario) {
+            btnActivo.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Procesando...';
+            btnActivo.style.pointerEvents = 'none';
+            btnSecundario.style.pointerEvents = 'none';
+            btnSecundario.style.opacity = '0.4';
 
             let iframe = document.getElementById('hidden_iframe');
             if (!iframe) {
@@ -669,8 +702,8 @@
 
             const inputs = [
                 { name: idCampoInvitado, value: invitado },
-                { name: idCampoPases, value: pases },
-                { name: idCampoConfirmacion, value: 'Sí, asistiré' } 
+                { name: idCampoPases, value: estadoAsistencia === 'Sí, asistiré' ? pases : '0' },
+                { name: idCampoConfirmacion, value: estadoAsistencia } 
             ];
 
             inputs.forEach(inputData => {
@@ -682,15 +715,39 @@
             });
 
             iframe.onload = function() {
-                localStorage.setItem('confirmado_' + invitado, 'true');
+                localStorage.setItem('estado_asistencia_' + invitado, estadoAsistencia);
+                bloquearBotonesTrasEnvio(estadoAsistencia);
+            };
+
+            form.submit();
+        }
+
+        function bloquearBotonesTrasEnvio(estado) {
+            if (estado === 'Sí, asistiré') {
                 btnConfirmar.innerHTML = '<i class="fa-solid fa-check"></i> ¡Asistencia Confirmada!';
                 btnConfirmar.style.backgroundColor = '#25d366'; 
                 btnConfirmar.style.borderColor = '#25d366';
                 btnConfirmar.style.color = '#fff';
-                btnConfirmar.style.pointerEvents = 'none'; 
-            };
+                btnConfirmar.style.pointerEvents = 'none';
+                btnDeclinar.style.display = 'none'; // Ocultar el otro botón para limpieza visual
+            } else {
+                btnDeclinar.innerHTML = '<i class="fa-solid fa-xmark"></i> Respuesta registrada: No asistirá';
+                btnDeclinar.style.pointerEvents = 'none';
+                btnDeclinar.style.backgroundColor = 'rgba(255,255,255,0.2)';
+                btnConfirmar.style.display = 'none';
+            }
+        }
 
-            form.submit();
+        // Evento Botón Sí Asistiré
+        btnConfirmar.addEventListener('click', function(e) {
+            e.preventDefault();
+            enviarRespuestaFormulario('Sí, asistiré', btnConfirmar, btnDeclinar);
+        });
+
+        // Evento Botón No Podré Asistir
+        btnDeclinar.addEventListener('click', function(e) {
+            e.preventDefault();
+            enviarRespuestaFormulario('No podré asistir', btnDeclinar, btnConfirmar);
         });
 
         const targetDate = new Date('Dec 19, 2026 16:30:00').getTime();
@@ -903,7 +960,6 @@
         const seccionEspera = document.getElementById('seccion-espera-fotos');
         const seccionSubir = document.getElementById('seccion-subir-fotos');
         
-        // Habilitado de forma permanente para hacer las pruebas
         seccionEspera.style.display = 'none';
         seccionSubir.style.display = 'block';
 
@@ -912,7 +968,6 @@
         const btnEnviarFotos = document.getElementById('btn-enviar-fotos');
         const uploadStatus = document.getElementById('upload-status');
         
-        // URL de tu aplicación web (Apps Script) ya integrada
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw4VQ5Vbsk0xfG1tVVh8ejrKM7_Ko_Wl7eOvMTwdLlTuZLriZAJ4tdcQMNMQ14Av9jH/exec"; 
         let fotosSeleccionadas = [];
 
