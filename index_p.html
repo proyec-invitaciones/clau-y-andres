@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -108,100 +108,103 @@
     </div>
 
     <script>
-        function procesarCSV() {
-            const fileInput = document.getElementById('input-csv');
-            if (!fileInput || !fileInput.files.length) {
-                alert("Por favor selecciona un archivo CSV antes de hacer clic.");
-                return;
+ function procesarCSV() {
+    const fileInput = document.getElementById('input-csv');
+    if (!fileInput || !fileInput.files.length) {
+        alert("Por favor selecciona un archivo CSV antes de hacer clic.");
+        return;
+    }
+
+    const file = fileInput.files[0];
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+        try {
+            const contenido = e.target.result;
+            const lineas = contenido.split(/\r?\n/);
+            const tablaBody = document.getElementById('tabla-csv-body');
+            tablaBody.innerHTML = "";
+
+            const urlBase = window.location.href.includes('index_p.html') 
+                ? window.location.href.replace('index_p.html', 'index.html')
+                : 'index.html';
+
+            let contador = 0;
+
+            // Definición de emojis en formato Unicode ultra-seguro
+            const emojiChispa = "\u2728";       // ✨
+            const emojiBrindis = "\u{1F942}";    // 🥂
+            const emojiCorazon = "\u2764\uFE0F"; // ❤️
+            const emojiMano = "\u{1F449}";      // 👉
+
+            for (let i = 0; i < lineas.length; i++) {
+                const linea = lineas[i].trim();
+                if (!linea) continue;
+
+                const delimitador = linea.includes(';') ? ';' : ',';
+                const partes = linea.split(delimitador).map(p => p.trim().replace(/^"|"$/g, ''));
+                
+                if (i === 0 && (linea.toLowerCase().includes('nombre') || linea.toLowerCase().includes('telefono'))) {
+                    continue;
+                }
+
+                const telefono = partes[0] || '';
+                const nombre = partes[1] || '';
+                const pases = partes[2] || '2';
+                const mesa = partes[3] || '';
+
+                if (!nombre || !telefono) continue;
+
+                let urlInvitacion = urlBase + '?invitado=' + encodeURIComponent(nombre) + '&pases=' + encodeURIComponent(pases);
+                if (mesa) {
+                    urlInvitacion += '&mesa=' + encodeURIComponent(mesa);
+                }
+                
+                // Mensaje ensamblado con Unicode seguro
+                const textoMensaje = 
+                    "¡Hola! Nos da mucho gusto saludarte. " + emojiChispa + "\n\n" +
+                    "Se acerca un día muy especial para nosotros y nos encantaría compartirlo contigo. Contar con tu presencia en la renovación de nuestros votos de bodas de plata hará que este momento sea inolvidable, ya que eres parte muy importante de nuestra historia.\n\n" +
+                    "Queremos asegurarnos de que todos estén muy cómodos, por lo que hemos preparado cada detalle con mucho cariño. Te pedimos amablemente que ingreses al enlace de nuestra invitación para consultar los detalles y confirmar tu asistencia.\n\n" +
+                    "Para poder hacer los preparativos y apartar tu lugar con la atención que mereces, te pedimos amablemente que nos confirmes tu asistencia por este mismo medio a más tardar el *09 de diciembre del 2026*. Al abrir tu invitación, verás reflejados los pases que hemos reservado con tanto afecto para ustedes; si tienes alguna duda con los lugares o necesitas ajustar algo, escríbenos por aquí con total confianza para revisarlo.\n\n" +
+                    "¡Nos hará una ilusión enorme celebrar juntos! " + emojiBrindis + emojiCorazon + "\n\n" +
+                    emojiMano + " Consulta tu invitación aquí:\n" + urlInvitacion;
+
+                const linkWA = "https://wa.me/" + telefono.replace(/[^0-9]/g, '') + "?text=" + encodeURIComponent(textoMensaje);
+
+                if (!localStorage.getItem('confirma-' + nombre)) {
+                    localStorage.setItem('confirma-' + nombre, 'Pendiente');
+                }
+
+                const fila = 
+                    "<tr>" +
+                        "<td><strong>" + nombre + "</strong></td>" +
+                        "<td>" + pases + "</td>" +
+                        "<td>" + (mesa || '-') + "</td>" +
+                        "<td>" + telefono + "</td>" +
+                        "<td>" +
+                            "<a href='" + linkWA + "' target='_blank' class='btn-wa'>" +
+                                "<i class='fa-brands fa-whatsapp'></i> Enviar Pase" +
+                            "</a>" +
+                        "</td>" +
+                    "</tr>";
+                
+                tablaBody.innerHTML += fila;
+                contador++;
             }
 
-            const file = fileInput.files[0];
-            const reader = new FileReader();
-
-            reader.onload = function(e) {
-                try {
-                    const contenido = e.target.result;
-                    const lineas = contenido.split(/\r?\n/);
-                    const tablaBody = document.getElementById('tabla-csv-body');
-                    tablaBody.innerHTML = "";
-
-                    const urlBase = window.location.href.includes('index_p.html') 
-                        ? window.location.href.replace('index_p.html', 'index.html')
-                        : 'index.html';
-
-                    let contador = 0;
-
-                    for (let i = 0; i < lineas.length; i++) {
-                        const linea = lineas[i].trim();
-                        if (!linea) continue;
-
-                        // Detectar si el CSV está separado por comas o por punto y coma
-                        const delimitador = linea.includes(';') ? ';' : ',';
-                        const partes = linea.split(delimitador).map(p => p.trim().replace(/^"|"$/g, ''));
-                        
-                        // Ignorar la fila de cabeceras si contiene palabras claves
-                        if (i === 0 && (linea.toLowerCase().includes('nombre') || linea.toLowerCase().includes('telefono'))) {
-                            continue;
-                        }
-
-                        const telefono = partes[0] || '';
-                        const nombre = partes[1] || '';
-                        const pases = partes[2] || '2';
-                        const mesa = partes[3] || '';
-
-                        if (!nombre || !telefono) continue;
-
-                        // Construcción URL de invitación
-                        let urlInvitacion = urlBase + '?invitado=' + encodeURIComponent(nombre) + '&pases=' + encodeURIComponent(pases);
-                        if (mesa) {
-                            urlInvitacion += '&mesa=' + encodeURIComponent(mesa);
-                        }
-                        
-                        // Redacción del mensaje de WhatsApp
-                        const textoMensaje = 
-                            "¡Hola! Nos da mucho gusto saludarte. ✨\n\n" +
-                            "Se acerca un día muy especial para nosotros y nos encantaría compartirlo contigo. Contar con tu presencia en la renovación de nuestros votos de bodas de plata hará que este momento sea inolvidable, ya que eres parte muy importante de nuestra historia.\n\n" +
-                            "Queremos asegurarnos de que todos estén muy cómodos, por lo que hemos preparado cada detalle con mucho cariño. Te pedimos amablemente que ingreses al enlace de nuestra invitación para consultar los detalles y confirmar tu asistencia.\n\n" +
-                            "Para poder hacer los preparativos y apartar tu lugar con la atención que mereces, te pedimos amablemente que nos confirmes tu asistencia por este mismo medio a más tardar el *09 de diciembre del 2026*. Al abrir tu invitación, verás reflejados los pases que hemos reservado con tanto afecto para ustedes; si tienes alguna duda con los lugares o necesitas ajustar algo, escríbenos por aquí con total confianza para revisarlo.\n\n" +
-                            "¡Nos hará una ilusión enorme celebrar juntos! 🥂❤️\n\n" +
-                            "👉 Consulta tu invitación aquí:\n" + urlInvitacion;
-
-                        const linkWA = "https://wa.me/" + telefono.replace(/[^0-9]/g, '') + "?text=" + encodeURIComponent(textoMensaje);
-
-                        if (!localStorage.getItem('confirma-' + nombre)) {
-                            localStorage.setItem('confirma-' + nombre, 'Pendiente');
-                        }
-
-                        const fila = 
-                            "<tr>" +
-                                "<td><strong>" + nombre + "</strong></td>" +
-                                "<td>" + pases + "</td>" +
-                                "<td>" + (mesa || '-') + "</td>" +
-                                "<td>" + telefono + "</td>" +
-                                "<td>" +
-                                    "<a href='" + linkWA + "' target='_blank' class='btn-wa'>" +
-                                        "<i class='fa-brands fa-whatsapp'></i> Enviar Pase" +
-                                    "</a>" +
-                                "</td>" +
-                            "</tr>";
-                        
-                        tablaBody.innerHTML += fila;
-                        contador++;
-                    }
-
-                    if (contador > 0) {
-                        document.getElementById('resultado-csv').style.display = 'block';
-                        cargarReporte();
-                    } else {
-                        alert("No se cargaron registros. Asegúrate de que el CSV tenga al menos un teléfono y un nombre en las primeras 2 columnas.");
-                    }
-                } catch (err) {
-                    alert("Ocurrió un problema procesando el archivo: " + err.message);
-                }
-            };
-
-            reader.readAsText(file, "UTF-8");
+            if (contador > 0) {
+                document.getElementById('resultado-csv').style.display = 'block';
+                cargarReporte();
+            } else {
+                alert("No se cargaron registros. Asegúrate de que el CSV tenga al menos un teléfono y un nombre.");
+            }
+        } catch (err) {
+            alert("Ocurrió un problema procesando el archivo: " + err.message);
         }
+    };
+
+    reader.readAsText(file, "UTF-8");
+}
 
         function generarInvitacion() {
             const nombre = document.getElementById('input-nombre').value;
