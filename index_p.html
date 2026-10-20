@@ -110,83 +110,98 @@
 
     <script>
         // --- LÓGICA DE CARGA Y PROCESAMIENTO DE CSV ---
-        function procesarCSV() {
-            const fileInput = document.getElementById('input-csv');
-            const file = fileInput.files[0];
+       // --- LÓGICA DE CARGA Y PROCESAMIENTO DE CSV ---
+function procesarCSV() {
+    const fileInput = document.getElementById('input-csv');
+    const file = fileInput.files[0];
+    
+    if (!file) return alert("Por favor selecciona un archivo CSV primero.");
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const contenido = e.target.result;
+        const lineas = contenido.split(/\r?\n/);
+        const tablaBody = document.getElementById('tabla-csv-body');
+        tablaBody.innerHTML = "";
+
+        const urlBase = window.location.href.includes('index_p.html') 
+            ? window.location.href.replace('index_p.html', 'index.html')
+            : 'index.html';
+
+        let contador = 0;
+
+        for (let i = 0; i < lineas.length; i++) {
+            const linea = lineas[i].trim();
+            if (!linea) continue;
+
+            // Ignorar encabezados del CSV
+            if (i === 0 && (linea.toLowerCase().includes('nombre') || linea.toLowerCase().includes('telefono'))) {
+                continue;
+            }
+
+            const partes = linea.split(',').map(p => p.trim().replace(/^"|"$/g, ''));
             
-            if (!file) return alert("Por favor selecciona un archivo CSV primero.");
+            const telefono = partes[0] || '';
+            const nombre = partes[1] || '';
+            const pases = partes[2] || '2';
+            const mesa = partes[3] || '';
 
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const contenido = e.target.result;
-                const lineas = contenido.split(/\r?\n/);
-                const tablaBody = document.getElementById('tabla-csv-body');
-                tablaBody.innerHTML = "";
+            if (!nombre || !telefono) continue;
 
-                const urlBase = window.location.href.includes('index_p.html') 
-                    ? window.location.href.replace('index_p.html', 'index.html')
-                    : 'index.html';
+            // Construir URL de la invitación
+            let urlInvitacion = `${urlBase}?invitado=${encodeURIComponent(nombre)}&pases=${pases}`;
+            if (mesa) {
+                urlInvitacion += `&mesa=${encodeURIComponent(mesa)}`;
+            }
+            
+            // --- PLANTILLA DEL MENSAJE DE WHATSAPP ---
+            const mensajeWhatsApp = 
+`¡Hola! Nos da mucho gusto saludarte. ✨
 
-                let contador = 0;
+Se acerca un día muy especial para nosotros y nos encantaría compartirlo contigo. Contar con tu presencia en la renovación de nuestros votos de bodas de plata hará que este momento sea inolvidable, ya que eres una parte muy especial de nuestra historia. 
 
-                for (let i = 0; i < lineas.length; i++) {
-                    const linea = lineas[i].trim();
-                    if (!linea) continue;
+Queremos asegurarnos de que todos estén muy cómodos y disfruten al máximo, por lo que hemos preparado cada detalle con mucho cariño. Para poder organizar los preparativos y reservar tu lugar con la atención que mereces, te pedimos amablemente que ingreses al enlace de nuestra invitación para consultar los detalles y confirmar tu asistencia. 
 
-                    if (i === 0 && (linea.toLowerCase().includes('nombre') || linea.toLowerCase().includes('telefono'))) {
-                        continue;
-                    }
+Al abrir la página, verás reflejados los pases que hemos reservado con mucho afecto para ustedes; si necesitas consultar o ajustar el número de lugares, escríbenos por este mismo chat con total confianza para revisarlo juntos.
 
-                    const partes = linea.split(',').map(p => p.trim().replace(/^"|"$/g, ''));
-                    
-                    const telefono = partes[0] || '';
-                    const nombre = partes[1] || '';
-                    const pases = partes[2] || '2';
-                    const mesa = partes[3] || ''; // Nuevo campo: Mesa
-                    const mensaje = partes[4] || '¡Hola! Nos llena de alegría invitarte a celebrar con nosotros nuestras Bodas de Plata.';
+¡Nos hará una ilusión enorme celebrar este gran día a su lado! 🥂❤️
 
-                    if (!nombre || !telefono) continue;
+👉 Consulta tu invitación y confirma tu asistencia aquí:  
+${urlInvitacion}`;
 
-                    // Construir URL de la invitación incluyendo la mesa si existe
-                    let urlInvitacion = `${urlBase}?invitado=${encodeURIComponent(nombre)}&pases=${pases}`;
-                    if(mesa) {
-                        urlInvitacion += `&mesa=${encodeURIComponent(mesa)}`;
-                    }
-                    
-                    const mensajeWhatsApp = `${mensaje}\n\nAquí tienes tu pase de acceso exclusivo:\n${urlInvitacion}`;
-                    const linkWA = `https://wa.me/${telefono.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(mensajeWhatsApp)}`;
+            const linkWA = `https://wa.me/${telefono.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(mensajeWhatsApp)}`;
 
-                    if(!localStorage.getItem(`confirma-${nombre}`)) {
-                        localStorage.setItem(`confirma-${nombre}`, 'Pendiente');
-                    }
+            if (!localStorage.getItem(`confirma-${nombre}`)) {
+                localStorage.setItem(`confirma-${nombre}`, 'Pendiente');
+            }
 
-                    const fila = `
-                        <tr>
-                            <td><strong>${nombre}</strong></td>
-                            <td>${pases}</td>
-                            <td>${mesa || '-'}</td>
-                            <td>${telefono}</td>
-                            <td>
-                                <a href="${linkWA}" target="_blank" class="btn-wa">
-                                    <i class="fa-brands fa-whatsapp"></i> Enviar Pase
-                                </a>
-                            </td>
-                        </tr>
-                    `;
-                    tablaBody.innerHTML += fila;
-                    contador++;
-                }
-
-                if (contador > 0) {
-                    document.getElementById('resultado-csv').style.display = 'block';
-                    cargarReporte();
-                } else {
-                    alert("No se encontraron registros válidos en el archivo CSV.");
-                }
-            };
-
-            reader.readAsText(file);
+            const fila = `
+                <tr>
+                    <td><strong>${nombre}</strong></td>
+                    <td>${pases}</td>
+                    <td>${mesa || '-'}</td>
+                    <td>${telefono}</td>
+                    <td>
+                        <a href="${linkWA}" target="_blank" class="btn-wa">
+                            <i class="fa-brands fa-whatsapp"></i> Enviar Pase
+                        </a>
+                    </td>
+                </tr>
+            `;
+            tablaBody.innerHTML += fila;
+            contador++;
         }
+
+        if (contador > 0) {
+            document.getElementById('resultado-csv').style.display = 'block';
+            cargarReporte();
+        } else {
+            alert("No se encontraron registros válidos en el archivo CSV.");
+        }
+    };
+
+    reader.readAsText(file);
+}
 
         // --- LÓGICA DE GENERACIÓN INDIVIDUAL ---
         function generarInvitacion() {
