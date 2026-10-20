@@ -110,13 +110,14 @@
 
     <script>
         // --- LÓGICA DE CARGA Y PROCESAMIENTO DE CSV ---
-       // --- LÓGICA DE CARGA Y PROCESAMIENTO DE CSV ---
+// --- LÓGICA DE CARGA Y PROCESAMIENTO DE CSV ---
 function procesarCSV() {
     const fileInput = document.getElementById('input-csv');
     const file = fileInput.files[0];
     
     if (!file) return alert("Por favor selecciona un archivo CSV primero.");
 
+    // Cargar con codificación UTF-8 para proteger emojis y acentos
     const reader = new FileReader();
     reader.onload = function(e) {
         const contenido = e.target.result;
@@ -134,7 +135,7 @@ function procesarCSV() {
             const linea = lineas[i].trim();
             if (!linea) continue;
 
-            // Ignorar encabezados del CSV
+            // Ignorar encabezados
             if (i === 0 && (linea.toLowerCase().includes('nombre') || linea.toLowerCase().includes('telefono'))) {
                 continue;
             }
@@ -153,6 +154,57 @@ function procesarCSV() {
             if (mesa) {
                 urlInvitacion += `&mesa=${encodeURIComponent(mesa)}`;
             }
+            
+            // --- NUEVA PLANTILLA DEL MENSAJE DE WHATSAPP ---
+            const mensajeWhatsApp = 
+`¡Hola! Nos da mucho gusto saludarte. ✨
+
+Se acerca un día muy especial para nosotros y nos encantaría compartirlo contigo. Contar con tu presencia en la renovación de nuestros votos de bodas de plata hará que este momento sea inolvidable, ya que eres parte muy importante de nuestra historia.
+
+Queremos asegurarnos de que todos estén muy cómodos, por lo que hemos preparado cada detalle con mucho cariño. Te pedimos amablemente que ingreses al enlace de nuestra invitación para consultar los detalles y confirmar tu asistencia.
+
+Para poder hacer los preparativos y apartar tu lugar con la atención que mereces, te pedimos amablemente que nos confirmes tu asistencia por este mismo medio a más tardar el *09 de diciembre del 2026*. Al abrir tu invitación, verás reflejados los pases que hemos reservado con tanto afecto para ustedes; si tienes alguna duda con los lugares o necesitas ajustar algo, escríbenos por aquí con total confianza para revisarlo.
+
+¡Nos hará una ilusión enorme celebrar juntos! 🥂❤️
+
+👉 Consulta tu invitación aquí:
+${urlInvitacion}`;
+
+            // encodeURIComponent se encarga de preservar los emoticones y caracteres especiales
+            const linkWA = `https://wa.me/${telefono.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(mensajeWhatsApp)}`;
+
+            if (!localStorage.getItem(`confirma-${nombre}`)) {
+                localStorage.setItem(`confirma-${nombre}`, 'Pendiente');
+            }
+
+            const fila = `
+                <tr>
+                    <td><strong>${nombre}</strong></td>
+                    <td>${pases}</td>
+                    <td>${mesa || '-'}</td>
+                    <td>${telefono}</td>
+                    <td>
+                        <a href="${linkWA}" target="_blank" class="btn-wa">
+                            <i class="fa-brands fa-whatsapp"></i> Enviar Pase
+                        </a>
+                    </td>
+                </tr>
+            `;
+            tablaBody.innerHTML += fila;
+            contador++;
+        }
+
+        if (contador > 0) {
+            document.getElementById('resultado-csv').style.display = 'block';
+            cargarReporte();
+        } else {
+            alert("No se encontraron registros válidos en el archivo CSV.");
+        }
+    };
+
+    // Asegura la lectura correcta de caracteres en UTF-8
+    reader.readAsText(file, "UTF-8");
+}
             
             // --- PLANTILLA DEL MENSAJE DE WHATSAPP ---
             const mensajeWhatsApp = 
