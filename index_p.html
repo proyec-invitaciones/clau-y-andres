@@ -108,7 +108,7 @@
     </div>
 
     <script>
- function procesarCSV() {
+function procesarCSV() {
     const fileInput = document.getElementById('input-csv');
     if (!fileInput || !fileInput.files.length) {
         alert("Por favor selecciona un archivo CSV antes de hacer clic.");
@@ -130,6 +130,12 @@
                 : 'index.html';
 
             let contador = 0;
+
+            // Emojis generados mediante números decimales puros (imposible que el editor los corrompa)
+            const emojiChispa = String.fromCodePoint(9960);          // ✨
+            const emojiBrindis = String.fromCodePoint(129346);       // 🥂
+            const emojiCorazon = String.fromCodePoint(10084, 65039); // ❤️
+            const emojiMano = String.fromCodePoint(128073);          // 👉
 
             for (let i = 0; i < lineas.length; i++) {
                 const linea = lineas[i].trim();
@@ -154,14 +160,14 @@
                     urlInvitacion += '&mesa=' + encodeURIComponent(mesa);
                 }
                 
-                // Texto completamente limpio de símbolos extraños, usando asteriscos y guiones seguros
+                // Mensaje con emojis numéricos seguros
                 const textoMensaje = 
-                    "¡Hola! Nos da mucho gusto saludarte.\n\n" +
+                    "¡Hola! Nos da mucho gusto saludarte. " + emojiChispa + "\n\n" +
                     "Se acerca un día muy especial para nosotros y nos encantaría compartirlo contigo. Contar con tu presencia en la renovación de nuestros votos de bodas de plata hará que este momento sea inolvidable, ya que eres parte muy importante de nuestra historia.\n\n" +
                     "Queremos asegurarnos de que todos estén muy cómodos, por lo que hemos preparado cada detalle con mucho cariño. Te pedimos amablemente que ingreses al enlace de nuestra invitación para consultar los detalles y confirmar tu asistencia.\n\n" +
                     "Para poder hacer los preparativos y apartar tu lugar con la atención que mereces, te pedimos amablemente que nos confirmes tu asistencia por este mismo medio a más tardar el *09 de diciembre del 2026*. Al abrir tu invitación, verás reflejados los pases que hemos reservado con tanto afecto para ustedes; si tienes alguna duda con los lugares o necesitas ajustar algo, escríbenos por aquí con total confianza para revisarlo.\n\n" +
-                    "¡Nos hará una ilusión enorme celebrar juntos!\n\n" +
-                    "-> Consulta tu invitación aquí:\n" + urlInvitacion;
+                    "¡Nos hará una ilusión enorme celebrar juntos! " + emojiBrindis + emojiCorazon + "\n\n" +
+                    emojiMano + " Consulta tu invitación aquí:\n" + urlInvitacion;
 
                 const linkWA = "https://wa.me/" + telefono.replace(/[^0-9]/g, '') + "?text=" + encodeURIComponent(textoMensaje);
 
