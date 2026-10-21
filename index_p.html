@@ -132,11 +132,12 @@
             let contador = 0;
 
             // Emojis generados mediante código numérico universal (imposible que fallen por codificación)
-            const emojiChispa = String.fromCodePoint(0x2728);       // ✨
-            const emojiBrindis = String.fromCodePoint(0x1F942);    // 🥂
-            const emojiCorazon = String.fromCodePoint(0x2764, 0xFE0F); // ❤️
-            const emojiMano = String.fromCodePoint(0x1F449);      // 👉
-
+          // Usando escapes hexadecimales directos de JS
+            const emojiChispa = "\u2728";          // ✨
+            const emojiBrindis = "\u{1F942}";       // 🥂
+            const emojiCorazon = "\u2764";          // ❤
+            const emojiMano = "\u{1F449}";         // 👉
+            
             for (let i = 0; i < lineas.length; i++) {
                 const linea = lineas[i].trim();
                 if (!linea) continue;
